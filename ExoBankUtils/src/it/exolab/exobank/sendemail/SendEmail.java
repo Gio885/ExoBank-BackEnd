@@ -2,6 +2,7 @@ package it.exolab.exobank.sendemail;
 
 import java.util.Properties;
 
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
@@ -118,14 +119,7 @@ le credenziali di autenticazione.
         }
         
     }
-    
-    
-  
-    
-    
-    
-    
-    
+
     public String emailBenvenuto(Utente utente) {
     	return String.format(CostantiEmail.EMAIL_TESTO_BENVENUTO, utente.getNome(),utente.getCognome());
     }

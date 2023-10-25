@@ -1,34 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-            
+                    
+    
+    
     
     <wb-module deploy-name="ExoBankEAR">
-                        
+                                        
+        
+        
         
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+                        
+        
+        <dependent-module archiveName="ExoBankModels.jar" deploy-path="/lib" handle="module:/resource/ExoBankModels/ExoBankModels">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <dependent-module archiveName="ExoBankUtils.jar" deploy-path="/lib" handle="module:/resource/ExoBankUtils/ExoBankUtils">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <dependent-module archiveName="ExoBankDB.jar" deploy-path="/lib" handle="module:/resource/ExoBankDB/ExoBankDB">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <dependent-module archiveName="ExoBankRest.war" deploy-path="/" handle="module:/resource/ExoBankRest/ExoBankRest">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <dependent-module archiveName="ExoBankEJB.jar" deploy-path="/" handle="module:/resource/ExoBankEJB/ExoBankEJB">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
                 
-        <dependent-module archiveName="mybatis-3.5.13.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/jar/mybatis-3.5.13.jar">
+        <dependent-module archiveName="poi-5.2.4.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/poi-5.2.4.jar">
                         
             <dependency-type>uses</dependency-type>
                     
         </dependent-module>
-        <dependent-module archiveName="ExoBankModels.jar" deploy-path="/lib" handle="module:/resource/ExoBankModels/ExoBankModels">
+                
+        <dependent-module archiveName="xmlbeans-5.1.1.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/xmlbeans-5.1.1.jar">
+                        
             <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="ExoBankUtils.jar" deploy-path="/lib" handle="module:/resource/ExoBankUtils/ExoBankUtils">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="ExoBankDB.jar" deploy-path="/lib" handle="module:/resource/ExoBankDB/ExoBankDB">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="ExoBankRest.war" deploy-path="/" handle="module:/resource/ExoBankRest/ExoBankRest">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="ExoBankEJB.jar" deploy-path="/" handle="module:/resource/ExoBankEJB/ExoBankEJB">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
                     
+        </dependent-module>
+                
+        <dependent-module archiveName="commons-math3-3.6.1.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/commons-math3-3.6.1.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="primefaces-12.0.0.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/primefaces-12.0.0.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="commons-io-2.13.0.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/commons-io-2.13.0.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="commons-collections4-4.4.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/commons-collections4-4.4.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="poi-ooxml-lite-5.2.4.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/poi-ooxml-lite-5.2.4.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="mybatis-3.5.13.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/mybatis-3.5.13.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="commons-compress-1.24.0.jar" deploy-path="/" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/commons-compress-1.24.0.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="commons-codec-1.16.0.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/commons-codec-1.16.0.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="jsr305-3.0.2.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/jsr305-3.0.2.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="poi-ooxml-5.2.4.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/poi-ooxml-5.2.4.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="log4j-core.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/log4j-core.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="curvesapi-1.08.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/curvesapi-1.08.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="SparseBitSet-1.3.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/SparseBitSet-1.3.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="openpdf-1.3.30.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/openpdf-1.3.30.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="log4j-api-2.20.0.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/ProgrammiUtili/log4j-api-2.20.0.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                                    
+    
+    
     
     </wb-module>
-        
+                
+
+
 
 </project-modules>

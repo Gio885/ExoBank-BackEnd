@@ -10,4 +10,7 @@
       <context-root>ExoBankJSF</context-root>
     </web>
   </module>
+  <module>
+    <java>commons-compress-1.24.0.jar</java>
+  </module>
 </application>
