@@ -27,10 +27,14 @@
 				
 			</p:outputPanel>
 			
-			<h:panelGroup rendered="#{utenteBean.login}">
+			<p:outputPanel rendered="#{utenteBean.login}">
 				<ui:include src="indexUtente.xhtml" />
-			</h:panelGroup>
+			</p:outputPanel>
 			
+			<p:outputPanel rendered="#{scacchieraBean.gioca}">
+				<ui:include src="scacchiera.xhtml" />
+			</p:outputPanel>
+	
 		</h:form>
 	</div>
 </h:body>
