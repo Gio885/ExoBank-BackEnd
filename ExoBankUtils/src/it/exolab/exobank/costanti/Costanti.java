@@ -74,5 +74,8 @@ public class Costanti {
     public static final String RGB_NERO = "000000";
 
 
+    //SCACCHI
+    public static final int RIGHE = 8;
+    public static final int COLONNE = 8;
     
 }
