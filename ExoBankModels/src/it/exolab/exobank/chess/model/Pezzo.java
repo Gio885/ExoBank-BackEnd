@@ -9,9 +9,30 @@ public class Pezzo implements Serializable {
 	private String colore;
 	private Integer posizioneX;
 	private Integer posizioneY;
+	private boolean esiste;
 	
+	
+	
+	public Pezzo(String colore, Integer posizioneX, Integer posizioneY, Integer id) {
+		super();
+		this.id = id;
+		this.colore = colore;
+		this.posizioneX = posizioneX;
+		this.posizioneY = posizioneY;
+	}
+	
+	public Pezzo() {
+		super();
+	}
+
 	public Integer getId() {
 		return id;
+	}
+	public boolean isEsiste() {
+		return esiste;
+	}
+	public void setEsiste(boolean esiste) {
+		this.esiste = esiste;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -37,11 +58,11 @@ public class Pezzo implements Serializable {
 	@Override
 	public String toString() {
 		return "Pezzo [id=" + id + ", colore=" + colore + ", posizioneX=" + posizioneX + ", posizioneY=" + posizioneY
-				+ "]";
+				+ ", esiste=" + esiste + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(colore, id, posizioneX, posizioneY);
+		return Objects.hash(colore, esiste, id, posizioneX, posizioneY);
 	}
 	@Override
 	public boolean equals(Object obj) {
