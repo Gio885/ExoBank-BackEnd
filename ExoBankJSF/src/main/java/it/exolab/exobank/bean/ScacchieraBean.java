@@ -22,6 +22,10 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	
+	public void switchGioca() {
+		gioca = !gioca;
+	}
+	
 	
 	
 	

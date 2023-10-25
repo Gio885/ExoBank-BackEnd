@@ -20,20 +20,22 @@
 	<p:messages id="messages" globalOnly="true" showDetail="true"
 				autoUpdate="true" closable="true" />
 		<h:form id="homeForm">
-			<p:outputPanel rendered="#{!utenteBean.login}">
+			<p:outputPanel rendered="#{!utenteBean.login and !scacchieraBean.gioca}">
 
 				<ui:include src="login.xhtml" />
 				<ui:include src="registrazione.xhtml" />
-				
 			</p:outputPanel>
+			<p:outputPanel rendered="#{scacchieraBean.gioca}">
+				<ui:include src="scacchiera.xhtml" />
+			</p:outputPanel>
+			
 			
 			<p:outputPanel rendered="#{utenteBean.login}">
 				<ui:include src="indexUtente.xhtml" />
 			</p:outputPanel>
 			
-			<p:outputPanel rendered="#{scacchieraBean.gioca}">
-				<ui:include src="scacchiera.xhtml" />
-			</p:outputPanel>
+			
+			
 	
 		</h:form>
 	</div>

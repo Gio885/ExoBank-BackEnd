@@ -86,10 +86,9 @@ CREAZIONE:
 			immediate="true" />
 		<br />
 		<br />
-		<p:commandButton value="Scacchi" action = "scacchieraBean.setGioca(!scacchieraBean.gioca)"
-			update="homeForm"
-			immediate="true"
-			  ></p:commandButton>
+		<p:commandButton value="Gioca"
+			action="#{scacchieraBean.switchGioca}" update="homeForm"
+			immediate="true"/>
 		<br/>
 		<br />
 		<p:messages/>
