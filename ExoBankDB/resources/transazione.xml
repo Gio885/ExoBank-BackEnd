@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="it.exolab.exobank.mapper.TransazioneMapper">
+
+	<resultMap id="TransazioneResultMap" type="it.exolab.exobank.models.Transazione">
+		<id property="id" column="id" />
+		<result property="dataTransazione" column="datatransazione" />
+		<result property="importo" column="importo" />
+		<result property="contoBeneficiarioEsterno" column="contoBeneficiarioEsterno" />
+		<association property="tipo" javaType="it.exolab.exobank.models.TipoTransazione">
+			<id property="id" column="idtipotransazione" />
+			<result property="tipoTransazione" column="tipotransazione" />
+		</association>
+		<association property="statoTransazione" javaType="it.exolab.exobank.models.StatoTransazione">
+			<id property="id" column="idstatotransazione" />
+			<result property="statoTransazione" column="statotransazione" />
+		</association>
+		<association property="contoBeneficiario" columnPrefix="ben_" javaType="it.exolab.exobank.models.ContoCorrente">
+			<id property="id" column="IDCONTOCORRENTEBENEFICIARIO" />
+			<id property="numeroConto" column="numeroconto" />
+			<id property="saldo" column="saldo" />
+			<association property="utente" javaType="it.exolab.exobank.models.Utente">
+				<id property="id" column="idutente" />
+				<id property="nome" column="nome" />
+				<id property="cognome" column="cognome" />
+				<id property="email" column="email" />
+				<id property="codiceFiscale" column="codicefiscale" />
+			</association>
+			<association property="stato" javaType="it.exolab.exobank.models.StatoContoCorrente">
+				<id property="id" column="idstatocontocorrente" />
+				<id property="statoContoCorrente" column="statocontocorrente" />
+			</association>
+		</association>
+		<association property="conto" javaType="it.exolab.exobank.models.ContoCorrente">
+			<id property="id" column="idcontocorrente" />
+			<id property="numeroConto" column="numeroconto" />
+			<id property="saldo" column="saldo" />
+			<association property="utente" javaType="it.exolab.exobank.models.Utente">
+				<id property="id" column="idutente" />
+				<id property="nome" column="nome" />
+				<id property="cognome" column="cognome" />
+				<id property="email" column="email" />
+				<id property="codiceFiscale" column="codicefiscale" />
+			</association>
+			<association property="stato" javaType="it.exolab.exobank.models.StatoContoCorrente">
+				<id property="id" column="idstatocontocorrente" />
+				<id property="statoContoCorrente" column="statocontocorrente" />
+			</association>
+		</association>
+	</resultMap>
+
+
+
+	<!-- CASE SE IL NUMERO DEL CONTO CORRENTE BENEFICIARIO IS NOT NULL O ELSE 
+		NULL METTILO AL BEN NUMERO CONTO -->
+
+	<select 
+		id="findAllTransazioni" 
+		resultMap="TransazioneResultMap"
+		resultType="it.exolab.exobank.models.Transazione">
+		SELECT
+			t.id,
+			t.datatransazione,
+			t.importo,
+			t.idtipotransazione,
+			t.contobeneficiarioesterno,
+			tipo.tipotransazione,
+			t.idstatotransazione,
+			s.statotransazione,
+			t.IDCONTOCORRENTEBENEFICIARIO AS ben_IDCONTOCORRENTEBENEFICIARIO,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.numeroconto ELSE
+			NULL
+			END AS ben_numeroconto,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.saldo ELSE NULL
+			END AS ben_saldo,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.idutente ELSE NULL
+			END AS ben_idutente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.nome ELSE NULL
+			END AS ben_nome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.cognome ELSE NULL
+			END AS ben_cognome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.email ELSE NULL
+			END AS ben_email,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.codicefiscale ELSE
+			NULL
+			END AS ben_codicefiscale,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN
+			cb.idstatocontocorrente ELSE NULL
+			END AS ben_idstatocontocorrente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN st.statocontocorrente
+			ELSE NULL
+			END AS ben_statocontocorrente,
+			t.idcontocorrente,
+			c.numeroconto,
+			c.saldo,
+			c.idstatocontocorrente,
+			sc.statocontocorrente,
+			c.idutente,
+			u.nome,
+			u.cognome,
+			u.email,
+			u.codicefiscale
+		FROM
+			transazione t
+		INNER JOIN 
+			tipotransazione tipo ON t.idtipotransazione= tipo.id
+		INNER JOIN 
+			statotransazione s ON t.idstatotransazione=s.id
+		INNER JOIN 
+			contocorrente c ON t.idcontocorrente=c.id
+		INNER JOIN 
+			utente u ON c.idutente=u.id
+		INNER JOIN 
+			statocontocorrente sc ON c.idstatocontocorrente=sc.id
+		LEFT JOIN 
+			contocorrente cb ON t.IDCONTOCORRENTEBENEFICIARIO = cb.id
+		LEFT JOIN 
+			utente ut ON cb.idutente = ut.id
+		LEFT JOIN 
+			statocontocorrente st ON cb.idstatocontocorrente=st.id
+		ORDER BY 
+			t.datatransazione
+	</select>
+
+
+	<select 
+		id="findTransazioniUtente"
+		resultMap="TransazioneResultMap"
+		parameterType="Integer"
+		resultType="it.exolab.exobank.models.Transazione">
+		SELECT
+			t.id,
+			t.datatransazione,
+			t.importo,
+			t.idtipotransazione,
+			t.contobeneficiarioesterno,
+			tipo.tipotransazione,
+			t.idstatotransazione,
+			s.statotransazione,
+			t.IDCONTOCORRENTEBENEFICIARIO AS ben_IDCONTOCORRENTEBENEFICIARIO,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.numeroconto ELSE
+			NULL
+			END AS ben_numeroconto,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.saldo ELSE NULL
+			END AS ben_saldo,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.idutente ELSE NULL
+			END AS ben_idutente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.nome ELSE NULL
+			END AS ben_nome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.cognome ELSE NULL
+			END AS ben_cognome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.email ELSE NULL
+			END AS ben_email,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.codicefiscale ELSE
+			NULL
+			END AS ben_codicefiscale,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN
+			cb.idstatocontocorrente ELSE NULL
+			END AS ben_idstatocontocorrente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN st.statocontocorrente
+			ELSE NULL
+			END AS ben_statocontocorrente,
+			t.idcontocorrente,
+			c.numeroconto,
+			c.saldo,
+			c.idstatocontocorrente,
+			sc.statocontocorrente,
+			c.idutente,
+			u.nome,
+			u.cognome,
+			u.email,
+			u.codicefiscale
+		FROM
+			transazione t
+		INNER JOIN 
+			tipotransazione tipo ON t.idtipotransazione= tipo.id
+		INNER JOIN 
+			statotransazione s ON t.idstatotransazione=s.id
+		INNER JOIN 
+			contocorrente c ON t.idcontocorrente=c.id
+		INNER JOIN 
+			utente u ON c.idutente=u.id
+		INNER JOIN 
+			statocontocorrente sc ON c.idstatocontocorrente=sc.id
+		LEFT JOIN 
+			contocorrente cb ON t.IDCONTOCORRENTEBENEFICIARIO = cb.id
+		LEFT JOIN 
+			utente ut ON cb.idutente = ut.id
+		LEFT JOIN 
+			statocontocorrente st ON cb.idstatocontocorrente=st.id
+		WHERE 
+			c.idutente = #{id}
+		ORDER BY 
+			t.datatransazione
+	</select>
+
+
+
+	<select 
+		id="findLastTransazione"
+		resultMap="TransazioneResultMap"
+		resultType="it.exolab.exobank.models.Transazione">
+	SELECT
+			t.id,
+			t.datatransazione,
+			t.importo,
+			t.idtipotransazione,
+			t.contobeneficiarioesterno,
+			tipo.tipotransazione,
+			t.idstatotransazione,
+			s.statotransazione,
+			t.IDCONTOCORRENTEBENEFICIARIO AS ben_IDCONTOCORRENTEBENEFICIARIO,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.numeroconto ELSE
+			NULL
+			END AS ben_numeroconto,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.saldo ELSE NULL
+			END AS ben_saldo,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN cb.idutente ELSE NULL
+			END AS ben_idutente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.nome ELSE NULL
+			END AS ben_nome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.cognome ELSE NULL
+			END AS ben_cognome,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.email ELSE NULL
+			END AS ben_email,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN ut.codicefiscale ELSE
+			NULL
+			END AS ben_codicefiscale,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN
+			cb.idstatocontocorrente ELSE NULL
+			END AS ben_idstatocontocorrente,
+			CASE
+			WHEN t.IDCONTOCORRENTEBENEFICIARIO IS NOT NULL THEN st.statocontocorrente
+			ELSE NULL
+			END AS ben_statocontocorrente,
+			t.idcontocorrente,
+			c.numeroconto,
+			c.saldo,
+			c.idstatocontocorrente,
+			sc.statocontocorrente,
+			c.idutente,
+			u.nome,
+			u.cognome,
+			u.email,
+			u.codicefiscale
+		FROM
+			transazione t
+		INNER JOIN 
+			tipotransazione tipo ON t.idtipotransazione= tipo.id
+		INNER JOIN 
+			statotransazione s ON t.idstatotransazione=s.id
+		INNER JOIN 
+			contocorrente c ON t.idcontocorrente=c.id
+		INNER JOIN 
+			utente u ON c.idutente=u.id
+		INNER JOIN 
+			statocontocorrente sc ON c.idstatocontocorrente=sc.id
+		LEFT JOIN 
+			contocorrente cb ON t.IDCONTOCORRENTEBENEFICIARIO = cb.id
+		LEFT JOIN 
+			utente ut ON cb.idutente = ut.id
+		LEFT JOIN 
+			statocontocorrente st ON cb.idstatocontocorrente=st.id
+		WHERE 
+			t.id = (SELECT LAST_INSERT_ID());
+
+	</select>
+
+
+
+	<insert 
+		id="insertTransazione"
+		parameterType="it.exolab.exobank.models.Transazione">
+		INSERT INTO 
+			transazione (importo,idtipotransazione,idstatotransazione,idcontocorrente,idcontocorrentebeneficiario,contobeneficiarioesterno)
+		VALUES 
+			(#{importo},#{tipo.id},#{statoTransazione.id},#{conto.id},#{contoBeneficiario.id},#{contoBeneficiarioEsterno})
+	</insert>
+
+	<select 
+		id="contoRigheAggiornate" 
+		resultType="int">
+		SELECT ROW_COUNT();
+	</select>
+
+	<update 
+		id="updateTransazione"
+		parameterType="it.exolab.exobank.models.Transazione">
+		UPDATE transazione
+		SET
+			datatransazione=#{dataTransazione},
+			importo=#{importo},
+			contobeneficiarioesterno=#{contoBeneficiarioEsterno},
+			idtipotransazione=#{tipo.id},
+			idstatotransazione=#{statoTransazione.id},
+			idcontocorrente=#{conto.id},
+			idcontocorrentebeneficiario=#{contoBeneficiario.id}
+		WHERE id=#{id}
+		
+	</update>
+
+
+
+
+
+
+	<!-- <resultMap id="contoResultMap" type="model.Conto"> -->
+	<!-- <id property="id" column="id" /> -->
+	<!-- <result property="iban" column="iban" /> -->
+	<!-- <result property="saldo" column="saldo" /> -->
+	<!-- </resultMap> -->
+
+	<!-- <select id="clienteEmail" parameterType="String" resultType="model.Cliente"> -->
+	<!-- select*from cliente where email=#{email} -->
+
+	<!-- </select> -->
+
+	<!-- <select id="clienteConto" resultMap="contoResultMap" parameterType="model.Cliente"> -->
+	<!-- SELECT id, iban, saldo -->
+	<!-- FROM conto -->
+	<!-- WHERE id = #{id_conto} -->
+	<!-- </select> -->
+
+
+
+
+
+	<!-- <select id="findOneCliente" parameterType="int" resultType="model.Cliente"> -->
+	<!-- select * from cliente where id=#{id} -->
+	<!-- </select> -->
+
+	<!-- <insert id="insertCliente" parameterType="model.Cliente"> -->
+	<!-- insert into cliente values (seq_id_cliente.nextval, #{nome}, #{cognome}, 
+		#{email}, #{password}, #{id_conto}) -->
+	<!-- </insert> -->
+
+
+
+	<!-- <delete id="deleteCliente" parameterType="model.Cliente"> -->
+	<!-- delete from cliente where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <resultMap id = "libriConAutoreMap" type = "it.exolab.mybatis.Libro"> -->
+	<!-- <result property = "id" column = "id"/> -->
+	<!-- <result property = "titolo" column = "titolo"/> -->
+	<!-- <result property = "autore" column = "autore"/> -->
+	<!-- <result property = "isbn" column = "isbn"/> -->
+
+	<!-- <association property="autoreDelLibro" javaType="it.exolab.mybatis.Autore"> -->
+	<!-- <id property = "id" column = "id_autore"/> -->
+	<!-- <result property = "name" column = "name"/> -->
+	<!-- <result property = "surname" column = "surname"/> -->
+
+	<!-- </association> -->
+
+
+	<!-- </resultMap> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutore" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="String" -->
+	<!-- > -->
+	<!-- select * from libro where autore = #{parametro} -->
+
+	<!-- </select> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutoreOppureConUnTitolo" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="it.exolab.mybatis.Query" -->
+	<!-- > -->
+	<!-- select id, titolo, autore, #{stringa2} as ilparametro from libro where 
+		autore = #{string1} or titolo = #{stringa2} -->
+
+	<!-- </select> -->
+
+
+
+
+
+	<!-- <select id="findAllConResultMap" resultMap="result"> -->
+	<!-- select *, -->
+	<!-- titolo as titoloDelLibro -->
+	<!-- from libro -->
+
+	<!-- </select> -->
+
+
+	<!-- <insert id="inserisci" c="it.exolab.mybatis.Libro"> -->
+	<!-- insert into libro (isbn, titolo,autore) values (#{id}, #{titolo}, #{autore}) -->
+
+	<!-- </insert> -->
+
+	<!-- <update id="aggiorna" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- update libro set titolo= #{titolo} ,autore=#{autore} where id = #{id} -->
+	<!-- </update> -->
+
+
+	<!-- <delete id="cancella" parameterType="Integer"> -->
+	<!-- delete from libro where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <delete id="cancella2" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- delete from libro where id = #{id} or autore=#{autore} -->
+	<!-- </delete> -->
+
+
+
+
+	<!-- <select id="libriConAutore" resultMap="libriConAutoreMap"> -->
+	<!-- select l.* -->
+	<!-- ,a.name -->
+	<!-- ,a.surname -->
+	<!-- ,a.id as id_autore -->
+	<!-- from libro l inner join author a on a.id=l.author_id -->
+
+	<!-- </select> -->
+
+</mapper>

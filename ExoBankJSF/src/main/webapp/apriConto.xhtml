@@ -1,0 +1,31 @@
+
+
+
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:fragment rendered="#{contoCorrente.apriConto}">
+	<h1>APERTURA CONTO</h1>
+	<br />
+	<br />
+	<h:inputText class = "stileInput" id="nome_aperturaConto" value="#{utenteBean.utenteLoggato.nome}" />
+	<br />
+	<br />
+	<h:inputText class = "stileInput" id="cognome_aperturaConto" value="#{utenteBean.utenteLoggato.cognome}" />
+	<br />
+	<br />
+	<h:inputText class = "stileInput" id="email_aperturaConto"
+		value="#{utenteBean.utenteLoggato.email}" />
+	<br />
+	<br />
+	<h:inputText class = "stileInput" id="codiceFiscale_aperturaConto"
+		value="#{utenteBean.utenteLoggato.codiceFiscale}" />
+
+	<h:commandButton class="stileButton" value="Apri" />
+</ui:fragment>
+
+
+</html>

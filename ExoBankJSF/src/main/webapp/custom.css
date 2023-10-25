@@ -1,0 +1,113 @@
+@charset "ISO-8859-1";
+
+
+/* CSS personalizzato in custom.css */
+body {
+    background-color: #323232; /* Sostituisci con il colore desiderato */
+}
+
+/* Esempio di classe personalizzata per il corpo */
+.my-theme-body {
+    background-color: #323232; /* Sostituisci con il colore desiderato */
+    color: white;
+}
+
+/* Stile del contenitore */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%; /* Larghezza del contenitore */
+  margin: 0 auto; /* Centra il contenitore orizzontalmente */
+  text-align: center; /* Centra il testo all'interno del contenitore */
+  background-color: rgb(255, 255, 255); /* Colore dello sfondo del contenitore */
+  padding: 20px; /* Spazio interno al contenitore */
+  border-radius: 10px;
+  color: black;
+  font-size: 18px; 
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/* Stile per l'header "BENVENUTO" */
+h1 {
+    color: #333; /* Colore del testo */
+}
+
+.stileLabel {
+    font-weight: bold; /* Rende il testo in grassetto */
+    color: #333; /* Colore del testo */
+    font-size: 16px; /* Dimensione del testo */
+    margin-bottom: 5px; /* Spazio sotto l'etichetta */
+    /* Altri stili personalizzati a tua scelta */
+}
+
+.divLeft {
+    text-align: left;
+}
+
+
+/* Stile generale per tutti i campi di input */
+.inputText {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    transition: border 0.3s;
+    background-color: white;
+    color: red;
+}
+
+/* Stile per evidenziare il campo quando è in stato di hover/focus */
+.inputText:hover, .inputText:focus {
+    border: 2px solid #0078d4;
+}
+
+
+.stileInput {
+    width: 90%; /* Rendi l'input largo al 100% del contenitore */
+    padding: 10px; /* Aggiunge spazio interno all'input */
+    font-size: 16px; /* Dimensione del carattere */
+    border: 1px solid #ccc; /* Bordo sottile con colore grigio */
+    border-radius: 5px; /* Bordo arrotondato */
+    color: rgb(255, 255, 255);
+    background-color: white;
+    margin: 10px;
+    background-color: white;
+    color: red;
+}
+
+.uppercase {
+	width: 90%; /* Rendi l'input largo al 100% del contenitore */
+    padding: 10px; /* Aggiunge spazio interno all'input */
+    font-size: 16px; /* Dimensione del carattere */
+    border: 1px solid #ccc; /* Bordo sottile con colore grigio */
+    border-radius: 5px; /* Bordo arrotondato */
+    color: black;
+    background-color: white;
+    margin: 10px;
+    text-transform: uppercase;
+}
+
+/* Stile per il pulsante */
+.stileButton {
+    background-color: #6B6B6B; /* Colore di sfondo personalizzato */
+    color: #ffffff; /* Colore del testo */
+    padding: 10px 20px; /* Spazio interno al pulsante */
+    border: none; /* Rimuove il bordo predefinito */
+    border-radius: 5px; /* Bordo arrotondato */
+    cursor: pointer; /* Cambia il cursore al passaggio del mouse */
+
+    /* Effetto hover */
+    transition: background-color 0.3s;
+}
+
+.stileButton:hover {
+    background-color: #555555; /* Cambia il colore di sfondo al passaggio del mouse */
+}
+
+
+
+
+

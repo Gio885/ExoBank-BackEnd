@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Example Web Page</title>
+	<link rel="stylesheet" type="text/css" href="custom.css" />
+	<h:outputStylesheet name="custom.css" />
+
+</h:head>
+
+<h:body styleClass="my-theme-body">
+
+
+
+	<div class="container">
+	<p:messages id="messages" globalOnly="true" showDetail="true"
+				autoUpdate="true" closable="true" />
+		<h:form id="homeForm">
+			<p:outputPanel rendered="#{!utenteBean.login}">
+
+				<ui:include src="login.xhtml" />
+				<ui:include src="registrazione.xhtml" />
+				
+			</p:outputPanel>
+			
+			<h:panelGroup rendered="#{utenteBean.login}">
+				<ui:include src="indexUtente.xhtml" />
+			</h:panelGroup>
+			
+		</h:form>
+	</div>
+</h:body>
+</html>

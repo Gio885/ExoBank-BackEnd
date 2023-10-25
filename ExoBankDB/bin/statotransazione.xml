@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="it.exolab.exobank.mapper.StatoTransazioneMapper">
+
+
+
+	<select 
+		id="findStatiTransazione"
+		resultType="it.exolab.exobank.models.StatoTransazione">
+		SELECT * FROM statotransazione
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- <select id="findOneCliente" parameterType="int" resultType="model.Cliente"> -->
+	<!-- select * from cliente where id=#{id} -->
+	<!-- </select> -->
+
+	<!-- <insert id="insertCliente" parameterType="model.Cliente"> -->
+	<!-- insert into cliente values (seq_id_cliente.nextval, #{nome}, #{cognome}, 
+		#{email}, #{password}, #{id_conto}) -->
+	<!-- </insert> -->
+
+	<!-- <update id="updateCliente" parameterType="model.Cliente"> -->
+	<!-- update cliente set id=#{id}, nome=#{nome}, cognome=#{cognome}, email=#{email}, 
+		password=#{password},id_conto= #{id_conto} where id=#{id} -->
+	<!-- </update> -->
+
+	<!-- <delete id="deleteCliente" parameterType="model.Cliente"> -->
+	<!-- delete from cliente where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <resultMap id = "libriConAutoreMap" type = "it.exolab.mybatis.Libro"> -->
+	<!-- <result property = "id" column = "id"/> -->
+	<!-- <result property = "titolo" column = "titolo"/> -->
+	<!-- <result property = "autore" column = "autore"/> -->
+	<!-- <result property = "isbn" column = "isbn"/> -->
+
+	<!-- <association property="autoreDelLibro" javaType="it.exolab.mybatis.Autore"> -->
+	<!-- <id property = "id" column = "id_autore"/> -->
+	<!-- <result property = "name" column = "name"/> -->
+	<!-- <result property = "surname" column = "surname"/> -->
+
+	<!-- </association> -->
+
+
+	<!-- </resultMap> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutore" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="String" -->
+	<!-- > -->
+	<!-- select * from libro where autore = #{parametro} -->
+
+	<!-- </select> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutoreOppureConUnTitolo" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="it.exolab.mybatis.Query" -->
+	<!-- > -->
+	<!-- select id, titolo, autore, #{stringa2} as ilparametro from libro where 
+		autore = #{string1} or titolo = #{stringa2} -->
+
+	<!-- </select> -->
+
+
+
+
+
+	<!-- <select id="findAllConResultMap" resultMap="result"> -->
+	<!-- select *, -->
+	<!-- titolo as titoloDelLibro -->
+	<!-- from libro -->
+
+	<!-- </select> -->
+
+
+	<!-- <insert id="inserisci" c="it.exolab.mybatis.Libro"> -->
+	<!-- insert into libro (isbn, titolo,autore) values (#{id}, #{titolo}, #{autore}) -->
+
+	<!-- </insert> -->
+
+	<!-- <update id="aggiorna" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- update libro set titolo= #{titolo} ,autore=#{autore} where id = #{id} -->
+	<!-- </update> -->
+
+
+	<!-- <delete id="cancella" parameterType="Integer"> -->
+	<!-- delete from libro where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <delete id="cancella2" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- delete from libro where id = #{id} or autore=#{autore} -->
+	<!-- </delete> -->
+
+
+
+
+	<!-- <select id="libriConAutore" resultMap="libriConAutoreMap"> -->
+	<!-- select l.* -->
+	<!-- ,a.name -->
+	<!-- ,a.surname -->
+	<!-- ,a.id as id_autore -->
+	<!-- from libro l inner join author a on a.id=l.author_id -->
+
+	<!-- </select> -->
+
+</mapper>

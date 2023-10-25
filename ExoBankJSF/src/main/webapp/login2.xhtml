@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<p:outputPanel rendered ="#{utenteBean.registrazione}">
+
+	<h:outputLabel class= "stileLabel"  style="font-size: 25px;" value="REGISTRAZIONE" />
+	<br/>
+	<br/>
+	<br/>
+	<h:outputLabel class= "stileLabel"  style="font-size: 20px;" value="Inserisci i tuoi dati" />
+	<br/>
+	<br/>
+	<br/>
+	<h:outputLabel class= "stileLabel" value="Nome: " />
+	<h:inputText class = "stileInput" id="nome_registrazione" value="#{utenteBean.utente.nome}" />
+	<br/>
+	<h:outputLabel class= "stileLabel" value="Cognome:" />
+	<h:inputText class = "stileInput" id="cognome_registrazione" value="#{utenteBean.utente.cognome}" />
+	<br/>
+	<h:outputLabel class= "stileLabel" value="Email: " />
+	<h:inputText class = "stileInput" id="email_registrazione" value="#{utenteBean.utenteLoggato.email}" />
+	<br/>
+	<h:outputLabel class= "stileLabel" value="Password: " />
+	<h:inputText class = "stileInput" id="password_registrazione" value="#{utenteBean.utente.password}" />
+	<br/>
+	<h:outputLabel class= "stileLabel" value="Codice Fiscale: " />
+	<h:inputText class = "uppercase" id="codiceFiscale_registazione" value="#{utenteBean.utente.codiceFiscale}" />
+	<br/>
+	<br/>
+	<h:commandButton class="stileButton" value="Registrati dentro registrazione" action = "#{utenteBean.insertUtente}"/>
+	<br/>
+	<h:messages/>
+	<br/>
+ </p:outputPanel>
+
+</ui:composition>

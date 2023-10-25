@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
+    <wb-module deploy-name="ExoBankEAR-JSF">
+                
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+                
+        <dependent-module archiveName="ExoBankEJB.jar" deploy-path="/" handle="module:/resource/ExoBankEJB/ExoBankEJB">
+                        
+            <dependent-object/>
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="ExoBankJSF.war" deploy-path="/" handle="module:/resource/ExoBankJSF/ExoBankJSF">
+                        
+            <dependent-object/>
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="ExoBankModels.jar" deploy-path="/lib" handle="module:/resource/ExoBankModels/ExoBankModels">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="ExoBankUtils.jar" deploy-path="/lib" handle="module:/resource/ExoBankUtils/ExoBankUtils">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="ExoBankDB.jar" deploy-path="/lib" handle="module:/resource/ExoBankDB/ExoBankDB">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+                
+        <dependent-module archiveName="mybatis-3.5.13.jar" deploy-path="/lib" handle="module:/classpath/lib/C:/Sviluppo/jar/mybatis-3.5.13.jar">
+                        
+            <dependency-type>uses</dependency-type>
+                    
+        </dependent-module>
+            
+    </wb-module>
+    
+</project-modules>

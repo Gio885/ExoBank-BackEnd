@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="it.exolab.exobank.mapper.ContoCorrenteMapper">
+
+	<resultMap id="contoCorrenteResultMap"
+		type="it.exolab.exobank.models.ContoCorrente">
+		<id property="id" column="id" />
+		<result property="numeroConto" column="numeroconto" />
+		<result property="saldo" column="saldo" />
+		<association property="stato"
+			javaType="it.exolab.exobank.models.StatoContoCorrente">
+			<id property="id" column="idstatocontocorrente" />
+			<result property="statoContoCorrente" column="statocontocorrente" />
+		</association>
+		<association property="utente" javaType="it.exolab.exobank.models.Utente">
+			<id property="id" column="idutente" />
+			<result property="nome" column="nome" />
+			<result property="cognome" column="cognome" />
+			<result property="email" column="email" />
+			<result property="password" column="password" />
+			<result property="codiceFiscale" column="codicefiscale" />
+		</association>
+	</resultMap>
+
+
+	<select 
+		resultMap="contoCorrenteResultMap"
+		id="findContoByIdUtente" 
+		parameterType="Integer"
+		resultType="it.exolab.exobank.models.ContoCorrente">
+		SELECT
+			c.id,
+			c.numeroconto,
+			c.saldo,
+			s.id as
+			idstatocontocorrente,
+			s.statocontocorrente,
+			u.id as idutente,
+			u.nome,
+			u.cognome,
+			u.email,
+			u.codicefiscale
+		FROM 
+			contocorrente c
+		INNER JOIN 
+			statocontocorrente s ON c.idstatocontocorrente = s.id
+		INNER JOIN 
+			utente u ON c.idutente = u.id
+		WHERE 
+			idutente = #{id}
+	</select>
+
+	<select 
+		resultMap="contoCorrenteResultMap"
+	 	id="findAllConti"
+		resultType="it.exolab.exobank.models.ContoCorrente">
+		SELECT
+			c.id,
+			c.numeroconto,
+			c.saldo,
+			s.id as
+			idstatocontocorrente,
+			s.statocontocorrente,
+			u.id as idutente,
+			u.nome,
+			u.cognome,
+			u.email,
+			u.codicefiscale
+		FROM 
+			contocorrente c
+		INNER JOIN 
+			statocontocorrente s ON c.idstatocontocorrente = s.id
+		INNER JOIN 
+			utente u ON c.idutente = u.id
+		WHERE 
+			u.idruolo=2
+	</select>
+
+	<insert 
+		id="insertContoCorrente"
+		parameterType="it.exolab.exobank.models.ContoCorrente">
+		INSERT INTO 
+			contocorrente (numeroconto,saldo,idstatocontocorrente, idutente)
+		VALUES 
+			(#{numeroConto},#{saldo},#{stato.id}, #{utente.id})
+	</insert>
+
+	<select 
+		id="contoRigheAggiornate" 
+		resultType="int">
+		SELECT ROW_COUNT();
+	</select>
+
+	<update 
+		id="updateConto"
+		parameterType="it.exolab.exobank.models.ContoCorrente">
+		UPDATE 
+			contocorrente
+		SET 
+			numeroconto=#{numeroConto},
+			saldo=#{saldo},
+			idstatocontocorrente=#{stato.id},
+			idutente=#{utente.id}
+		WHERE 
+			id=#{id}
+	</update>
+
+	<!-- <resultMap id="contoResultMap" type="model.Conto"> -->
+	<!-- <id property="id" column="id" /> -->
+	<!-- <result property="iban" column="iban" /> -->
+	<!-- <result property="saldo" column="saldo" /> -->
+	<!-- </resultMap> -->
+
+	<!-- <select id="clienteEmail" parameterType="String" resultType="model.Cliente"> -->
+	<!-- select*from cliente where email=#{email} -->
+
+	<!-- </select> -->
+
+	<!-- <select id="clienteConto" resultMap="contoResultMap" parameterType="model.Cliente"> -->
+	<!-- SELECT id, iban, saldo -->
+	<!-- FROM conto -->
+	<!-- WHERE id = #{id_conto} -->
+	<!-- </select> -->
+
+
+
+
+
+	<!-- <select id="findOneCliente" parameterType="int" resultType="model.Cliente"> -->
+	<!-- select * from cliente where id=#{id} -->
+	<!-- </select> -->
+
+	<!-- <insert id="insertCliente" parameterType="model.Cliente"> -->
+	<!-- insert into cliente values (seq_id_cliente.nextval, #{nome}, #{cognome}, 
+		#{email}, #{password}, #{id_conto}) -->
+	<!-- </insert> -->
+
+
+
+	<!-- <delete id="deleteCliente" parameterType="model.Cliente"> -->
+	<!-- delete from cliente where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <resultMap id = "libriConAutoreMap" type = "it.exolab.mybatis.Libro"> -->
+	<!-- <result property = "id" column = "id"/> -->
+	<!-- <result property = "titolo" column = "titolo"/> -->
+	<!-- <result property = "autore" column = "autore"/> -->
+	<!-- <result property = "isbn" column = "isbn"/> -->
+
+	<!-- <association property="autoreDelLibro" javaType="it.exolab.mybatis.Autore"> -->
+	<!-- <id property = "id" column = "id_autore"/> -->
+	<!-- <result property = "name" column = "name"/> -->
+	<!-- <result property = "surname" column = "surname"/> -->
+
+	<!-- </association> -->
+
+
+	<!-- </resultMap> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutore" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="String" -->
+	<!-- > -->
+	<!-- select * from libro where autore = #{parametro} -->
+
+	<!-- </select> -->
+
+
+	<!-- <select id="tuttiILibriDiUnAutoreOppureConUnTitolo" resultType="it.exolab.mybatis.Libro" -->
+	<!-- parameterType="it.exolab.mybatis.Query" -->
+	<!-- > -->
+	<!-- select id, titolo, autore, #{stringa2} as ilparametro from libro where 
+		autore = #{string1} or titolo = #{stringa2} -->
+
+	<!-- </select> -->
+
+
+
+
+
+	<!-- <select id="findAllConResultMap" resultMap="result"> -->
+	<!-- select *, -->
+	<!-- titolo as titoloDelLibro -->
+	<!-- from libro -->
+
+	<!-- </select> -->
+
+
+	<!-- <insert id="inserisci" c="it.exolab.mybatis.Libro"> -->
+	<!-- insert into libro (isbn, titolo,autore) values (#{id}, #{titolo}, #{autore}) -->
+
+	<!-- </insert> -->
+
+	<!-- <update id="aggiorna" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- update libro set titolo= #{titolo} ,autore=#{autore} where id = #{id} -->
+	<!-- </update> -->
+
+
+	<!-- <delete id="cancella" parameterType="Integer"> -->
+	<!-- delete from libro where id = #{id} -->
+	<!-- </delete> -->
+
+	<!-- <delete id="cancella2" parameterType="it.exolab.mybatis.Libro"> -->
+	<!-- delete from libro where id = #{id} or autore=#{autore} -->
+	<!-- </delete> -->
+
+
+
+
+	<!-- <select id="libriConAutore" resultMap="libriConAutoreMap"> -->
+	<!-- select l.* -->
+	<!-- ,a.name -->
+	<!-- ,a.surname -->
+	<!-- ,a.id as id_autore -->
+	<!-- from libro l inner join author a on a.id=l.author_id -->
+
+	<!-- </select> -->
+
+</mapper>

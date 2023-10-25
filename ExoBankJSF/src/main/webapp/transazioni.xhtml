@@ -1,0 +1,47 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h1>BENVENUTO</h1>
+		<p:dataTable value="#{transazioneBean.listaTransazioni}"
+			var="transazione">
+			<p:column headerText="ID Transazione">
+        #{transazione.id}
+    </p:column>
+			<p:column headerText="Data Transazione">
+        #{transazione.dataTransazione}
+    </p:column>
+			<p:column headerText="Numero Conto">
+        #{transazione.conto.numeroConto}
+    </p:column>
+			<p:column headerText="Importo">
+        #{transazione.importo}
+    </p:column>
+			<p:column headerText="Tipo Transazione">
+        #{transazione.tipo.tipoTransazione}
+    </p:column>
+			<p:column headerText="Stato Transazione">
+        #{transazione.statoTransazione.statoTransazione}
+    </p:column>
+		</p:dataTable>
+	
+</ui:composition>
+
+
+
+
+
+</html>

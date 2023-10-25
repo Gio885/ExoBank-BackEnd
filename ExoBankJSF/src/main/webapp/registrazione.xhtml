@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:outputPanel rendered="#{utenteBean.registrazione}">
+		<p:outputLabel value="REGISTRAZIONE" />
+		<br />
+		<br />
+		<br />
+		<p:outputLabel value="Inserisci i tuoi dati" />
+		<br />
+		<br />
+		<br />
+		<p:outputLabel value="Nome: " />
+		<br />
+		<p:inputText id="nome_registrazione" value="#{utenteBean.utente.nome}" />
+		<br />
+		<p:outputLabel value="Cognome:" />
+		<br />
+		<p:inputText id="cognome_registrazione"
+			value="#{utenteBean.utente.cognome}" />
+		<br />
+		<p:outputLabel value="Email: " />
+		<br />
+		<p:inputText id="email_registrazione"
+			value="#{utenteBean.utente.email}" />
+		<br />
+		<p:outputLabel value="Password: " />
+		<br />
+		<p:inputText id="password_registrazione"
+			value="#{utenteBean.utente.password}" />
+		<br />
+		<p:outputLabel value="Codice Fiscale: " />
+		<br />
+		<p:inputText class="uppercase" id="codiceFiscale_registazione" value="#{utenteBean.utente.codiceFiscale}" />
+		<br />
+		<br />
+		<p:commandButton value="Registrati" action="#{utenteBean.insertUtente}" update="homeForm" />
+		<br />
+		<br />
+		<p:commandButton value="Torna al menu"
+			action="#{utenteBean.switchLoginRegister}" update="homeForm"
+			immediate="true" />
+		<br />
+		<p:messages />
+	</p:outputPanel>
+
+
+</ui:composition>
+
+
+
+
+
+</html>
