@@ -36,7 +36,6 @@ public class UtenteBean implements Serializable {
 	private Utente utenteLoggato;
 	private boolean login;
 	private boolean registrazione;
-	private String cane;
 
 	@PostConstruct
 	public void init() {
@@ -59,7 +58,6 @@ public class UtenteBean implements Serializable {
 	public void setUtenteLoggato(Utente utenteLoggato) {
 		this.utenteLoggato = utenteLoggato;
 	}
-
 
 	public boolean isLogin() {
 		return login;
