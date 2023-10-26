@@ -14,55 +14,35 @@
                 </p:column>
             </c:forEach>
         </p:dataTable> -->
-        
-        <h:panelGrid styleClass="chessboard-container">
-	        <p:dataTable var="row" rowIndexVar="rowIndex" value="#{scacchieraBean.array}" styleClass="chessboard-table">
-	            <p:columns var="cell" columnIndexVar="colIndex" value="#{scacchieraBean.array}" styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}">
-	            	<p:column styleClass="chessboard-cell" columnIndexVar="colIndex">
-	                	<p:outputLabel value="#{0}" />
-	                </p:column>
-	            </p:columns>
-	        </p:dataTable>
-        </h:panelGrid>
-        
-		<style>
-            .chessboard-container {
-                width: 400px; /* Adjust as needed */
-                height: 400px; /* Adjust as needed */
-            }
 
-            .chessboard-table {
-                border-collapse: collapse;
-                width: 100%;
-                height: 100%;
-            }
 
-            .chessboard-white-cell {
-                width: 50px; /* Adjust as needed */
-                height: 50px; /* Adjust as needed */
-                text-align: center;
-                vertical-align: middle;
-                background-color: white;
-                
-            }
-            
-            .chessboard-black-cell {
-                width: 50px; /* Adjust as needed */
-                height: 50px; /* Adjust as needed */
-                text-align: center;
-                vertical-align: middle;
-                background-color: gray;
-                
-            }
+	<div class="elementoPadre">
+		<div class="contenitoreScacchiera">
+			<h:panelGrid styleClass="chessboard-container">
+				<p:dataTable var="row" rowIndexVar="rowIndex"
+					value="#{scacchieraBean.array}" styleClass="customTable">
+					<p:columns var="cell" columnIndexVar="colIndex"
+						value="#{scacchieraBean.array}"
+						styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}">
+						<p:column styleClass="chessboard-cell" columnIndexVar="colIndex">
+							<p:outputLabel value="#{0}" />
+						</p:column>
+					</p:columns>
+				</p:dataTable>
+			</h:panelGrid>
+		</div>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<p:commandButton value="Torna al menu"
+			action="#{scacchieraBean.switchGioca}" update="homeForm"
+			immediate="true"/>
 
-            .white-cell {
-                background-color: white;
-            }
+	</div>
 
-            .black-cell {
-                background-color: #808080; /* Dark gray */
-                color: white; /* Text color on dark cells */
-            }
-        </style>
+
 </ui:composition>
 
