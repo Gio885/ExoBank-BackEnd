@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -18,20 +19,28 @@ public class ScacchieraBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
+	@EJB
 	ScacchieraController scacchieraController = new ScacchieraController();
 	private boolean gioca;
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
-
-	public ScacchieraBean() {
-		inizializzaScacchiera();
-	}
-
-	private void inizializzaScacchiera() {
+	
+	@PostConstruct
+	public void scacchieraInit() {
+		griglia = new Pezzo[8][8];
 		this.griglia = scacchieraController.scacchieraIniziale().getGriglia();
-
+		pezzo = new Pezzo();
 	}
+
+//	public ScacchieraBean() {
+//		inizializzaScacchiera();
+//	}
+//
+//	private void inizializzaScacchiera() {
+//		this.griglia = scacchieraController.scacchieraIniziale().getGriglia();
+//
+//	}
 
 	public Pezzo[][] getGriglia() {
 		return griglia;
