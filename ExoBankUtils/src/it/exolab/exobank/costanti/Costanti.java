@@ -77,5 +77,7 @@ public class Costanti {
     //SCACCHI
     public static final int RIGHE = 8;
     public static final int COLONNE = 8;
+    public static final String BIANCO = "BIANCO";
+    public static final String NERO = "NERO";
     
 }

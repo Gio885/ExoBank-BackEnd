@@ -2,12 +2,15 @@ package it.exolab.exobank.controller;
 
 import javax.ejb.Local;
 
+import it.exolab.exobank.chess.model.Pezzo;
+import it.exolab.exobank.chess.model.Scacchiera;
+
 @Local
 public interface ScacchieraControllerInterface {
 	
-	Scacchiera scacchieraIniziale(Scacchiera scacchieraIniziale); // Ottieni la scacchiera iniziale
+	Scacchiera scacchieraIniziale();
 
-    boolean movimentoValido(Scacchiera scacchieraCorrente, Scacchiera scacchieraAggiornata);
+//	boolean mossaConsentita(Pezzo pezzo);
 
-    Scacchiera faiMovimento(Scacchiera scacchieraCorrente,  Scacchiera scacchieraAggiornata) throws InvalidMoveException;
+	
 }
