@@ -7,49 +7,39 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import it.exolab.exobank.chess.model.Pezzo;
+import it.exolab.exobank.controller.ScacchieraController;
+
 @Named
 @SessionScoped
 public class ScacchieraBean implements Serializable {
-	
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
+	ScacchieraController scacchieraController = new ScacchieraController();
 	private boolean gioca;
-	
-	private String[][] array;
+	private Pezzo[][] griglia;
+	private Pezzo pezzo;
 
-    public ScacchieraBean() {
-        // Initialize your 2D array with data
-        initializeArray();
-    }
+	public ScacchieraBean() {
+		inizializzaScacchiera();
+	}
 
-    private void initializeArray() {
-    	
-        array = new String[8][8];
+	private void inizializzaScacchiera() {
+		scacchieraController.scacchieraIniziale();
 
-        // Populate the array with data
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                array[i][j] = "Row " + i + ", Col " + j;
-            }
-        }
-    }
-    
-    public String getCellValue(int i, int j) {
-    	String value = array[i][j];
-    	return value;
-    }
+	}
 
-    public String[][] getArray() {
-        return array;
-    }
+	public Pezzo[][] getGriglia() {
+		return griglia;
+	}
 
-    public void setArray(String[][] array) {
-        this.array = array;
-    }
+	public void setGriglia(Pezzo[][] griglia) {
+		this.griglia = griglia;
+	}
 
 	public boolean isGioca() {
 		return gioca;
@@ -58,15 +48,16 @@ public class ScacchieraBean implements Serializable {
 	public void setGioca(boolean gioca) {
 		this.gioca = gioca;
 	}
-	
-	
+
 	public void switchGioca() {
 		gioca = !gioca;
 	}
 
-	@Override
-	public String toString() {
-		return "ScacchieraBean [gioca=" + gioca + ", array=" + Arrays.toString(array) + "]";
+	public Pezzo getPezzo() {
+		return pezzo;
 	}
-	
+
+	public void setPezzo(Pezzo pezzo) {
+		this.pezzo = pezzo;
+	}
 }
