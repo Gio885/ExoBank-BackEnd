@@ -20,17 +20,12 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 50%;
-	height: 1000px;;
-	/* Larghezza del contenitore */
+	width: 500px;
+	height: auto;
 	margin: 0 auto;
-	/* Centra il contenitore orizzontalmente */
 	text-align: center;
-	/* Centra il testo all'interno del contenitore */
 	background-color: rgb(255, 255, 255);
-	/* Colore dello sfondo del contenitore */
 	padding: 10px;
-	/* Spazio interno al contenitore */
 	border-radius: 10px;
 	color: black;
 	font-size: 18px;
@@ -171,40 +166,44 @@ body {
 }
 
 
-.elementoPadre {
-	margin: 0 auto;
-	/* Centra l'elemento padre orizzontalmente */
-	display: flex;
-	/* Usa flexbox per il centratura verticale */
-	justify-content: center;
-	/* Centra orizzontalmente all'interno dell'elemento padre */
-	align-items: center;
-	/* Centra verticalmente all'interno dell'elemento padre */
-	height: 100vh;
-	/* Altezza al 100% della viewport height */
-	text-align: center;
-	/* Centra il contenuto all'interno dell'elemento padre */
-
+.container1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 1200px;
+    height: auto;
+    margin: 40px auto 0 auto; /* Margini superiori e inferiori a 0, margini a destra e sinistra a auto */
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    color: black;
+    font-size: 18px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 100px 0px 0px 0px;
 }
 
-
-.contenitoreScacchiera {
-	background-color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 20px;
-	width: 1000px;
-	height: 1000px;
-	/* Altezza desiderata */
+.container1-right {
+    display: flex;
+    flex-direction: row; /* Imposta il contenitore in verticale */
+    align-items: center; /* Centro verticale all'interno di .container1 */
+    margin-left: 20px; /* Aggiungi margine sinistro per separare il contenuto a destra */
 }
+
+.container1-right-mosse{
+	background-color: red;
+	margin-left: 50px;
+	width: 350px;
+	height: 550px;
+}
+
 
 
 
 .chessboard-container {
-	width: 400px;
+	width: 300px;
 	/* Adjust as needed */
-	height: 400px;
+	height: 300px;
 	/* Adjust as needed */
 
 }
@@ -218,6 +217,7 @@ body {
 	height: 100%;
 	border: 1px solid #ccc;
 	border-collapse: collapse;
+	
 }
 
 .customTable thead {
@@ -236,23 +236,39 @@ body {
 }
 
 .chessboard-white-cell {
-	width: 100px;
-	/* Adjust as needed */
-	height: 100px;
-	/* Adjust as needed */
+	width: 80px;
+	height: 80px;
 	text-align: center;
 	vertical-align: middle;
-	background-color: white;
+	background-color: #F1D2B1;
 
 }
 
 .chessboard-black-cell {
-	width: 100px;
-	/* Adjust as needed */
-	height: 100px;
-	/* Adjust as needed */
+	width: 80px;
+	height: 80px;
 	text-align: center;
 	vertical-align: middle;
-	background-color: gray;
+	background-color: #754E51;
 
 }
+
+.button-scacchi {
+    background: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
+                linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    color: white !important;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-scacchi:hover {
+    background: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
+                linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    color: white !important;
+}
+

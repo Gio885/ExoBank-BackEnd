@@ -2,10 +2,12 @@ package it.exolab.exobank.bean;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import it.exolab.exobank.chess.model.Pezzo;
@@ -25,6 +27,7 @@ public class ScacchieraBean implements Serializable {
 	private boolean gioca;
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
+	
 	
 	@PostConstruct
 	public void scacchieraInit() {
@@ -69,4 +72,23 @@ public class ScacchieraBean implements Serializable {
 	public void setPezzo(Pezzo pezzo) {
 		this.pezzo = pezzo;
 	}
+	
+	public void azione() {
+        // Recupera i parametri passati dalla chiamata AJAX
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
+        
+        // Recupera le coordinate di partenza e destinazione e l'ID del pezzo
+        String coordinataPartenza = params.get("coordinataPartenza");
+        String coordinataDestinazione = params.get("coordinataDestinazione");
+        String idPezzo = params.get("idPezzo");
+
+        // Fai qualcosa con le coordinate e l'ID del pezzo
+        System.out.println("Coordinate di partenza: " + coordinataPartenza);
+        System.out.println("Coordinate di destinazione: " + coordinataDestinazione);
+        System.out.println("ID del pezzo: " + idPezzo);
+
+        // Esegui altre azioni o aggiorna il tuo modello dati
+    }
+
 }

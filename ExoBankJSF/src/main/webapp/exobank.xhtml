@@ -9,6 +9,10 @@
 	<title>Example Web Page</title>
 	<link rel="stylesheet" type="text/css" href="custom.css" />
 	<h:outputStylesheet name="custom.css" />
+	<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"/>
+	<h:outputStylesheet name="font-awesome.min.css" />
+<script src="https://kit.fontawesome.com/0e7c1ebfa7.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="funzioniJS/funzioni.js"></script>
 
 </h:head>
 
@@ -17,26 +21,25 @@
 	
 
 
-	<div class="container">
-	<p:messages id="messages" globalOnly="true" showDetail="true"
+	
+<p:messages id="messages" globalOnly="true" showDetail="true"
 				autoUpdate="true" closable="true" />
 				
 		<h:form id="homeForm">
-			<p:outputPanel rendered="#{!utenteBean.login and !scacchieraBean.gioca}">
-
-				<ui:include src="login.xhtml" />
-				<ui:include src="registrazione.xhtml" />
-			</p:outputPanel>
-				
-			<p:outputPanel rendered="#{utenteBean.login}">
-				<ui:include src="indexUtente.xhtml" />
-			</p:outputPanel>
-
-			<p:outputPanel rendered="#{scacchieraBean.gioca}">
-				<ui:include src="scacchiera.xhtml" />
-			</p:outputPanel>
+				<p:outputPanel id="panel1" rendered="#{!utenteBean.login and !scacchieraBean.gioca}">
+					<ui:include src="login.xhtml" />
+					<ui:include src="registrazione.xhtml" />
+				</p:outputPanel>	
+				<p:outputPanel id="panel2" rendered="#{utenteBean.login}">
+					<ui:include src="indexUtente.xhtml" />
+				</p:outputPanel>
+				<p:outputPanel id="panel3" rendered="#{scacchieraBean.gioca}">
+					<ui:include src="scacchiera.xhtml" />
+				</p:outputPanel>
+			
 		</h:form>
-	</div>
+		
+
 
 </h:body>
 </html>
