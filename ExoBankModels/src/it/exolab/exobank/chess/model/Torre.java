@@ -6,8 +6,8 @@ public class Torre extends Pezzo {
 		super();
 	}
 
-	public Torre(String colore, Integer posizioneX, Integer posizioneY, Integer id) {
-		super(colore, posizioneX, posizioneY, id);
+	public Torre(String colore, Integer posizioneX, Integer posizioneY, Integer id, boolean esiste) {
+		super(colore, posizioneX, posizioneY, id, esiste);
 	}
 
 	

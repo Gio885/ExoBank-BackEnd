@@ -6,8 +6,8 @@ public class Regina extends Pezzo {
 		super();
 	}
 
-	public Regina(String colore, Integer posizioneX, Integer posizioneY, Integer id) {
-		super(colore, posizioneX, posizioneY, id);
+	public Regina(String colore, Integer posizioneX, Integer posizioneY, Integer id, boolean esiste) {
+		super(colore, posizioneX, posizioneY, id, esiste);
 	}
 
 	

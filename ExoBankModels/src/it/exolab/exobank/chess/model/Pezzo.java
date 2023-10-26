@@ -13,12 +13,13 @@ public class Pezzo implements Serializable {
 	
 	
 	
-	public Pezzo(String colore, Integer posizioneX, Integer posizioneY, Integer id) {
+	public Pezzo(String colore, Integer posizioneX, Integer posizioneY, Integer id, boolean esiste) {
 		super();
 		this.id = id;
 		this.colore = colore;
 		this.posizioneX = posizioneX;
 		this.posizioneY = posizioneY;
+		this.esiste = esiste;
 	}
 	
 	public Pezzo() {

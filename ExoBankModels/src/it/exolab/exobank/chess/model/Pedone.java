@@ -7,8 +7,8 @@ public class Pedone extends Pezzo {
 		super();
 	}
 
-	public Pedone(String colore, Integer posizioneX, Integer posizioneY, Integer id) {
-		super(colore, posizioneX, posizioneY, id);
+	public Pedone(String colore, Integer posizioneX, Integer posizioneY, Integer id, boolean esiste) {
+		super(colore, posizioneX, posizioneY, id, esiste);
 	}
 	
 	
