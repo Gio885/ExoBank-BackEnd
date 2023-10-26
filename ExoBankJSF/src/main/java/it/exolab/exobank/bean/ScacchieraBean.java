@@ -29,7 +29,7 @@ public class ScacchieraBean implements Serializable {
 	}
 
 	private void inizializzaScacchiera() {
-		scacchieraController.scacchieraIniziale();
+		this.griglia = scacchieraController.scacchieraIniziale().getGriglia();
 
 	}
 
