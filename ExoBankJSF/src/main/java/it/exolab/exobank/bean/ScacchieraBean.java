@@ -27,13 +27,12 @@ public class ScacchieraBean implements Serializable {
 	private boolean gioca;
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
-	
-	
+	private Pezzo pezzoAggiornato;
+
 	@PostConstruct
 	public void scacchieraInit() {
 		griglia = new Pezzo[8][8];
 		this.griglia = scacchieraController.scacchieraIniziale().getGriglia();
-		pezzo = new Pezzo();
 	}
 	
 	public void trovaPezzo(Integer id) {
@@ -47,12 +46,25 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	public void pezzoSelezionato(Pezzo pezzo) {
+		this.pezzo = new Pezzo();
 		this.pezzo = pezzo;
 		System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
 	}
 	
 	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
 		System.out.println("posX " + posX + " posY " + posY);
+		
+		if(null != pezzo) {
+			pezzoAggiornato = new Pezzo();
+			pezzoAggiornato.setId(pezzo.getId());
+			pezzoAggiornato.setColore(pezzo.getColore());
+			pezzoAggiornato.setPosizioneX(posX);
+			pezzoAggiornato.setPosizioneY(posY);
+			System.out.println(pezzoAggiornato.toString());
+			pezzo = null;
+			System.out.println(pezzo.toString());
+			//inviare pezzo a back end
+		} 
 	}
 	
 	@PreDestroy
@@ -96,6 +108,14 @@ public class ScacchieraBean implements Serializable {
 
 	public void setPezzo(Pezzo pezzo) {
 		this.pezzo = pezzo;
+	}
+	
+	public Pezzo getPezzoAggiornato() {
+		return pezzoAggiornato;
+	}
+
+	public void setPezzoAggiornato(Pezzo pezzoAggiornato) {
+		this.pezzoAggiornato = pezzoAggiornato;
 	}
 	
 	public void azione() {
