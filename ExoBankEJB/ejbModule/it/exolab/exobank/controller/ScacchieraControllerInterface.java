@@ -10,7 +10,7 @@ public interface ScacchieraControllerInterface {
 	
 	Scacchiera scacchieraIniziale();
 
-//	boolean mossaConsentita(Pezzo pezzo);
+	boolean mossaConsentita(Pezzo pezzo);
 
 	
 }
