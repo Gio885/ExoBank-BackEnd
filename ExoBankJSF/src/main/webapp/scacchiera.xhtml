@@ -40,8 +40,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:c="http://java.sun.com/jsp/jstl/core_1_1">
 
-
-	<div class="container1">
+<p:outputPanel rendered="#{scacchieraBean.gioca}">
+	<div class="container1">	
 		<div class="container1-right">	
 			<h:panelGrid  id="scacchiera" styleClass="chessboard-container">
 				<p:dataTable var="row" rowIndexVar="rowIndex"
@@ -58,11 +58,13 @@
 							</p:outputPanel>		
 						</p:column>
 					</p:columns>
-				</p:dataTable>
+				</p:dataTable>			
 			</h:panelGrid>
 			<div class="container1-right-mosse">
 			</div>
 		</div>
+		<br /> 
+		<br /> 
 		<br /> 
 		<br /> 
 		<p:commandButton value="Pausa" onclick="stampa()" />
@@ -72,8 +74,10 @@
 	    immediate="true" styleClass="button-scacchi">
 		</p:commandButton>
 			<br/>
+			
 	</div>	
 
+</p:outputPanel>
 
 </ui:composition>
 

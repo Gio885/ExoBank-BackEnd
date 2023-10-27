@@ -63,8 +63,10 @@ CREAZIONE:
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<div class="container">
-	<p:outputPanel rendered="#{!utenteBean.registrazione}">
+	
+<p:outputPanel rendered="#{!utenteBean.registrazione}">
+	<div class="container">
+	
 		<h1>BENVENUTO</h1>
 		<br />
 		<p:outputLabel for="email" value="Inserisci la tua email:" />
@@ -76,15 +78,12 @@ CREAZIONE:
 		<p:inputText id="password"
 			value="#{utenteBean.utenteLoggato.password}" />
 		<br />
-		<br />
 		<p:commandButton value="Entra"
 			action="#{utenteBean.login}" update="homeForm" />
-		<br />
 		<br />
 		<p:commandButton value="Registrati"
 			action="#{utenteBean.switchLoginRegister}" update="homeForm"
 			immediate="true" />
-		<br />
 		<br />
 		<p:commandButton value="Gioca"
 			action="#{scacchieraBean.switchGioca}" update="homeForm"
@@ -92,9 +91,9 @@ CREAZIONE:
 		<br/>
 		<br />
 		<p:messages/>
+</div>
 
 	</p:outputPanel>
-</div>
 
 </ui:composition>
 

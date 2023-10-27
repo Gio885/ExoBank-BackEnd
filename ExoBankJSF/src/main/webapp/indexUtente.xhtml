@@ -10,6 +10,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+<div class="container">
 
 	<p:outputPanel rendered="#{utenteBean.login}">
 		<p:outputLabel class = "stileLabel" value="Benvenuto in EXOBANK, #{utenteBean.utenteLoggato.nome} #{utenteBean.utenteLoggato.cognome}" />
@@ -52,7 +53,7 @@
 		<br />
 		<p:messages closable="true" />
 	</p:outputPanel>
-
+</div>
 
 </ui:composition>
 
