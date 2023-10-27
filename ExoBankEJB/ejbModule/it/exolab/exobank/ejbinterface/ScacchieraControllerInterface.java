@@ -1,4 +1,4 @@
-package it.exolab.exobank.controller;
+package it.exolab.exobank.ejbinterface;
 
 import javax.ejb.Local;
 
