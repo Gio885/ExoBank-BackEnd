@@ -48,6 +48,7 @@ public class ScacchieraBean implements Serializable {
 		try {
 			scacchiera = new Scacchiera();
 			scacchiera = scacchieraController.scacchieraIniziale();
+			griglia = new Pezzo[8][8];
 			griglia = scacchiera.getGriglia();
 
 		} catch (Exception e) {
