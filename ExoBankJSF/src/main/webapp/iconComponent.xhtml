@@ -2,57 +2,82 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	>
 	
 
 	
 	
 	<h:panelGroup rendered="#{iconComponent.id == 1 || iconComponent.id == 8}">
 		<i class="fa-regular fa-chess-rook fa-4x" style ="color : #000000"></i>
+		<p:commandLink  value="#{iconComponent}" style="color:red;" action="#{scacchieraBean.pezzoSelezionato(iconComponent)}" />	
 	</h:panelGroup>
-	
+
 	<h:panelGroup rendered="#{iconComponent.id == 25 || iconComponent.id == 32}">
 		<i class="fa-solid fa-chess-rook fa-4x" style ="color : #000000"></i>	
+				<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+		
 	</h:panelGroup>
 		
 	<h:panelGroup rendered="#{iconComponent.id == 2 || iconComponent.id == 7 }">
 		<i class="fa-regular fa-chess-knight fa-4x" style ="color : #000000"></i>
+				<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+		
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 26 || iconComponent.id == 31 }">
 	<i class="fa-solid fa-chess-knight fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 3 || iconComponent.id == 6 }">
 	<i class="fa-regular fa-chess-bishop fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 27 || iconComponent.id == 30 }">
 	<i class="fa-solid fa-chess-bishop fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 4 }">
 	<i class="fa-regular fa-chess-king fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 28 }">
 	<i class="fa-solid fa-chess-king fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 		
 	<h:panelGroup rendered="#{iconComponent.id == 5 }">
 	<i class="fa-regular fa-chess-queen fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id == 29 }">
 	<i class="fa-solid fa-chess-queen fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id > 8 and 17 > iconComponent.id }">
 	<i class="fa-regular fa-chess-pawn fa-4x" style ="color : #000000"></i>
+			<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+	
 	</h:panelGroup>
 	
 	<h:panelGroup rendered="#{iconComponent.id > 16 and 25 > iconComponent.id }">
     <i class="fa-solid fa-chess-pawn fa-4x" style="color: #000000"></i>
+    		<p:commandLink styleClass="pulsante-pausa" value="ok" style="color:red;" onclick="stampa()" />	
+    
 	</h:panelGroup>
 	
 	

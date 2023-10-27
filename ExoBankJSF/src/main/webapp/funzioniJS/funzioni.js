@@ -45,3 +45,36 @@ function eseguiAzioneJS(cellaPartenza) {
         ]
     });
 }
+
+
+
+function drag(event) {
+	    alert("Drag started");
+
+    event.dataTransfer.setData("text", event.target.id);
+}
+
+function allowDrop(event) {
+	    alert("allowDrop started");
+
+    event.preventDefault();
+}
+
+function drop(event) {
+	    alert("drop started");
+
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");
+    var target = event.target;
+    while (target.tagName !== "TD") {
+        target = target.parentElement;
+    }
+    target.appendChild(document.getElementById(data));
+}
+
+function stampa(){
+	alert("stampa dentro")
+}
+
+
+

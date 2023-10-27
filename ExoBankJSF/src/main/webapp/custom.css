@@ -272,3 +272,20 @@ body {
     color: white !important;
 }
 
+.pulsante-pausa {
+    background-color: rgb(255, 0, 128);
+    color: rgb(255, 128, 64);
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.pulsante-pausa:hover {
+    background-color: rgb(255, 128, 255);
+}
+
+

@@ -48,22 +48,14 @@
 					value="#{scacchieraBean.griglia}" styleClass="customTable">
 					<p:columns var="cell" columnIndexVar="colIndex"
 						value="#{scacchieraBean.griglia}"
-						styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}">
-						<p:column styleClass="chessboard-cell" columnIndexVar="colIndex">	
-							<p:outputPanel redendered="#{null != scacchieraBean.griglia[rowIndex][colIndex].colore}" value="#{scacchieraBean.griglia[rowIndex][colIndex].colore}">	
-								<ui:include src="iconComponent.xhtml">
-									<ui:param name="iconComponent" value="#{scacchieraBean.griglia[rowIndex][colIndex]}" />
-								</ui:include>
-								<p:commandButton value="Esegui Azione"
-								 process="@form" 
-								 update="homeForm:scacchiera"
-								 actionListener="#{scacchieraBean.azione()}"
-								 coordinata="#{scacchieraBean.griglia[rowIndex][colIndex]}"
-								 idPezzo="#{scacchieraBean.griglia[rowIndex][colIndex].id}"
-								 class="cella-scacchiera" 
-								 ondblclick="selezionaCella(this)">
-								 </p:commandButton>
-							</p:outputPanel>
+						styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}"  >
+						<p:column styleClass="chessboard-cell" columnIndexVar="colIndex" ondragover="allowDrop(event)" ondrop="drop(event)" >	
+							<p:outputPanel redendered="#{null != scacchieraBean.griglia[rowIndex][colIndex].id}" value="#{scacchieraBean.griglia[rowIndex][colIndex].id}">	
+								<ui:include src="iconComponent.xhtml" draggable="true" ondragstart="drag(event)" >
+									<ui:param name="iconComponent" value="#{scacchieraBean.griglia[rowIndex][colIndex]}" />		
+								</ui:include>	
+								<p:commandLink rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}" styleClass="pulsante-pausa" value="#{rowIndex} + #{colIndex}" action ="#{scacchieraBean.nuovaPosizioneSelezionata(rowIndex,colIndex)}" style="color:blue;" />
+							</p:outputPanel>		
 						</p:column>
 					</p:columns>
 				</p:dataTable>
@@ -73,7 +65,7 @@
 		</div>
 		<br /> 
 		<br /> 
-		<p:commandButton value="Pausa" />
+		<p:commandButton value="Pausa" onclick="stampa()" />
 		<br/>
 		<p:commandButton value="Torna al menu e termina la partita"
 	    action="#{scacchieraBean.switchGioca}" update="homeForm"
