@@ -8,9 +8,9 @@ import it.exolab.exobank.chess.model.Scacchiera;
 @Local
 public interface ScacchieraControllerInterface {
 	
-	Scacchiera scacchieraIniziale();
+	Scacchiera scacchieraIniziale() throws Exception;
 
-	boolean mossaConsentita(Pezzo pezzo);
+	Scacchiera mossaConsentita(Pezzo pezzo) throws Exception;
 
 	
 }
