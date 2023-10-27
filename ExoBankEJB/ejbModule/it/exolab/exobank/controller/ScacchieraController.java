@@ -90,8 +90,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 						pezzoSpecifico.setPosizioneY(yDestinazione);
 
 					}
+					scacchieraLavoro.setScacchiera(griglia);
 				}
-				scacchieraLavoro.setScacchiera(griglia);
 			}else {
 				throw new Exception("Mossa non consentita");
 			}

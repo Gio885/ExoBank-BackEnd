@@ -46,8 +46,8 @@ public class ValidaMosseScacchi {
 		return isValid;
 	}
 	
-	private boolean validaMovimentoPedone(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, String colore, Pezzo[][] griglia) {
-	    if (xPartenza != xDestinazione && yPartenza != yDestinazione) {
+	private boolean validaMovimentoPedone(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, String colore, Pezzo[][] griglia) throws Exception {
+	    if (xPartenza != xDestinazione || yPartenza != yDestinazione) {
 	        if (colore.equals(Costanti.BIANCO)) {
 	            // Controllo per il pedone bianco
 	            if (xDestinazione == xPartenza + 1) {
@@ -78,12 +78,13 @@ public class ValidaMosseScacchi {
 	            }
 	        }
 	    }
-	    return false; // La mossa non è consentita
+	    
+	    throw new Exception("Movimento non valido per il pedone.");
 	}
-	
-	private boolean validaMovimentoTorre(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) {
-	    if (!xPartenza.equals(xDestinazione) && !yPartenza.equals(yDestinazione)) {
-	        return false; // La torre può muoversi solo in orizzontale o verticale
+
+	private boolean validaMovimentoTorre(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
+	    if (xPartenza != xDestinazione && yPartenza != yDestinazione) {
+	        throw new Exception("La torre può muoversi solo in orizzontale o verticale.");
 	    }
 
 	    if (xPartenza.equals(xDestinazione)) {
@@ -91,7 +92,7 @@ public class ValidaMosseScacchi {
 	        int maxY = Math.max(yPartenza, yDestinazione);
 	        for (int i = minY + 1; i < maxY; i++) {
 	            if (griglia[xPartenza][i] != null) {
-	                return false; // Una casella lungo il percorso è occupata, la mossa non è consentita
+	                throw new Exception("Una casella lungo il percorso è occupata, la mossa non è consentita.");
 	            }
 	        }
 	    } else if (yPartenza.equals(yDestinazione)) {
@@ -99,22 +100,21 @@ public class ValidaMosseScacchi {
 	        int maxX = Math.max(xPartenza, xDestinazione);
 	        for (int i = minX + 1; i < maxX; i++) {
 	            if (griglia[i][yPartenza] != null) {
-	                return false; // Una casella lungo il percorso è occupata, la mossa non è consentita
+	                throw new Exception("Una casella lungo il percorso è occupata, la mossa non è consentita.");
 	            }
 	        }
 	    }
-
+	    
 	    if (griglia[xDestinazione][yDestinazione] != null) {
-	        // La torre può catturare un pezzo avversario
 	        return true;
 	    }
-
-	    return true; // La mossa è consentita
+	    
+	    throw new Exception("La mossa non è consentita.");
 	}
-	
-	private boolean validaMovimentoAlfiere(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) {
+
+	private boolean validaMovimentoAlfiere(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
 	    if (Math.abs(xDestinazione - xPartenza) != Math.abs(yDestinazione - yPartenza)) {
-	        return false; // L'alfiere deve muoversi lungo diagonali
+	        throw new Exception("L'alfiere deve muoversi lungo diagonali.");
 	    }
 
 	    int deltaX = (xDestinazione - xPartenza) > 0 ? 1 : -1;
@@ -122,25 +122,23 @@ public class ValidaMosseScacchi {
 
 	    for (int i = xPartenza + deltaX, j = yPartenza + deltaY; i != xDestinazione && j != yDestinazione; i += deltaX, j += deltaY) {
 	        if (griglia[i][j] != null) {
-	            return false; // Una casella lungo il percorso è occupata, la mossa non è consentita
+	            throw new Exception("Una casella lungo il percorso è occupata, la mossa non è consentita.");
 	        }
 	    }
 
 	    if (griglia[xDestinazione][yDestinazione] != null) {
-	        // L'alfiere può catturare un pezzo avversario
 	        return true;
 	    }
 
-	    return true; // La mossa è consentita
+	    throw new Exception("La mossa non è consentita.");
 	}
 
-	
-	private boolean controllaMovimentoRegina(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) {
+	private boolean controllaMovimentoRegina(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
 	    if (validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia) || validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
-	        return true; // Il movimento è conforme alle regole della torre o dell'alfiere (e quindi della regina)
+	        return true;
 	    }
-
-	    return false; // La mossa non è consentita
+	    
+	    throw new Exception("Il movimento non è conforme alle regole della torre o dell'alfiere (e quindi della regina).");
 	}
 	
 	private boolean validaMovimentoCavallo(Pezzo cavallo, Scacchiera scacchiera, Integer posX, Integer posY) {
@@ -165,19 +163,19 @@ public class ValidaMosseScacchi {
 		return isValid;
 	}
 	
-	public boolean puoiRimuovereScacco(Integer xRe, Integer yRe, Pezzo[][] griglia, Scacchiera scacchiera) {
+	public boolean puoiRimuovereScacco(Integer xRe, Integer yRe, Pezzo[][] griglia, Scacchiera scacchiera) throws Exception {
 	    Pezzo re = griglia[xRe][yRe];
 
 	    if (isScaccoMatto(re, griglia, re.getColore())) {
 	        throw new RuntimeException("SCACCO MATTO");
 	    }
 
-	    return puoiRimuovereScaccoMossaRe(re, xRe, yRe, griglia, scacchiera) ||
+	    return puoiRimuovereScaccoMossaRe(re, xRe, yRe, griglia) ||
 	        puoiRimuovereScaccoCatturaMinaccia(re, xRe, yRe, griglia) ||
 	        puoiRimuovereScaccoBloccaMinaccia(re, xRe, yRe, griglia);
 	}
 
-	private boolean puoiRimuovereScaccoMossaRe(Pezzo re, Integer posizioneXRe, Integer posizioneYRe, Pezzo[][] griglia, Scacchiera schacchiera) {
+	private boolean puoiRimuovereScaccoMossaRe(Pezzo re, Integer posizioneXRe, Integer posizioneYRe, Pezzo[][] griglia) {
 	    for (int deltaX = -1; deltaX <= 1; deltaX++) {
 	        for (int deltaY = -1; deltaY <= 1; deltaY++) {
 	            if (deltaX == 0 && deltaY == 0) {
@@ -195,7 +193,7 @@ public class ValidaMosseScacchi {
 	    return false;
 	}
 
-	private boolean puoiRimuovereScaccoCatturaMinaccia(Pezzo re, int xRe, int yRe, Pezzo[][] griglia) {
+	private boolean puoiRimuovereScaccoCatturaMinaccia(Pezzo re, int xRe, int yRe, Pezzo[][] griglia) throws Exception {
 	    String coloreRe = re.getColore();
 
 	    // Trova il pezzo minaccioso
@@ -342,7 +340,7 @@ public class ValidaMosseScacchi {
 	    return false;
 	}
 	
-	private Pezzo trovaMinacciaRe(int xRe, int yRe, Pezzo[][] griglia) {
+	private Pezzo trovaMinacciaRe(int xRe, int yRe, Pezzo[][] griglia) throws Exception {
 	    String coloreRe = griglia[xRe][yRe].getColore();
 	    
 	    // Scorrere la griglia per trovare la minaccia
@@ -486,7 +484,7 @@ public class ValidaMosseScacchi {
         return traiettoria;
     }
 
-    public boolean mossaValida(Pezzo pezzo, Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] scacchiera) {
+    public boolean mossaValida(Pezzo pezzo, Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] scacchiera) throws Exception {
         if (xDestinazione < 0 || xDestinazione >= scacchiera.length || yDestinazione < 0 || yDestinazione >= scacchiera[0].length) {
             return false; // La destinazione è fuori dalla scacchiera.
         }
