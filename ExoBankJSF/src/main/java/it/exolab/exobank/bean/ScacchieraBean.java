@@ -121,6 +121,7 @@ public class ScacchieraBean implements Serializable {
 		this.griglia = null;
 		this.pezzo = null;
 		this.pezzoAggiornato = null;
+		switchGioca();
 	}
 
 	public Pezzo[][] getGriglia() {
