@@ -75,7 +75,7 @@ public class ScacchieraBean implements Serializable {
 			boolean prova = scacchieraController.mossaConsentita(pezzoAggiornato);
 			System.out.println(prova);
 		} else {
-	        FacesContext.getCurrentInstance().addMessage("selezionaPezzo:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
+	        FacesContext.getCurrentInstance().addMessage("homeForm:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
 
 		}
 	}
