@@ -51,6 +51,10 @@ public class ScacchieraBean implements Serializable {
 		System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
 	}
 	
+	public void nuovaPosizioneSelezionata(int pos) {
+		System.out.println(pos);
+	}
+	
 	@PreDestroy
 	public void resetGame() {
 		this.griglia = null;
