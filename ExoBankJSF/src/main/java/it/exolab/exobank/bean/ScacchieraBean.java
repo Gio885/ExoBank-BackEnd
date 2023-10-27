@@ -1,10 +1,10 @@
 package it.exolab.exobank.bean;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -34,6 +34,22 @@ public class ScacchieraBean implements Serializable {
 		griglia = new Pezzo[8][8];
 		this.griglia = scacchieraController.scacchieraIniziale().getGriglia();
 		pezzo = new Pezzo();
+	}
+	
+	public void trovaPezzo(Integer id) {
+		for(Pezzo[] arrayPezzi : griglia) {
+			for(Pezzo pezzo : arrayPezzi) {
+				if(pezzo.getId() == id && null != pezzo) {
+					this.pezzo = pezzo;
+				}
+			}
+		}
+	}
+	
+	@PreDestroy
+	public void resetGame() {
+		this.griglia = null;
+		this.pezzo = null;
 	}
 
 //	public ScacchieraBean() {
