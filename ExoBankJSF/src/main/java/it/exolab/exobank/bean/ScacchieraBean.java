@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -45,10 +46,20 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void pezzoSelezionato(Pezzo pezzo) {
-		this.pezzo = new Pezzo();
-		this.pezzo = pezzo;
-		System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
+	public void pezzoSelezionato(Pezzo pezzoSelezionato) {
+		
+		if(null != pezzo) {
+			if(pezzo.getColore().equalsIgnoreCase(pezzoSelezionato.getColore())) {
+				this.pezzo = pezzoSelezionato;
+				System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
+			} else {
+				nuovaPosizioneSelezionata(pezzoSelezionato.getPosizioneX(), pezzoSelezionato.getPosizioneY());
+			}
+		} else {
+			pezzo = new Pezzo();
+			pezzo = pezzoSelezionato;
+		}
+		
 	}
 	
 	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
@@ -56,16 +67,17 @@ public class ScacchieraBean implements Serializable {
 		
 		if(null != pezzo) {
 			pezzoAggiornato = new Pezzo();
-			pezzoAggiornato.setId(pezzo.getId());
-			pezzoAggiornato.setColore(pezzo.getColore());
-			pezzoAggiornato.setEsiste(pezzo.isEsiste());
+			pezzoAggiornato = pezzo;
 			pezzoAggiornato.setPosizioneX(posX);
 			pezzoAggiornato.setPosizioneY(posY);
 			System.out.println(pezzoAggiornato.toString());
 			pezzo = null;
 			boolean prova = scacchieraController.mossaConsentita(pezzoAggiornato);
 			System.out.println(prova);
-		} 
+		} else {
+	        FacesContext.getCurrentInstance().addMessage("selezionaPezzo:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
+
+		}
 	}
 	
 	@PreDestroy
