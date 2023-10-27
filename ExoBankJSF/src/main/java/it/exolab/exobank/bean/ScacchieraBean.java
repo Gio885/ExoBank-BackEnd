@@ -58,12 +58,11 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato = new Pezzo();
 			pezzoAggiornato.setId(pezzo.getId());
 			pezzoAggiornato.setColore(pezzo.getColore());
+			pezzoAggiornato.setEsiste(pezzo.isEsiste());
 			pezzoAggiornato.setPosizioneX(posX);
 			pezzoAggiornato.setPosizioneY(posY);
 			System.out.println(pezzoAggiornato.toString());
 			pezzo = null;
-			System.out.println(pezzo.toString());
-			//inviare pezzo a back end
 		} 
 	}
 	
