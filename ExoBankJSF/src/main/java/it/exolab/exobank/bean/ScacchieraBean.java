@@ -63,6 +63,8 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato.setPosizioneY(posY);
 			System.out.println(pezzoAggiornato.toString());
 			pezzo = null;
+			boolean prova = scacchieraController.mossaConsentita(pezzoAggiornato);
+			System.out.println(prova);
 		} 
 	}
 	
