@@ -46,8 +46,8 @@ public class ScacchieraBean implements Serializable {
 	@PostConstruct
 	public void scacchieraInit() {
 		try {
-			this.griglia = new Pezzo [8][8];
-			griglia = scacchieraController.scacchieraIniziale().getGriglia();
+			this.scacchiera = scacchieraController.scacchieraIniziale();
+			this.griglia = scacchiera.getGriglia();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,7 +113,7 @@ public class ScacchieraBean implements Serializable {
 	
 	public void switchGioca() {
 		gioca = !gioca;
-		if(gioca) {
+		if(gioca && null == scacchiera) {
 			scacchieraInit();
 		} else {
 			resetGame();
