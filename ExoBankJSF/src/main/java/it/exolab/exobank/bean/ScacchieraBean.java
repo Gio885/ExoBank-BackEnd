@@ -51,7 +51,7 @@ public class ScacchieraBean implements Serializable {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("panel3:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		}
 	}
 	
@@ -86,11 +86,11 @@ public class ScacchieraBean implements Serializable {
 				aggiornaPosizionePezzo(posX, posY);
 				
 			} else {
-		        FacesContext.getCurrentInstance().addMessage("panel3:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
+		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("panel3:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 
 		}
 	}
@@ -107,7 +107,7 @@ public class ScacchieraBean implements Serializable {
 			//TODO AGGIORNA GRIGLIA TRAMITE METODO CONTROLLER
 		} catch(Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("panel3:messages", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		}
 	}
 	
@@ -115,9 +115,10 @@ public class ScacchieraBean implements Serializable {
 		gioca = !gioca;
 		if(gioca && null == scacchiera) {
 			scacchieraInit();
-		} else {
+		} 
+		else if(!gioca){
 			resetGame();
-		}
+		}	
 	}
 	
 	@PreDestroy

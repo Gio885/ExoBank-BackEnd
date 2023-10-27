@@ -61,6 +61,9 @@
 				</p:dataTable>			
 			</h:panelGrid>
 			<div class="container1-right-mosse">
+			 	<p:messages id="messaggioScacchi" showDetail="false" closable="true">
+            		<p:autoUpdate/>
+        		</p:messages>
 			</div>
 		</div>
 		<br /> 
@@ -70,7 +73,7 @@
 		<p:commandButton value="Pausa" onclick="stampa()" />
 		<br/>
 		<p:commandButton value="Torna al menu e termina la partita"
-	    action="#{scacchieraBean.switchGioca}" update="homeForm"
+	    action="#{scacchieraBean.switchGioca()}" update="homeForm"
 	    immediate="true" styleClass="button-scacchi">
 		</p:commandButton>
 			<br/>
