@@ -86,8 +86,8 @@ CREAZIONE:
 			immediate="true" />
 		<br />
 		<p:commandButton value="Gioca"
-			action="#{scacchieraBean.switchGioca}" update="homeForm"
-			immediate="true"/>
+			action="#{scacchieraBean.switchGioca}"  update="homeForm modalDialog"
+			immediate="true" oncomplete="PF('modalDialog').show()"/>
 		<br/>
 		<br />
 		<p:messages/>

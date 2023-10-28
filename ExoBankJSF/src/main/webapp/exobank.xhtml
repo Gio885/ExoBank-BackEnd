@@ -14,6 +14,13 @@
 <script src="https://kit.fontawesome.com/0e7c1ebfa7.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="funzioni.js"></script>
 
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymouse"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+
 </h:head>
 
 <h:body styleClass="my-theme-body">
@@ -34,6 +41,7 @@
 					<ui:include src="indexUtente.xhtml" />
 				</p:outputPanel>
 				<p:outputPanel id="panel3" rendered="#{scacchieraBean.gioca}">
+					
 					<ui:include src="scacchiera.xhtml" />
 				</p:outputPanel>
 			

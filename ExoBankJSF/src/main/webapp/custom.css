@@ -167,34 +167,60 @@ body {
 
 
 .container1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 1200px;
-    height: auto;
-    margin: 40px auto 0 auto; /* Margini superiori e inferiori a 0, margini a destra e sinistra a auto */
-    text-align: center;
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    color: black;
-    font-size: 18px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    padding: 100px 0px 0px 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 1200px;
+	height: 1100px;
+	margin: 40px auto 0 auto;
+	/* Margini superiori e inferiori a 0, margini a destra e sinistra a auto */
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	border-radius: 10px;
+	color: black;
+	font-size: 18px;
+	background-image: url("https://www.appartamenti-lathuile.com/wp-content/uploads/2016/05/sfondo-legno.jpg");
+}
+
+.container2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color:#f39f5a;
+	width:700px;
+	height:850px;
+	border: 5px solid black;
+	border-radius: 10px;
+}
+
+.container-right-bottone {
+    display: flex; /* Utilizza un layout flexbox */
+    justify-content: center; /* Centra gli elementi orizzontalmente */
+    align-items: center; /* Centra gli elementi verticalmente */
 }
 
 .container1-right {
-    display: flex;
-    flex-direction: row; /* Imposta il contenitore in verticale */
-    align-items: center; /* Centro verticale all'interno di .container1 */
-    margin-left: 20px; /* Aggiungi margine sinistro per separare il contenuto a destra */
+	display: flex;
+	flex-direction: row;
+	/* Imposta il contenitore in verticale */
+	align-items: center;
+	/* Centro verticale all'interno di .container1 */
+	margin-left: 20px;
+	/* Aggiungi margine sinistro per separare il contenuto a destra */
 }
 
-.container1-right-mosse{
-	background-color: red;
+.container1-right-mosse {
+	background-color:#323232;
 	margin-left: 50px;
 	width: 350px;
 	height: 550px;
+	border-radius: 5px;
+	border: 5px solid black;
+	font-family: VT323 ;
+
 }
 
 
@@ -212,11 +238,10 @@ body {
 
 /* Stile per la tabella personalizzata */
 .customTable {
-	border-collapse: collapse;
 	width: 100%;
 	height: 100%;
-	border: 1px solid #ccc;
-	border-collapse: collapse;
+	border: 3px solid rgb(0, 0, 0);
+	border-radius: 10px;
 	
 }
 
@@ -254,38 +279,39 @@ body {
 }
 
 .button-scacchi {
-    background: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
-                linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
-    color: white !important;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+	font-family: VT323 !important;
+	font-size: 30px !important;
+	background-color: #f39f5a !important;
+	border-color: black !important;
+	border-width: 5px !important;
+	border-radius: 10px !important;
 }
 
 .button-scacchi:hover {
-    background: linear-gradient(45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000), 
-                linear-gradient(-45deg, #000000 25%, transparent 25%, transparent 75%, #000000 75%, #000000);
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px;
-    color: white !important;
-}
-
-.pulsante-pausa {
-    background-color: rgb(255, 0, 128);
-    color: rgb(255, 128, 64);
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.pulsante-pausa:hover {
-    background-color: rgb(255, 128, 255);
+	color: white !important;
 }
 
 
+
+.illuminaCella {
+	display: block;
+	width: 100px;
+	height: 100px;
+	text-align: center;
+	text-decoration: none;
+	background-color: red;
+	color: red;
+	transition: background-color 0.3s;
+	/* Aggiunge una transizione al cambio di colore */
+}
+
+.illuminaCella:active,
+.illuminaCella.illuminato {
+	background-color: yellow;
+	/* Cambia il colore di sfondo quando il link è attivo o illuminato */
+}
+
+
+.ui-dialog-titlebar{
+display:none;
+}

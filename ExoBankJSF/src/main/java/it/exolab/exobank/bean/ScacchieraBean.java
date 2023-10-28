@@ -42,17 +42,30 @@ public class ScacchieraBean implements Serializable {
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
 	private Pezzo pezzoAggiornato;
+	private Integer turno=1;
+
 
 	@PostConstruct
 	public void scacchieraInit() {
 		try {
-			this.scacchiera = scacchieraController.scacchieraIniziale();
-			this.griglia = scacchiera.getGriglia();
+			Scacchiera scacchieraOriginale = scacchieraController.scacchieraIniziale();
+			scacchiera = new Scacchiera();
+			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
+			griglia = scacchiera.getGriglia();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		}
+	}
+	
+	public void mossa(Integer posX,Integer posY) {
+		System.out.println(" X "+posX+" Y "+posY+" ok mossa ");
+	}
+	
+	public void resetPezzo() {
+		pezzo = null;
+		System.out.println(pezzo);
 	}
 	
 	//VALORIZZA CAMPI VARIABILE PEZZO CON CAMPI PEZZO SELEZIONATO.
@@ -168,6 +181,19 @@ public class ScacchieraBean implements Serializable {
 	public void setScacchiera(Scacchiera scacchiera) {
 		this.scacchiera = scacchiera;
 	}
+
+
+	public Integer getTurno() {
+		return turno;
+	}
+
+
+	public void setTurno(Integer turno) {
+		this.turno = turno;
+	}
+	
+	
+	
 	
 //	public void trovaPezzo(Integer id) {
 //	for(Pezzo[] arrayPezzi : griglia) {
