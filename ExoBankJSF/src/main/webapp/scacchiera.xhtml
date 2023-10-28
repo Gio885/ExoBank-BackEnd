@@ -85,14 +85,13 @@
 						<p:columns var="cell" columnIndexVar="colIndex"
 							value="#{scacchieraBean.griglia}"
 							styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}"  >
-							<p:column styleClass="chessboard-cell" columnIndexVar="colIndex">	
+							<p:column id="mossa" styleClass="chessboard-cell" columnIndexVar="colIndex">	
 								<p:outputPanel redendered="#{null != scacchieraBean.griglia[rowIndex][colIndex].id}" value="#{scacchieraBean.griglia[rowIndex][colIndex].id}">	
 									<ui:include src="iconComponent.xhtml">
 										<ui:param name="iconComponent" value="#{scacchieraBean.griglia[rowIndex][colIndex]}" />		
 									</ui:include>	
 								</p:outputPanel>	
-								<p:commandLink rendered="#{null != scacchieraBean.pezzo}" value="#{rowIndex} + #{colIndex}" action ="#{scacchieraBeanProvaGio.mossa(rowIndex,colIndex)}" style="color:blue;" >
-									<f:ajax   />	
+								<p:commandLink update="homeForm:scacchiera"  rendered="#{null != scacchieraBean.pezzo}" value="#{rowIndex} + #{colIndex}" action ="#{scacchieraBean.mossa(rowIndex,colIndex)}" style="color:blue;" >
 								</p:commandLink>
 							</p:column>
 						</p:columns>
@@ -113,7 +112,7 @@
 		<p:commandButton
 			 	styleClass="button-scacchi"
 				value="Reset Pedina"
-				action="#{scacchieraBeanProvaGio.resetPezzo()}"
+				action="#{scacchieraBean.resetPezzo()}"
 				update="scacchiera"
 				/>
 			<p:commandButton
@@ -122,7 +121,11 @@
 				value="Pausa"
 				update="modalPausa"
 				immediate="true" 
-				oncomplete="PF('modalPausa').show()"/>		
+				oncomplete="PF('modalPausa').show()"/>	
+				<p:commandButton
+				style="margin-left:20px;"
+			 	styleClass="button-scacchi"
+				value="Ricomincia"/>		
 			<p:commandButton
 				style="margin-left:20px;"
 				value="Torna al menu e termina la partita"

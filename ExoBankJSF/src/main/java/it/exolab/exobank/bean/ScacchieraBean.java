@@ -59,10 +59,6 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void mossa(Integer posX,Integer posY) {
-		System.out.println(" X "+posX+" Y "+posY+" ok mossa ");
-	}
-	
 	public void resetPezzo() {
 		pezzo = null;
 		System.out.println(pezzo);
@@ -72,51 +68,43 @@ public class ScacchieraBean implements Serializable {
 	//SE DIVERSO DA NULL AGGIORNA ALTRIMENTI CREA PEZZO E AGGIORNA
 	//SE COLORE UGUALE AGGIORNA
 	//SE COLORE DIVERSO AGGIORNA POSIZOINE (STA CERCANDO DI MANGIARE UN PEZZO AVVERSARIO)
-	public void pezzoSelezionato(Pezzo pezzoSelezionato) {
-		
-		if(null != pezzo) {
-			if(pezzo.getColore().equalsIgnoreCase(pezzoSelezionato.getColore())) {
-				this.pezzo = pezzoSelezionato;
-				System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
-			
-			} else {
-				nuovaPosizioneSelezionata(pezzoSelezionato.getPosizioneX(), pezzoSelezionato.getPosizioneY());
-			}
-			
-		} else {
+	public void pezzoSelezionato(Pezzo pezzoSelezionato) {	
 			pezzo = new Pezzo();
 			pezzo = pezzoSelezionato;
-		}
+			System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
 	}
 	
-	//METODO PER AGGIORNARE POSIZIONE DEL PEZZO
-	//SE DIVERSO DA NULL AGGIORNA POSIZOINE
-	//ALTRIMENTI MANDA UN MESSAGGIO DI ERRORE
-	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
-		System.out.println("posX " + posX + " posY " + posY);
-		try {
-			if(null != pezzo) {
-				aggiornaPosizionePezzo(posX, posY);
-				
-			} else {
-		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
-
-		}
-	}
+//	//METODO PER AGGIORNARE POSIZIONE DEL PEZZO
+//	//SE DIVERSO DA NULL AGGIORNA POSIZOINE
+//	//ALTRIMENTI MANDA UN MESSAGGIO DI ERRORE
+//	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
+//		System.out.println("posX " + posX + " posY " + posY);
+//		try {
+//			if(null != pezzo) {
+//				aggiornaPosizionePezzo(posX, posY);
+//				
+//			} else {
+//		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+//
+//		}
+//	}
 	
-	private void aggiornaPosizionePezzo(Integer posX, Integer posY) {
+	public void mossa (Integer posX, Integer posY) {
 		try {
 			pezzoAggiornato = new Pezzo();
-			pezzoAggiornato = pezzo;
+			pezzoAggiornato.setColore(pezzo.getColore());
+			pezzoAggiornato.setEsiste(pezzo.isEsiste());
+			pezzoAggiornato.setId(pezzo.getId());
 			pezzoAggiornato.setPosizioneX(posX);
 			pezzoAggiornato.setPosizioneY(posY);
 			System.out.println(pezzoAggiornato.toString());
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
+			pezzoAggiornato=null;
 			//TODO AGGIORNA GRIGLIA TRAMITE METODO CONTROLLER
 		} catch(Exception e) {
 			e.printStackTrace();
