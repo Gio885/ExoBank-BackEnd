@@ -38,70 +38,45 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 	@Override
 	public Scacchiera mossaConsentita(Pezzo pezzo) throws Exception {
-		boolean ritorno = true;
 		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
 
 		try {
-			// Trova il pezzo specifico sulla scacchiera usando l'ID
 			Pezzo pezzoSpecifico = (Pezzo) findPezzoById(pezzo, griglia);
-
 			if (pezzoSpecifico == null) {
-				ritorno = false; // Nessun pezzo con l'ID specifico è stato trovato.
+				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
 			}
 
 			Integer xPartenza = pezzoSpecifico.getPosizioneX();
 			Integer yPartenza = pezzoSpecifico.getPosizioneY();
 			Integer xDestinazione = pezzo.getPosizioneX();
 			Integer yDestinazione = pezzo.getPosizioneY();
-			// Verifica se la destinazione è all'interno della scacchiera
-			if (xDestinazione < 0 || xDestinazione >= griglia.length || yDestinazione < 0 || yDestinazione >= griglia[0].length) {
-				ritorno = false; // La destinazione è fuori dalla scacchiera.
-			}
 
-			// Verifica se la destinazione è la stessa posizione di partenza
-			if (xPartenza.equals(xDestinazione) && yPartenza.equals(yDestinazione)) {
-				ritorno = false; // La destinazione è la stessa posizione di partenza.
-			}
-
-			Pezzo pezzoDestinazione = griglia[xDestinazione][yDestinazione];
-
-			// Verifica se il pezzo di destinazione è dello stesso colore del pezzo in movimento
-			if (pezzoDestinazione != null && pezzoDestinazione.getColore().equals(pezzoSpecifico.getColore())) {
-				ritorno = false; // Il pezzo di destinazione è dello stesso colore del pezzo in movimento.
-			}
-
-			if (ritorno) {
-				// Utilizza il validatoreScacchi per verificare la validità della mossa
-				if (validatoreScacchi.mossaValida(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
-					if (null != griglia[xDestinazione][yDestinazione]) {
-						griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false cosi dico che il pezzo non esiste piu sulla scacchiera
-						griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia cosi da dire che il pezzo è stato mangiato
-						// Aggiorna la scacchiera con la nuova posizione
-						griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-						griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-						pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-						pezzoSpecifico.setPosizioneY(yDestinazione);
-
-					} else {
-						// Aggiorna la scacchiera con la nuova posizione
-						griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-						griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-						pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-						pezzoSpecifico.setPosizioneY(yDestinazione);
-
-					}
-					scacchieraLavoro.setScacchiera(griglia);
-				}
-			}else {
-				throw new Exception("Mossa non consentita");
-			}
-			return scacchieraLavoro;
+			 // Utilizza il validatoreScacchi per verificare la validità della mossa
+	        if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
+	            if (null != griglia[xDestinazione][yDestinazione]) {
+	                griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
+	                griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
+	                // Aggiorna la scacchiera con la nuova posizione
+	                griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+	                griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+	                pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+	                pezzoSpecifico.setPosizioneY(yDestinazione);
+	            } else {
+	                // Aggiorna la scacchiera con la nuova posizione
+	                griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+	                griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+	                pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+	                pezzoSpecifico.setPosizioneY(yDestinazione);
+	            }
+	            scacchieraLavoro.setScacchiera(griglia);
+	        } else {
+	            throw new Exception("Mossa non consentita");
+	        }
+	        return scacchieraLavoro;
 		} catch (Exception e) {
-			// Gestisci l'eccezione qui
 			e.printStackTrace();
-			throw new Exception(null != e.getMessage() ? e.getMessage() : "Contatta assistenza si è rotto qualcosa");
+			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
 		}
-
 	}
 
 	// Metodo per creare la scacchiera iniziale
