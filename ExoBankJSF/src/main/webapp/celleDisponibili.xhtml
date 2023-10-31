@@ -1,0 +1,76 @@
+<!-- 
+I TAG <H> FANNO PARTE DI JAVA SERVER FACES UTILIZZATI PER GENERARE MARKUP HTML IN APPLICAZIONE JSF, UTILIZZATI PER CREARE COMPONENTI HTML
+
+I TAG <UI> FANNO PARTE DI JAVA SERVER FACES E VENGONO UTILIZZATI PER LA CREAZIONE DI INTERFACCIE UTENTE WEB BASATE SU COMPONENTI
+
+I TAG <P> FANNO PARTE DI PRIME FACES, QUESTI TAG AGGIUNGONO FUNZIONALITA AGGIUNTIVE PER LA GESTIONE DEGLI EVENTI TRAMITE AJAX E LA CREAZIONE DI COMPONENTI
+DI PULSANTE INTERATTIVI, UTILIZZATI PER CREARE COMPONENTI RICCHI DI FUNZIONALITA ALL'INTERNO DI APPLICAZIONE JSF
+
+I TAG <F> FANNO PARTE DI JSF E SONO UTILIZZATI PER DEFINIRE COMPONENTI O FUNZIONALITA LEGATE AL CICLO DI VITA DELLE PAGINE WEB
+VENGONO UTILIZZATI PER DEFINIRE REGOLE DI VALIDAZIONE PER I COMPONENTI DI INPUT
+VENGONO UTILIZZATI PER LA CONVERSIONE DEI DATI TRA IL MODELLO DE DATI E I COMPONENTI UI
+VENGONO UTILIZZATI PER ASSOCIARE AZIONI PERSONALIZZATE AI COMPONENTI UI. ES. E POSSIBILE SPECIFICARE UN METODO DI GESTIONE DELL'EVENTO CHE VERRA CHIAMATO QUANDO
+SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
+
+<H:PANEL>: E UN CONTENITORE UTILIZZATO PER RAGGRUPPARE COMPONENENTI E RENDERIZZARLI INSIEME, UTILIZZATO PER GESTIRE COMPONENENTI 
+
+<UI:COMPOSITION>: UTILIZZATO PER DEFINIRE LAYOUT COMUNI, COMPONENTE PRINCIPALE CHE DEFINISCE IL LAYOUT DELLA PAGINA, UNA SORTA DI CONTENITORE
+
+<UI:INCLUDE>: COMPONENTE JSP UTILIZZATO PER INCLUDERE IL CONTENUTO DI UNA PAGINA O FRAMMENTO ALL'INTERNO DI UNA PAGINA JSF 
+
+<UI:PARAM>: CONSENTE DI PASSARE PARAMETRI ALLA PAGINA CHE ANDIAMO AD INCLUDERE
+
+<UI:FRAGMENT: BLOCCHI DI CONTENUTO CHE VENGONO INCLUSI O ESCLUSI SECONDO LE CONDIZIONI DI RENDERED, SE VERA IL CONTENUTO VERRA INCLUSO IN CASO CONTRARIO NO
+
+ -->
+
+<ui:composition 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	<p:commandLink 
+		styleClass="p-commandlink-trasparent" 
+		rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}" 
+      	update="homeForm:scacchiera" 
+      	style="top: 7px;left: 7px;"
+      	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
+	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 0}">
+		<p:commandLink 
+			styleClass="p-commandlink-trasparent" 
+			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'BIANCO'}" 
+         	update="homeForm:scacchiera" 
+         	style="top: 7px;left: 7px;"
+          	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
+    </ui:fragment>
+    <ui:fragment rendered="#{scacchieraBean.turno % 2 == 0}">
+		<p:commandLink 
+			styleClass="p-commandlink-nonDisponibile" 
+			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'NERO' and scacchieraBean.griglia[rowIndex][colIndex].id != scacchieraBean.pezzo.id}" 
+			disabled="true"
+         	update="homeForm:scacchiera" 
+         	style="top: 7px;left: 7px;"
+          	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
+    </ui:fragment>
+	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 1}">
+		<p:commandLink 
+			styleClass="p-commandlink-trasparent" 
+			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'NERO'}" 
+          	update="homeForm:scacchiera"
+          	style="top: 7px;left: 7px;" 
+          	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
+  	</ui:fragment>
+  	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 1}">
+		<p:commandLink 
+			styleClass="p-commandlink-nonDisponibile" 
+			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'BIANCO' and scacchieraBean.griglia[rowIndex][colIndex].id != scacchieraBean.pezzo.id}" 
+          	update="homeForm:scacchiera" 
+          	disabled="true"
+          	style="top: 7px;left: 7px;"
+			action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
+  	</ui:fragment>
+  
+
+</ui:composition>

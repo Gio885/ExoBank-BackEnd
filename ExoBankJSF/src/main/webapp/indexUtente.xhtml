@@ -12,47 +12,48 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <div class="container">
 
-	<p:outputPanel rendered="#{utenteBean.login}">
-		<p:outputLabel class = "stileLabel" value="Benvenuto in EXOBANK, #{utenteBean.utenteLoggato.nome} #{utenteBean.utenteLoggato.cognome}" />
-		<br/>
-		<br/>
-		<p:outputPanel rendered="#{not empty contoCorrenteBean.contoCorrente}">
-			<p:outputLabel class="stileLabel" value="DATI CONTO" />
-			<div class="divLeft">
-			<br />
-			<p:outputLabel class="stileLabel" value="NUMERO CONTO: " />
-			<p:outputLabel  value="#{contoCorrenteBean.contoCorrente.numeroConto}" />
-			<br />
-			<br />
-			<p:outputLabel class="stileLabel" value="STATO CONTO CORRENTE: " />
-			<p:outputLabel  value="#{contoCorrenteBean.contoCorrente.stato.statoContoCorrente}" />
-			<br />
-			<br />
-			<p:outputLabel class="stileLabel" value="SALDO CONTO CORRENTE: " />
-			<p:outputLabel  value="€ #{contoCorrenteBean.contoCorrente.saldo}" />
-			<br />
-			<br />
-			</div>
-			<p:commandButton value="Operazione" action="#{benvenutoBean.listaTransazioni}"/>
-			<br />
-			<br />
-			<p:commandButton value="Lista Transazioni" action="#{benvenutoBean.listaTransazioni}"/>
-		</p:outputPanel>
-		<p:outputPanel rendered = "#{contoCorrenteBean.contoCorrente == null}">
-			<p:outputLabel value="Non hai ancora un conto" />
+	<div class="ui-outputpanel ui-widget">
+		<p:outputPanel rendered="#{utenteBean.login}">
+			<p:outputLabel class = "stileLabel" value="Benvenuto in EXOBANK, #{utenteBean.utenteLoggato.nome} #{utenteBean.utenteLoggato.cognome}" />
 			<br/>
-			<br />
-			<p:commandButton value="Apri Conto"	action="#{contoCorrenteBean.apriConto}" />
 			<br/>
+			<p:outputPanel rendered="#{not empty contoCorrenteBean.contoCorrente}">
+				<p:outputLabel class="stileLabel" value="DATI CONTO" />
+				<br />
+				<p:outputLabel class="stileLabel" value="NUMERO CONTO: " />
+				<p:outputLabel  value="#{contoCorrenteBean.contoCorrente.numeroConto}" />
+				<br />
+				<br />
+				<p:outputLabel class="stileLabel" value="STATO CONTO CORRENTE: " />
+				<p:outputLabel  value="#{contoCorrenteBean.contoCorrente.stato.statoContoCorrente}" />
+				<br />
+				<br />
+				<p:outputLabel class="stileLabel" value="SALDO CONTO CORRENTE: " />
+				<p:outputLabel  value="€ #{contoCorrenteBean.contoCorrente.saldo}" />
+				<br />
+				<br />
+				<p:commandButton value="Operazione" action="#{benvenutoBean.listaTransazioni}"/>
+				<br />
+				<br />
+				<p:commandButton value="Lista Transazioni" action="#{benvenutoBean.listaTransazioni}"/>
+			</p:outputPanel>
+			<p:outputPanel rendered = "#{contoCorrenteBean.contoCorrente == null}">
+				<p:outputLabel value="Non hai ancora un conto" />
+				<br/>
+				<br />
+				<p:commandButton value="Apri Conto"	action="#{contoCorrenteBean.apriConto}" />
+				<br/>
+				<br />
+			</p:outputPanel>
 			<br />
+			<p:commandButton value="Logout"	action="#{utenteBean.logout}" update="homeForm"
+				immediate="true" />
+			<br />
+			<br />
+			<p:messages closable="true" />
 		</p:outputPanel>
-		<br />
-		<p:commandButton value="Logout"	action="#{utenteBean.logout}" update="homeForm"
-			immediate="true" />
-		<br />
-		<br />
-		<p:messages closable="true" />
-	</p:outputPanel>
+	</div>
+	
 </div>
 
 </ui:composition>

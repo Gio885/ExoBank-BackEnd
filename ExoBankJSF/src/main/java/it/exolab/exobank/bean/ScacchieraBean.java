@@ -42,7 +42,7 @@ public class ScacchieraBean implements Serializable {
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
 	private Pezzo pezzoAggiornato;
-	private Integer turno=1;
+	private Integer turno=2;
 
 
 	@PostConstruct
@@ -57,6 +57,10 @@ public class ScacchieraBean implements Serializable {
 			e.printStackTrace();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		}
+	}
+	
+	public void cambiaTurno() {
+		turno++;
 	}
 	
 	public void resetPezzo() {

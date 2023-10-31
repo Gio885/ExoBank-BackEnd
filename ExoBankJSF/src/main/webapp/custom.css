@@ -9,7 +9,7 @@ body {
 
 /* Esempio di classe personalizzata per il corpo */
 .my-theme-body {
-	background-color: #323232;
+	background-color: #D7C99C;
 	/* Sostituisci con il colore desiderato */
 	color: white;
 }
@@ -31,26 +31,6 @@ body {
 	font-size: 18px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-
-
-.chessCell {
-	width: 40px;
-	/* Larghezza desiderata per ogni cella */
-	height: 40px;
-	/* Altezza desiderata per ogni cella */
-	text-align: center;
-	/* Centra il testo all'interno della cella */
-	border: 1px solid #000;
-	/* Aggiungi un bordo nero alle celle (puoi personalizzare il colore) */
-	background-color: #f0f0f0;
-	/* Colore di sfondo (puoi personalizzare) */
-	font-size: 14px;
-	/* Dimensione del testo */
-	font-weight: bold;
-	/* Grassetto */
-}
-
-
 
 .stileLabel {
 	font-weight: bold;
@@ -149,23 +129,15 @@ body {
 
 
 
-.hiddenHeader {
-	display: none;
-}
-
-/* Stile per le celle della tabella */
-.ui-datatable-data tr {
-	background-color: #fff;
-	/* Colore di sfondo delle righe dei dati */
-}
-
-/* Stile per le celle della tabella in hover (opzionale) */
-.ui-datatable-data tr:hover {
-	background-color: #f0f0f0;
-	/* Cambia colore di sfondo al passaggio del mouse */
-}
 
 
+
+
+
+/*------------------------------------------------------------      CSS PER GIOCO SCACCHI       --------------------------------------------------------------------*/
+
+
+/*CONTENITORE PRINCIPALE*/
 .container1 {
 	display: flex;
 	flex-direction: column;
@@ -180,110 +152,158 @@ body {
 	border-radius: 10px;
 	color: black;
 	font-size: 18px;
-	background-image: url("https://www.appartamenti-lathuile.com/wp-content/uploads/2016/05/sfondo-legno.jpg");
+	background-image: url("https://img3.stockfresh.com/files/d/dolgachov/m/16/4642902_stock-photo-close-up-of-wooden-floor-or-wall-background.jpg"); /*https://i.pinimg.com/550x/5c/12/28/5c12284a80a8e53e92d564917b27c8a0.jpg*/
 }
-
+/*SECONDO CONTENITORE DIVISO ORIZZONTALMENTE PER METTERE CONTENITORE2 OVVERO SCACCHIERA E CONTENITORE MOSSE*/
+.container1-right {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 20px;
+}
+/*CONTENITORE PER LA SCACCHIERA A SINISTRA*/
 .container2 {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	background-color:#f39f5a;
+	background-color: #D7C99C;
 	width:700px;
 	height:850px;
-	border: 5px solid black;
+	border: 3px solid rgb(0, 0, 0);
 	border-radius: 10px;
 }
-
-.container-right-bottone {
-    display: flex; /* Utilizza un layout flexbox */
-    justify-content: center; /* Centra gli elementi orizzontalmente */
-    align-items: center; /* Centra gli elementi verticalmente */
-}
-
-.container1-right {
-	display: flex;
-	flex-direction: row;
-	/* Imposta il contenitore in verticale */
-	align-items: center;
-	/* Centro verticale all'interno di .container1 */
-	margin-left: 20px;
-	/* Aggiungi margine sinistro per separare il contenuto a destra */
-}
-
+/*CONTENITORE A DESTRA DELLA SCACCHIERA */
 .container1-right-mosse {
-	background-color:#323232;
+	background-color: #D7C99C;
+	border: 3px,solid,black;
 	margin-left: 50px;
 	width: 350px;
 	height: 550px;
 	border-radius: 5px;
-	border: 5px solid black;
 	font-family: VT323 ;
-
 }
 
+/*CONTENITORE BOTTONI IN BASSO MESSI ORIZZONTALI*/
+.container-right-bottone {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
 
-
-
+/*DEFINISCE LA LARGHEZZA E L'ALTEZZA DELLA SCACCHIERA*/
 .chessboard-container {
 	width: 300px;
-	/* Adjust as needed */
 	height: 300px;
-	/* Adjust as needed */
-
 }
 
-
-
-/* Stile per la tabella personalizzata */
+/* QUESTO VA A MODIFICARE IL .ui-datatable-data, MESSA COME CLASSSTYLE SU DATA TABLE E A SEGUIRE TUTTI I SUOI COMPONENTI  */
 .customTable {
 	width: 100%;
 	height: 100%;
 	border: 3px solid rgb(0, 0, 0);
 	border-radius: 10px;
-	
+    padding: 0.rem 0.rem,0 rem, 0 rem !important; 	
+
+}
+/*MODIFICA I BORDI INTERNI DELLA TABELLA LI FA DOPPI VISTO SUL BROWSER*/
+.customTable table {
+	border-collapse: separate ;
+	border: 0px !important;
 }
 
+/*VA A MODIFICARE IL DATA TABLE , OVVERO IL THEAD*/
 .customTable thead {
 	display: none;
 }
 
-
-.customColumn {
-	font-weight: bold;
-}
-
-
-/* Stile per il testo nelle celle */
-.customText {
-	font-weight: bold;
-}
-
+/*QUESTO FA L'OVVERIDE DELLE DI OGNI SINGOLA COLUMNS DI DATA TABLE, POSIZIONE RELATIVE PICCOLO PADDING PER NON STARE ATTACCATO AL BORDO IN QUANTO DENTRO C'E QUESTO SOTTO */
 .chessboard-white-cell {
-	width: 80px;
-	height: 80px;
-	text-align: center;
-	vertical-align: middle;
-	background-color: #F1D2B1;
-
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    vertical-align: middle;
+	background-color: rgb(219, 201, 185);
+    padding-top: 2px !important;
+    padding-left: 2px !important;
+    padding-bottom: 2px !important;
+    padding-right: 2px !important;
+    position: relative; /* Per consentire al div interno di posizionarsi in modo assoluto */
 }
 
+/*QUESTO FA L'OVVERIDE DELLE DI OGNI SINGOLA COLUMNS DI DATA TABLE, POSIZIONE RELATIVE PICCOLO PADDING PER NON STARE ATTACCATO AL BORDO IN QUANTO DENTRO C'E QUESTO SOTTO */
 .chessboard-black-cell {
 	width: 80px;
 	height: 80px;
-	text-align: center;
-	vertical-align: middle;
-	background-color: #754E51;
+	background-color: rgb(126, 88, 78);
+	padding-top: 2px !important;
+	padding-left: 2px !important;
+	padding-bottom: 2px !important;
+	padding-right: 2px !important;
+	position: relative; /* Per consentire al div interno di posizionarsi in modo assoluto */
+}
+
+
+/*QUESTO MODIFICA TUTTO LO SFONDO DELLA FORM E I PICCOLI DIV CHE FANNO PARTE DI UN OGNI CELLA, MI ADDATTO IN LUNGHEZZA E LARGHEZZA ALLE BLACK CELL E WHITE CELL
+  E POSIZIONO IL CONTENUTO QUINDI ICONA E COMMAND LINK AL CENTRO DI QUESTO DIV CHE FA PARTE DI UI
+  RIMOZIONE CENTRATURA ICONA E COMMAND LINK IN QUANTO MI SI ROMPEVA L'INDEX UTENTE, QUINDI SONO ANDATO DOVE HO LE ICONE DI OGNI PEDINA E NELL OUT PUT
+  HO MESSO CLASS class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " COSI HO AGGITO SOLO SU QUEL .ui-outputpanel.ui-widget */
+.ui-outputpanel.ui-widget {
+    background-color: transparent;
+    width: 100% !important;
+    height: 100% !important;
+    padding-top: 0px !important;
+    padding-left: 0px !important;
+    padding-bottom: 0px !important;
+    padding-right:	0px !important;
+	background-color: transparent !important; 	
+}
+
+
+/* CENTRATURA COMMAND LINK */
+.chessboard-black-cell div .ui-commandlink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* AREA DI CLICK COMMAND LINK DISPONIBILI*/
+.p-commandlink-trasparent {
+    padding: 32px; 
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    background-color:rgb(128, 255, 128,0.5);
+    transition: border 0.3s, background-color 0.3s; /* Aggiungi una transizione per un effetto di transizione fluida */
 
 }
 
+.p-commandlink-trasparent:hover {
+    border: 3px solid rgb(0, 0, 0);
+    background-color: rgba(0, 128, 255, 0.4);
+    top: 2px;
+    left: 2px;
+    padding:30px;
+}
+
+
+/* AREA DI CLICK COMMAND LINK NON DISPONIBILI*/
+.p-commandlink-nonDisponibile {
+  	padding: 32px;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    background-color:rgba(255, 255, 255, 0.7);
+}
+
+/* COMMAND BUTTON SOVRASCRITTO DALLO STILE BUTTON-SCACCHI*/
 .button-scacchi {
 	font-family: VT323 !important;
 	font-size: 30px !important;
-	background-color: #f39f5a !important;
+	background-color: #D7C99C !important;
 	border-color: black !important;
-	border-width: 5px !important;
+	border-width: 4px !important;
 	border-radius: 10px !important;
 }
 
@@ -291,27 +311,74 @@ body {
 	color: white !important;
 }
 
-
-
-.illuminaCella {
-	display: block;
-	width: 100px;
-	height: 100px;
-	text-align: center;
-	text-decoration: none;
-	background-color: red;
-	color: red;
-	transition: background-color 0.3s;
-	/* Aggiunge una transizione al cambio di colore */
-}
-
-.illuminaCella:active,
-.illuminaCella.illuminato {
-	background-color: yellow;
-	/* Cambia il colore di sfondo quando il link è attivo o illuminato */
-}
-
-
+/*TOGLIERE LA TITLE BAR DELLA FINESTRA DI DIALOG*/
 .ui-dialog-titlebar{
 display:none;
 }
+.dialog {
+    background: #D7C99C;
+    color: #dedede;
+    border: 1px solid #191919;
+    padding: 1rem;
+    border: 1px solid #191919;
+}
+
+
+
+/*NON DOVREBBE SERVIRE NON USATO*/
+/*.chessboard-white-cell div {*/
+/*    width: 100%;  Adatta il div all'intera larghezza della cella */
+/*    height: 100%;  Adatta il div all'intera altezza della cella */
+/*    position: absolute;  Posizionamento assoluto all'interno della cella */
+/*    top: 0;  Allinea il div in alto rispetto alla cella */
+/*    left: 0;  Allinea il div a sinistra rispetto alla cella */
+/*    padding-top: 10px !important;*/
+/*	padding-left: 10px !important;*/
+/*	padding-bottom: 10px !important;*/
+/*	padding-right: 10px !important;*/
+/*}*/
+
+/*DIV PER OUTPUTPANEL E WIDGET CHE SI ADATTA*/
+/*.cellaSelezionata{*/
+/*	width: 80%;*/
+/*	height: 80%;*/
+/*}*/
+
+
+/*.chessCell {*/
+/*	width: 40px;*/
+/*	 Larghezza desiderata per ogni cella */
+/*	height: 40px;*/
+/*	 Altezza desiderata per ogni cella */
+/*	text-align: center;*/
+/*	 Centra il testo all'interno della cella */
+/*	border: 1px solid #000;*/
+/*	 Aggiungi un bordo nero alle celle (puoi personalizzare il colore) */
+/*	background-color: #f0f0f0;*/
+/*	 Colore di sfondo (puoi personalizzare) */
+/*	font-size: 14px;*/
+/*	 Dimensione del testo */
+/*	font-weight: bold;*/
+/*	 Grassetto */
+/*	padding: 0;*/
+/*}*/
+
+
+/*DA VERIFICARE*/
+/*.illuminaCella {*/
+/*	display: block;*/
+/*	width: 100px;*/
+/*	height: 100px;*/
+/*	text-align: center;*/
+/*	text-decoration: none;*/
+/*	background-color: red;*/
+/*	color: red;*/
+/*	transition: background-color 0.3s;*/
+/*	 Aggiunge una transizione al cambio di colore */
+/*}*/
+
+/*.illuminaCella:active,*/
+/*.illuminaCella.illuminato {*/
+/*	background-color: yellow;*/
+/*	 Cambia il colore di sfondo quando il link è attivo o illuminato */
+/*}*/

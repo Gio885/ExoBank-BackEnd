@@ -14,13 +14,9 @@
 	<div class="container">
 	
 		<p:outputLabel value="REGISTRAZIONE" />
-		<br />
-		<br />
-		<br />
+		<br/>
 		<p:outputLabel value="Inserisci i tuoi dati" />
-		<br />
-		<br />
-		<br />
+		<br/>
 		<p:outputLabel value="Nome: " />
 		<br />
 		<p:inputText id="nome_registrazione" value="#{utenteBean.utente.nome}" />
@@ -44,9 +40,7 @@
 		<br />
 		<p:inputText class="uppercase" id="codiceFiscale_registazione" value="#{utenteBean.utente.codiceFiscale}" />
 		<br />
-		<br />
 		<p:commandButton value="Registrati" action="#{utenteBean.insertUtente}" update="homeForm" />
-		<br />
 		<br />
 		<p:commandButton value="Torna al menu"
 			action="#{utenteBean.switchLoginRegister}" update="homeForm"
