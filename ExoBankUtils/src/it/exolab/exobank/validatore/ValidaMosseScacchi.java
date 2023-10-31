@@ -34,7 +34,7 @@ public class ValidaMosseScacchi {
         } else if (pezzo instanceof Alfiere) {
             return validatoreMovimento.validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
         } else if (pezzo instanceof Regina) {
-            return validatoreMovimento.controllaMovimentoRegina(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
+            return validatoreMovimento.validaMovimentoRegina(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
         } else if (pezzo instanceof Pedone) {
             return validatoreMovimento.validaMovimentoPedone(xPartenza, yPartenza, xDestinazione, yDestinazione, pezzo.getColore(), scacchiera);
         } else if (pezzo instanceof Cavallo) {

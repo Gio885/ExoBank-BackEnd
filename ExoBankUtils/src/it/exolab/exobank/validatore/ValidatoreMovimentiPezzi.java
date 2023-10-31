@@ -102,12 +102,29 @@ public class ValidatoreMovimentiPezzi {
         return true;
     }
 
-    public boolean controllaMovimentoRegina(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
-        if (validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia) || validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
-            return true;
+    public boolean validaMovimentoRegina(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
+        int deltaX = Math.abs(xDestinazione - xPartenza);
+        int deltaY = Math.abs(yDestinazione - yPartenza);
+
+        if ((deltaX == 0 && deltaY != 0) || (deltaX != 0 && deltaY == 0)) {
+            try {
+                // Movimento orizzontale o verticale, quindi validaMovimentoTorre
+                return validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
+            } catch (Exception e) {
+                // Personalizza il messaggio di errore se il movimento della torre non è valido
+                throw new Exception("Movimento non valido per la regina: " + e.getMessage());
+            }
+        } else if (deltaX == deltaY) {
+            try {
+                // Movimento diagonale, quindi validaMovimentoAlfiere
+                return validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
+            } catch (Exception e) {
+                // Personalizza il messaggio di errore se il movimento dell'alfiere non è valido
+                throw new Exception("Movimento non valido per la regina: " + e.getMessage());
+            }
         }
 
-        throw new Exception("Il movimento non è conforme alle regole della torre o dell'alfiere (e quindi della regina).");
+        return false;
     }
 
     public boolean validaMovimentoCavallo(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione) {
@@ -128,8 +145,8 @@ public class ValidatoreMovimentiPezzi {
     public boolean validaMovimentoRe(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
         boolean isValid = false;
 
-        int deltaX = xDestinazione - xPartenza;
-        int deltaY = yDestinazione - yPartenza;
+        int deltaX = Math.abs(xDestinazione - xPartenza);
+        int deltaY = Math.abs(yDestinazione - yPartenza);
 
         // Il re può muoversi solo in queste 8 posizioni intorno a lui
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
