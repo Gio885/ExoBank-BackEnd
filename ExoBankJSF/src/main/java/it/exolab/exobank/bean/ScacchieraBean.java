@@ -73,8 +73,6 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	
-	
 	private void creazioneTimer() {
 		try {
 			Calendar tempo = Calendar.getInstance();
@@ -137,9 +135,7 @@ public class ScacchieraBean implements Serializable {
 			}
 		}	
 	}
-	
-	
-	
+
 	public void cambiaTurno() {
 		turno++;
 		giocaGiocatore1 = !giocaGiocatore1;
@@ -222,14 +218,9 @@ public class ScacchieraBean implements Serializable {
 		turno = 0;		
 	}
 	
-
-
-
 	public boolean isPartitaTerminata() {
 		return partitaTerminata;
 	}
-
-
 
 	public void setPartitaTerminata(boolean partitaTerminata) {
 		this.partitaTerminata = partitaTerminata;
