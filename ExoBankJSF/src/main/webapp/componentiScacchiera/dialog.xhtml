@@ -1,0 +1,96 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	
+	
+	
+	
+<!-- DIALOG CHE SI APRE TRAMITE IL BOTTONE NELLA LOGIN.XHTML DOVE CE oncomplete="PF('modalDialog').show()" CON L'UPDATE DELLA FORM E MODAL DIALOG -->
+<p:dialog  id="modalInizio"  header="Seleziona il colore delle pedine" closable="false" widgetVar="modalInizio" modal="true" resizable="false">
+<div class="container">
+	<center>
+		<h1 style="font-family:VT323;">CHESS</h1>
+	    <i class="fa-regular fa-chess-king fa-3x" style ="color : #000000;margin-right:40px"/>
+		<i class="fa-solid fa-chess-king fa-3x" style ="color : #000000"/>
+    	<p:selectOneRadio id="coloreGiocatore" >
+            <f:selectItem  itemLabel="Bianco" itemValue="Bianco"  />
+            <f:selectItem  itemLabel="Nero" itemValue="Nero"  />
+    	</p:selectOneRadio>
+    	<br/>
+    	<p:commandButton 
+    		styleClass="button-scacchi"
+    		value="INIZIA" 
+    		update="homeForm" 
+    		oncomplete="PF('modalInizio').hide()" 
+    		action="#{scacchieraBean.start()}"/>     
+	</center>
+</div>
+</p:dialog>
+
+
+<p:dialog id="modalPausa"  class="dialog"  closable="false" widgetVar="modalPausa" modal="true" resizable="false">
+<div class="container" style="background-color: #D7C99C">
+	<center>
+		<h1 style="font-family:VT323;">GIOCO IN PAUSA</h1>
+    	<p:commandButton 
+    	styleClass="button-scacchi" 
+    	value="Riprendi" 
+    	update="modalPausa tempo" 
+    	action="#{scacchieraBean.start()}"
+    	oncomplete="PF('modalPausa').hide()" />     
+	</center>
+	</div>
+</p:dialog>
+
+
+<p:dialog id="modalRicomincia" class="dialog"  closable="false" widgetVar="modalRicomincia" modal="true" resizable="false">
+<div class="container" style="background-color: #D7C99C">
+	<center>
+		<h1 style="font-family:VT323;">SEI SICURO DI VOLER RICOMINCIARE</h1>
+    	<p:commandButton 
+    	styleClass="button-scacchi" 
+    	value="Ricomincia" 
+    	update="homeForm" 
+    	action="#{scacchieraBean.scacchieraInit()}"
+    	oncomplete="PF('modalPausa').hide();PF('modalInizio').show()"/>  
+    	<p:commandButton
+    	style="margin-left:10px"
+    	styleClass="button-scacchi" 
+    	value="Riprendi" 
+    	update="tempo modalRicomincia" 
+    	action="#{scacchieraBean.start()}"
+    	oncomplete="PF('modalPausa').hide()"/>   
+	</center>
+	</div>
+</p:dialog>
+
+
+
+<!-- oncomplete="PF('modalTermina').hide()" ATTENZIONE IN QUESTO MODAL HO DOVUTO TOGLIERE QUESTA RIGA PERCHE NON MI FACEVA PREMERE I BOTTONI NELLA HOME
+FARE DOMANDA AD ALESSIO SUL PERCHE? VISTO CHE COMUNQUE AL TERMINE DELLA ACTION LUI FA L'HIDE DEL MODAL E RENDERIZZA LA HOMEFORM DA CAPO QUALE IL PROBLEMA?? -->
+<p:dialog id="modalTermina" class="dialog"  closable="false" widgetVar="modalTermina" modal="true" resizable="false">
+<div class="container" style="background-color: #D7C99C">
+	<center>
+		<h1 style="font-family:VT323;">VUOI TERMINARE LA PARTITA?</h1>
+    	<p:commandButton 
+    	styleClass="button-scacchi" 
+    	value="Si" 
+    	update="homeForm"
+    	action="#{scacchieraBean.switchGioca()}"/>  
+    	<p:commandButton
+    	style="margin-left:10px"
+    	styleClass="button-scacchi" 
+    	value="No" 
+    	update="tempo modalTermina" 
+    	action="#{scacchieraBean.start()}"
+    	oncomplete="PF('modalTermina').hide()"/>   
+	</center>
+	</div>
+</p:dialog>
+	
+	
+	</ui:composition>

@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:panelGrid styleClass="chessboard-container">
+		<p:dataTable var="row" rowIndexVar="rowIndex"
+			value="#{scacchieraBean.griglia}" styleClass="customTable">
+			<p:columns var="cell" columnIndexVar="colIndex"
+				value="#{scacchieraBean.griglia}"
+				styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}">
+				<p:column id="mossa" styleClass="chessboard-cell"
+					columnIndexVar="colIndex">
+					<p:outputPanel
+						rendered="#{null != scacchieraBean.griglia[rowIndex][colIndex].id}"
+						value="#{scacchieraBean.griglia[rowIndex][colIndex].id}">
+						<ui:include src="iconComponent.xhtml">
+							<ui:param name="iconComponent"
+								value="#{scacchieraBean.griglia[rowIndex][colIndex]}" />
+						</ui:include>
+					</p:outputPanel>
+					<!-- NON HO UTILIZZATO UN OUTPUTPANEL IN QUANTO MI CREAVA UN ALTRO DIV SOTTO QUEST'ULTIMO DERIVATO DALLA
+										CLASSE DEL CSS UI OUTPUT PANEL UI WIDGET CHE IO HO ANCHE RIDEFINITO NEL MIO CSS -->
+					<h:panelGroup rendered="#{null != scacchieraBean.pezzo}">
+						<ui:include src="celleDisponibili.xhtml" />
+					</h:panelGroup>
+				</p:column>
+			</p:columns>
+		</p:dataTable>
+	</h:panelGrid>
+
+
+
+
+
+
+
+</ui:composition>

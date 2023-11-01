@@ -12,10 +12,14 @@
 		 ON MOUSE OUT QUANDO IL CURSORE ESCE DALL'ELEMENTO HTML VENGONO ESEGUITE LE ISTRUZIONI ALL'INTERNO OVVERO IN QUESTO CASO
 		 IL BACK GROUND COLOR TORNA TRASPARENTE
 		  -->
+		  
+		  
+
+
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 1 || iconComponent.id == 8}">
 		<i class="fa-regular fa-chess-rook fa-4x" style ="color : #000000;"></i>
 			<p:commandLink  
-				disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+				disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 				styleClass="p-commandlink-trasparent" 
 				style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"				
 				onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -27,7 +31,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 25 || iconComponent.id == 32}">
 		<i class="fa-solid fa-chess-rook fa-4x" style ="color : #000000"></i>	
 			<p:commandLink  
-				disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+				disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 				styleClass="p-commandlink-trasparent" 
 				style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"				
 				onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -39,7 +43,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 2 || iconComponent.id == 7 }">
 		<i class="fa-regular fa-chess-knight fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -51,7 +55,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 26 || iconComponent.id == 31 }">
 		<i class="fa-solid fa-chess-knight fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -63,7 +67,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 3 || iconComponent.id == 6 }">
 		<i class="fa-regular fa-chess-bishop fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -75,7 +79,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 27 || iconComponent.id == 30 }">
 		<i class="fa-solid fa-chess-bishop fa-4x" style ="color : #000000 " >
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -88,7 +92,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 4 }"  >
 		<i class="fa-regular fa-chess-king fa-4x"  style="color: #000000;">
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -101,7 +105,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 28  }">
 		<i class="fa-solid fa-chess-king fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -113,7 +117,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 5 }">
 		<i class="fa-regular fa-chess-queen fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -125,7 +129,7 @@
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 29 }">
 		<i class="fa-solid fa-chess-queen fa-4x" style ="color : #000000"></i>
 			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -136,8 +140,9 @@
 	
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id > 8 and 17 > iconComponent.id }">
 		<i class="fa-regular fa-chess-pawn fa-4x" style ="color : #000000"></i>
-			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
+			<p:commandLink
+			id="pedoniBianchi"
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 1 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
@@ -148,11 +153,11 @@
 	
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center "  rendered="#{iconComponent.id > 16 and 25 > iconComponent.id }">
    	 	<i class="fa-solid fa-chess-pawn fa-4x" style="color: #000000"></i>
-			<p:commandLink  
-			disabled="#{!(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
+			<p:commandLink
+			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
-			update="homeForm:scacchiera" 
+			update="homeForm" 
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
 			onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
 			action="#{scacchieraBean.pezzoSelezionato(iconComponent)}" />		

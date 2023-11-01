@@ -1,0 +1,47 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	<div class="container-right-bottone">	
+		<p:commandButton
+			 	styleClass="button-scacchi"
+				value="Reset Pedina"
+				action="#{scacchieraBean.resetPezzo()}"
+				update="scacchiera"/>
+		<p:commandButton
+				style="margin-left:20px;"
+			 	styleClass="button-scacchi"
+				value="Pausa"
+				update="modalPausa"
+				immediate="true" 
+				oncomplete="PF('modalPausa').show()"
+				action="#{scacchieraBean.start()}"/>	
+		<p:commandButton
+				style="margin-left:20px;"
+			 	styleClass="button-scacchi"
+				value="Ricomincia"
+				update="modalRicomincia"
+				immediate="true"
+				oncomplete="PF('modalRicomincia').show()"
+				action="#{scacchieraBean.start()}"/>			
+		<p:commandButton
+				style="margin-left:20px;"
+				value="Torna al menu e termina la partita"
+				action="#{scacchieraBean.start()}"
+				update="modalTermina"
+	   			oncomplete="PF('modalTermina').show()"
+	    		immediate="true" 
+	    		styleClass="button-scacchi"/>
+		<p:commandButton
+				style="margin-left:20px;"
+				value="CAMBIA TURNO"
+	   			action="#{scacchieraBean.cambiaTurno()}"
+	   			update="homeForm"
+	    		immediate="true" 
+	    		styleClass="button-scacchi"/>
+		</div>			
+	
+	</ui:composition>

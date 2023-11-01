@@ -33,7 +33,8 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 	
 	<p:commandLink 
 		styleClass="p-commandlink-trasparent" 
-		rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}" 
+		rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}"
+		disabled="#{scacchieraBean.partitaTerminata}"
       	update="homeForm:scacchiera" 
       	style="top: 7px;left: 7px;"
       	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
@@ -41,6 +42,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 		<p:commandLink 
 			styleClass="p-commandlink-trasparent" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'BIANCO'}" 
+			disabled="#{scacchieraBean.partitaTerminata}"
          	update="homeForm:scacchiera" 
          	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
@@ -58,6 +60,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 		<p:commandLink 
 			styleClass="p-commandlink-trasparent" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'NERO'}" 
+			disabled="#{scacchieraBean.partitaTerminata}"
           	update="homeForm:scacchiera"
           	style="top: 7px;left: 7px;" 
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
