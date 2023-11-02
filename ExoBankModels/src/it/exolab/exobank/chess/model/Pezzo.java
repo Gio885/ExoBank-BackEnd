@@ -29,12 +29,6 @@ public class Pezzo implements Serializable {
 	public Integer getId() {
 		return id;
 	}
-	public boolean isEsiste() {
-		return esiste;
-	}
-	public void setEsiste(boolean esiste) {
-		this.esiste = esiste;
-	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -44,6 +38,7 @@ public class Pezzo implements Serializable {
 	public void setColore(String colore) {
 		this.colore = colore;
 	}
+	
 	public Integer getPosizioneX() {
 		return posizioneX;
 	}
@@ -56,15 +51,24 @@ public class Pezzo implements Serializable {
 	public void setPosizioneY(Integer posizioneY) {
 		this.posizioneY = posizioneY;
 	}
+	public boolean isEsiste() {
+		return esiste;
+	}
+	public void setEsiste(boolean esiste) {
+		this.esiste = esiste;
+	}
+	
 	@Override
 	public String toString() {
 		return "Pezzo [id=" + id + ", colore=" + colore + ", posizioneX=" + posizioneX + ", posizioneY=" + posizioneY
 				+ ", esiste=" + esiste + "]";
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(colore, esiste, id, posizioneX, posizioneY);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
