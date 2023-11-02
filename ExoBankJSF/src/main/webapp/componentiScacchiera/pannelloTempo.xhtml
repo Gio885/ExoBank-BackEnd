@@ -34,8 +34,8 @@
 	<p:poll 
 		ignoreAutoUpdate="true"
 		interval="1" 
-		onstart="#{scacchieraBean.start}"
-		stop="#{!(scacchieraBean.start)}" 
+		onstart="#{scacchieraBean.stopTimer}"
+		stop="#{!(scacchieraBean.stopTimer)}" 
 		listener="#{scacchieraBean.timer}"
-		update="tempo scacchiera pannelloBottoni " />
+		update="#{scacchieraBean.partitaTerminata ? 'scacchiera pannelloBottoni pannelloDestro' : 'tempo'}"/>
 </ui:composition>
