@@ -315,14 +315,10 @@ body {
 .ui-dialog-titlebar{
 display:none;
 }
-.dialog {
-    background: #D7C99C;
-    color: #dedede;
-    border: 1px solid #191919;
-    padding: 1rem;
-    border: 1px solid #191919;
-}
-
+.mioDialog.ui-dialog .ui-dialog-content{
+    background: #D7C99C !important;
+    border: 5px solid #191919 !important;
+    }
 
 
 /*NON DOVREBBE SERVIRE NON USATO*/

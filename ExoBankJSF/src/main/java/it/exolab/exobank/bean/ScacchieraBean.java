@@ -69,7 +69,7 @@ public class ScacchieraBean implements Serializable {
 			turno=1;
 		} catch (Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
 		}
 	}
 	
@@ -98,7 +98,7 @@ public class ScacchieraBean implements Serializable {
 			if(giocaGiocatore1) {
 				cal.setTime(tempoGiocatore1);
 				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Il tempo è scaduto, hai perso Giocatore1", null));
+			        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Il tempo è scaduto, hai perso Giocatore1", null));
 			        start=!start;
 			        partitaTerminata=true;
 				}
@@ -117,7 +117,7 @@ public class ScacchieraBean implements Serializable {
 			else if(giocaGiocatore2) {
 				cal.setTime(tempoGiocatore2);
 				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_FATAL,"Il tempo è scaduto, hai perso Giocatore2", null));
+			        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_FATAL,"Il tempo è scaduto, hai perso Giocatore2", null));
 			        start=!start;
 			        partitaTerminata=true;
 				}
@@ -191,7 +191,7 @@ public class ScacchieraBean implements Serializable {
 			//TODO AGGIORNA GRIGLIA TRAMITE METODO CONTROLLER
 		} catch(Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	

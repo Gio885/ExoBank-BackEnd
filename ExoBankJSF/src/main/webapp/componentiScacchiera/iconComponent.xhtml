@@ -13,9 +13,6 @@
 		 IL BACK GROUND COLOR TORNA TRASPARENTE
 		  -->
 		  
-		  
-
-
 	<p:outputPanel class="ui-outputpanel ui-widget" style="display: flex; justify-content: center; align-items: center " rendered="#{iconComponent.id == 1 || iconComponent.id == 8}">
 		<i class="fa-regular fa-chess-rook fa-4x" style ="color : #000000;"></i>
 			<p:commandLink  
@@ -157,13 +154,10 @@
 			disabled="#{scacchieraBean.partitaTerminata or !(scacchieraBean.turno % 2 == 0 and scacchieraBean.pezzo == null)}" 
 			styleClass="p-commandlink-trasparent" 
 			style="border: #{(scacchieraBean.pezzo.id == iconComponent.id) ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.pezzo.id == iconComponent.id) ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"			
-			update="homeForm" 
+			update="homeForm:scacchiera" 
 			onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.top='5px';this.style.padding='32px'; this.style.left= '5px'; this.style.border='3px solid rgb(0, 0, 0)';"
 			onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
 			action="#{scacchieraBean.pezzoSelezionato(iconComponent)}" />		
 	</p:outputPanel>
 	
-
-
-
 </ui:composition>

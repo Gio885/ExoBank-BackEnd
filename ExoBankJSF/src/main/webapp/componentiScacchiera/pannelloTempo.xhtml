@@ -6,9 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
-	<div 
-		class="container"
-		style="width: 250px; height: 70px; border: 3px solid black">
+	<div class="container" style="width: 250px; height: 70px; border: 3px solid black">
 		<p:outputLabel 
 			for="giocatore1-tempo" 
 			value="Tempo Giocatore 1"
@@ -20,9 +18,7 @@
 			<f:convertDateTime pattern="mm:ss" />
 		</h:outputText>
 	</div>
-	<div 
-		class="container"
-		style="width: 250px; height: 70px; margin-left: 20px; border: 3px solid black">
+	<div class="container" style="width: 250px; height: 70px; margin-left: 20px; border: 3px solid black">
 		<p:outputLabel 
 			for="giocatore2-tempo" 
 			value="Tempo Giocatore 2"
@@ -34,10 +30,12 @@
 			<f:convertDateTime pattern="mm:ss" />
 		</h:outputText>
 	</div>
+	<!-- IGNORE AUTO UPDATE NECESSARIO AFFINCHE NON VADA AD AGGIORNARE L'AUTO UPDATE DEI MESSAGGI ALTRIMENTI SCOMPAIONO -->
 	<p:poll 
+		ignoreAutoUpdate="true"
 		interval="1" 
 		onstart="#{scacchieraBean.start}"
 		stop="#{!(scacchieraBean.start)}" 
 		listener="#{scacchieraBean.timer}"
-		update="giocatore1-tempo giocatore2-tempo" />
+		update="tempo scacchiera pannelloBottoni " />
 </ui:composition>
