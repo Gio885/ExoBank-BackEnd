@@ -149,45 +149,57 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
-			Pezzo[][] griglia = new Pezzo[8][8];
+			Pezzo[][] griglia = new Pezzo[Costanti.RIGHE][Costanti.COLONNE];
 			int idPezzo = 1;
-
-			// Inizializza la prima riga (0) con i pezzi iniziali (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-			griglia[0][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 0, true);
-			griglia[0][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 1, true);
-			griglia[0][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 2, true);
-			griglia[0][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.BIANCO, 0, 3, true);
-			griglia[0][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.BIANCO, 0, 4, true);
-			griglia[0][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 5, true);
-			griglia[0][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 6, true);
-			griglia[0][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 7, true);
-
-			// Inizializza la seconda riga (1) con i pedoni bianchi
-			for (int colonna = 0; colonna < 8; colonna++) {
-				griglia[1][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 1, colonna, true);
+			
+			
+			for (int riga = 0; riga < Costanti.RIGHE; riga++) {
+			    for (int colonna = 0; colonna < Costanti.COLONNE; colonna++) {
+			        String tipoPezzo = Costanti.SCACCHIERA_INIZIALE[riga][colonna];
+			        if (tipoPezzo != null) {
+			            griglia[riga][colonna] = new Pezzo(idPezzo++, tipoPezzo, (riga < 2) ? Costanti.BIANCO : Costanti.NERO, riga, colonna, true);
+			        } else {
+			            griglia[riga][colonna] = null;
+			        }
+			    }
 			}
-
-			// Inizializza le righe 2-5 con caselle vuote
-			for (int riga = 2; riga < 6; riga++) {
-				for (int colonna = 0; colonna < 8; colonna++) {
-					griglia[riga][colonna] = null; // Casella vuota
-				}
-			}
-
-			// Inizializza la sesta riga (6) con i pedoni neri
-			for (int colonna = 0; colonna < 8; colonna++) {
-				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.NERO, 6, colonna, true);
-			}
-
-			// Inizializza l'ultima riga (7) con i pezzi iniziali neri (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-			griglia[7][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 0, true);
-			griglia[7][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 1, true);
-			griglia[7][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 2, true);
-			griglia[7][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.NERO, 7, 3, true);
-			griglia[7][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.NERO, 7, 4, true);
-			griglia[7][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 5, true);
-			griglia[7][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 6, true);
-			griglia[7][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 7, true);
+			
+//			// Inizializza la prima riga (0) con i pezzi iniziali (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
+//			griglia[0][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 0, true);
+//			griglia[0][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 1, true);
+//			griglia[0][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 2, true);
+//			griglia[0][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.BIANCO, 0, 3, true);
+//			griglia[0][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.BIANCO, 0, 4, true);
+//			griglia[0][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 5, true);
+//			griglia[0][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 6, true);
+//			griglia[0][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 7, true);
+//
+//			// Inizializza la seconda riga (1) con i pedoni bianchi
+//			for (int colonna = 0; colonna < 8; colonna++) {
+//				griglia[1][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 1, colonna, true);
+//			}
+//
+//			// Inizializza le righe 2-5 con caselle vuote
+//			for (int riga = 2; riga < 6; riga++) {
+//				for (int colonna = 0; colonna < 8; colonna++) {
+//					griglia[riga][colonna] = null; // Casella vuota
+//				}
+//			}
+//
+//			// Inizializza la sesta riga (6) con i pedoni neri
+//			for (int colonna = 0; colonna < 8; colonna++) {
+//				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.NERO, 6, colonna, true);
+//			}
+//
+//			// Inizializza l'ultima riga (7) con i pezzi iniziali neri (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
+//			griglia[7][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 0, true);
+//			griglia[7][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 1, true);
+//			griglia[7][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 2, true);
+//			griglia[7][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.NERO, 7, 3, true);
+//			griglia[7][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.NERO, 7, 4, true);
+//			griglia[7][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 5, true);
+//			griglia[7][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 6, true);
+//			griglia[7][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 7, true);
 			
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(griglia);

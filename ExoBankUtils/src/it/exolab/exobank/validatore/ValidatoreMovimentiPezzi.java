@@ -66,8 +66,8 @@ public class ValidatoreMovimentiPezzi {
     private boolean validaMovimentoTorreVerticale(Integer xPartenza, Integer yPartenza, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
         int minY = Math.min(yPartenza, yDestinazione);
         int maxY = Math.max(yPartenza, yDestinazione);
-        for (int i = minY + 1; i < maxY; i++) {
-            if (griglia[xPartenza][i] != null) {
+        for (int index = minY + 1; index < maxY; index++) {
+            if (griglia[xPartenza][index] != null) {
             	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
@@ -77,8 +77,8 @@ public class ValidatoreMovimentiPezzi {
     private boolean validaMovimentoTorreOrizzontale(Integer xPartenza, Integer xDestinazione, Integer yPartenza, Pezzo[][] griglia) throws Exception {
         int minX = Math.min(xPartenza, xDestinazione);
         int maxX = Math.max(xPartenza, xDestinazione);
-        for (int i = minX + 1; i < maxX; i++) {
-            if (griglia[i][yPartenza] != null) {
+        for (int index = minX + 1; index < maxX; index++) {
+            if (griglia[index][yPartenza] != null) {
             	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
@@ -93,8 +93,8 @@ public class ValidatoreMovimentiPezzi {
         int deltaX = (xDestinazione - xPartenza) > 0 ? 1 : -1;
         int deltaY = (yDestinazione - yPartenza) > 0 ? 1 : -1;
 
-        for (int i = xPartenza + deltaX, j = yPartenza + deltaY; i != xDestinazione && j != yDestinazione; i += deltaX, j += deltaY) {
-            if (griglia[i][j] != null) {
+        for (int index = xPartenza + deltaX, j_index = yPartenza + deltaY; index != xDestinazione && j_index != yDestinazione; index += deltaX, j_index += deltaY) {
+            if (griglia[index][j_index] != null) {
             	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
