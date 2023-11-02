@@ -24,14 +24,14 @@
 				autoUpdate="true" closable="true" />
 				
 		<h:form id="homeForm">
-				<p:outputPanel id="panel1" rendered="#{!utenteBean.login and !scacchieraBean.gioca}">
+				<p:outputPanel id="panel1" rendered="#{!utenteBean.login and !scacchieraBean.nuovoGioco}">
 					<ui:include src="login.xhtml" />
 					<ui:include src="registrazione.xhtml" />
 				</p:outputPanel>	
 				<p:outputPanel id="panel2" rendered="#{utenteBean.login}">
 					<ui:include src="indexUtente.xhtml" />
 				</p:outputPanel>
-				<p:outputPanel id="panel3" rendered="#{scacchieraBean.gioca}">	
+				<p:outputPanel id="panel3" rendered="#{scacchieraBean.nuovoGioco}">	
 					<ui:include src="componentiScacchiera/scacchiera.xhtml" />
 				</p:outputPanel>
 			
