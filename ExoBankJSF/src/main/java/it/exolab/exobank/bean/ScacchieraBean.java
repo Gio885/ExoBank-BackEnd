@@ -1,12 +1,9 @@
 package it.exolab.exobank.bean;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -21,7 +18,7 @@ import it.exolab.exobank.controller.ScacchieraController;
 * Bean class for chess game
 * made with JSF component
 *
-* @author  Armando
+* @author  Armandone
 * @version 0.1
 * @since   24-10-2023 
 */
@@ -39,7 +36,7 @@ public class ScacchieraBean implements Serializable {
 	
 	@EJB
 	ScacchieraController scacchieraController = new ScacchieraController();
-	private boolean gioca;
+	private boolean nuovoGioco;
 	private Scacchiera scacchiera;
 	private Pezzo[][] griglia;
 	private Pezzo pezzo;
@@ -49,10 +46,12 @@ public class ScacchieraBean implements Serializable {
 	private Date tempoGiocatore2;
 	private boolean giocaGiocatore1;
 	private boolean giocaGiocatore2;
-	private boolean start;
+	private boolean stopTimer;
 	private boolean partitaTerminata;
+	private boolean ultimaPosizione;
 	
 
+	//INIZIALIZZAZIONE SCACCHIERA
 	public void scacchieraInit() {
 		try {
 			if(scacchiera != null ) {
@@ -66,10 +65,12 @@ public class ScacchieraBean implements Serializable {
 			giocaGiocatore1=true;
 			giocaGiocatore2=false;
 			partitaTerminata=false;
+			ultimaPosizione = false;
 			turno=1;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	
@@ -83,24 +84,25 @@ public class ScacchieraBean implements Serializable {
 			tempoGiocatore1 = tempo.getTime();
 			tempoGiocatore2 = new Date();
 			tempoGiocatore2 = tempo.getTime();
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}		
 	}
 	
 	public void start() {
-		start = !start;
+		stopTimer = !stopTimer;
 	}
 	
 	public void timer() {
 		Calendar cal = Calendar.getInstance();
-		if(start) {
+		if(stopTimer) {
 			if(giocaGiocatore1) {
 				cal.setTime(tempoGiocatore1);
 				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Il tempo è scaduto, hai perso Giocatore1", null));
-			        start=!start;
 			        partitaTerminata=true;
+			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore1", null));
+
 				}
 				else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
 					cal.add(Calendar.SECOND, -1);
@@ -111,15 +113,20 @@ public class ScacchieraBean implements Serializable {
 				}
 				else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
 					cal.add(Calendar.SECOND, -1);
+					
+				}else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
+			        stopTimer=!stopTimer;
 				}
+				
 				tempoGiocatore1 = cal.getTime();
 			}
 			else if(giocaGiocatore2) {
 				cal.setTime(tempoGiocatore2);
+				
 				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_FATAL,"Il tempo è scaduto, hai perso Giocatore2", null));
-			        start=!start;
 			        partitaTerminata=true;
+			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore1", null));
+
 				}
 				else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
 					cal.add(Calendar.SECOND, -1);
@@ -130,10 +137,61 @@ public class ScacchieraBean implements Serializable {
 				}
 				else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
 					cal.add(Calendar.SECOND, -1);
+					
+				} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
+			        stopTimer=!stopTimer;
 				}
+				
 				tempoGiocatore2 = cal.getTime();
 			}
 		}	
+	}
+	
+	
+	//FACCIO MOSSA
+	//MOSSA CONSENTITA? OK
+	//PRIMA DI ANNULLARE PEZZOAGGIORNATO CONTROLLO
+	//SE é PEDONE E POSIZOINE ULTIMA POS
+	//AGGIORNO UNA VARIABILE BOOLEANA TRUE
+	//ELSE
+	//PEZZO AGGIORNATO NULL
+	//POI VIENE SELEZIONATO PEZZO
+	//FACCIO CONFERMA CHE CAMBIA IL TIPO AL PEZZO AGGIORNATO
+	//CHIAMO METODO CONTROLLER
+	//PASSO PEZZO AGGIORNATO CON TUTTO
+	//MI RITORNA GRIGLIA
+	//DOPODICHE PEZZO AGGIORNATO = NULL
+	public void mossa (Integer posX, Integer posY) {
+		try {
+			pezzoAggiornato = aggiornaPezzoAggiornato(posX, posY);
+			pezzo = null;
+			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
+			
+			if(pezzoAggiornato.getColore().equalsIgnoreCase("bianco")
+					&& pezzoAggiornato.getPosizioneX() == 7
+					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone") 
+					) {
+				ultimaPosizione = true;
+					
+			} else if(pezzoAggiornato.getColore().equalsIgnoreCase("nero")
+					&& pezzoAggiornato.getPosizioneX() == 0
+					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone") 
+					) {
+				ultimaPosizione = true;
+				
+			} else {
+				pezzoAggiornato=null;
+				cambiaTurno();
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+	
+	public void trasformaPedone(String nuovoTipo) {
+		//TODO TRASFORMA PEDONE E CHIAMA METODO CONTROLLER
 	}
 
 	public void cambiaTurno() {
@@ -176,7 +234,7 @@ public class ScacchieraBean implements Serializable {
 //		}
 //	}
 	
-	public void mossa (Integer posX, Integer posY) {
+	private Pezzo aggiornaPezzoAggiornato(Integer posX, Integer posY) throws Exception {
 		try {
 			pezzoAggiornato = new Pezzo();
 			pezzoAggiornato.setColore(pezzo.getColore());
@@ -184,23 +242,22 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato.setId(pezzo.getId());
 			pezzoAggiornato.setPosizioneX(posX);
 			pezzoAggiornato.setPosizioneY(posY);
-			System.out.println(pezzoAggiornato.toString());
-			pezzo = null;
-			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
-			pezzoAggiornato=null;
-			//TODO AGGIORNA GRIGLIA TRAMITE METODO CONTROLLER
+			return pezzoAggiornato;
+			
 		} catch(Exception e) {
 			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("homeForm:messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			throw new Exception("errore in aggiornaPezzoAggiornato --> ");
 		}
+		
 	}
+
 	
 	public void switchGioca() {
-		gioca = !gioca;
-		if(gioca && null == scacchiera) {
+		nuovoGioco = !nuovoGioco;
+		if(nuovoGioco && null == scacchiera) {
 			scacchieraInit();
 		} 
-		else if(!gioca){
+		else if(!nuovoGioco){
 			resetGame();
 		}	
 	}
@@ -214,7 +271,7 @@ public class ScacchieraBean implements Serializable {
 		tempoGiocatore2 = null;
 		giocaGiocatore1 = false;
 		giocaGiocatore2 = false;
-		start = false;
+		stopTimer = false;
 		turno = 0;		
 	}
 	
@@ -227,11 +284,11 @@ public class ScacchieraBean implements Serializable {
 	}
 
 	public boolean isStart() {
-		return start;
+		return stopTimer;
 	}
 
 	public void setStart(boolean start) {
-		this.start = start;
+		this.stopTimer = start;
 	}
 
 	public boolean isGiocaGiocatore1() {
@@ -275,11 +332,11 @@ public class ScacchieraBean implements Serializable {
 	}
 
 	public boolean isGioca() {
-		return gioca;
+		return nuovoGioco;
 	}
 
 	public void setGioca(boolean gioca) {
-		this.gioca = gioca;
+		this.nuovoGioco = gioca;
 	}
 
 	public Pezzo getPezzo() {
@@ -314,6 +371,14 @@ public class ScacchieraBean implements Serializable {
 
 	public void setTurno(Integer turno) {
 		this.turno = turno;
+	}
+
+	public boolean isUltimaPosizione() {
+		return ultimaPosizione;
+	}
+
+	public void setUltimaPosizione(boolean ultimaPosizione) {
+		this.ultimaPosizione = ultimaPosizione;
 	}
 	
 	
