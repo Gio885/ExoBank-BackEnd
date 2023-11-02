@@ -58,21 +58,26 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean puoiRimuovereScaccoMossaRe(Pezzo re, Integer posizioneXRe, Integer posizioneYRe, Pezzo[][] griglia) throws Exception {
-		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-		for (int deltaX = -1; deltaX <= 1; deltaX++) {
+	    ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+	    
+	    for (int deltaX = -1; deltaX <= 1; deltaX++) {
 	        for (int deltaY = -1; deltaY <= 1; deltaY++) {
 	            if (deltaX == 0 && deltaY == 0) {
 	                continue;
 	            }
-
+	            
 	            Integer nuovaX = posizioneXRe + deltaX;
 	            Integer nuovaY = posizioneYRe + deltaY;
-
-	            if (validaMosse.mossaConsentitaPerPezzo(re, posizioneXRe, posizioneYRe, nuovaX, nuovaY, griglia) && !isScacco(nuovaX, nuovaY, griglia, re.getColore())) {
-	                return true;
+	            
+	            // Verifica se le nuove coordinate sono all'interno della scacchiera
+	            if (nuovaX >= 0 && nuovaX < griglia.length && nuovaY >= 0 && nuovaY < griglia[0].length) {
+	                if (validaMosse.mossaConsentitaPerPezzo(re, posizioneXRe, posizioneYRe, nuovaX, nuovaY, griglia) && !isScacco(nuovaX, nuovaY, griglia, re.getColore())) {
+	                    return true;
+	                }
 	            }
 	        }
 	    }
+	    
 	    return false;
 	}
 
@@ -244,16 +249,16 @@ public class ValidatoreScaccoAlRe {
 
 	
 
-	private boolean isScacco(int x, int y, Pezzo[][] scacchiera, String coloreRe) throws Exception {
+	public boolean isScacco(Integer x, Integer y, Pezzo[][] scacchiera, String coloreRe) throws Exception {
 	    String coloreAvversario = (coloreRe.equals(Costanti.BIANCO)) ? Costanti.NERO : Costanti.BIANCO; // Calcola il colore avversario
 
-	    for (Pezzo minaccia : trovaMinacce(coloreAvversario, scacchiera)) {
-	        if (minaccia.getPosizioneX() == x && minaccia.getPosizioneY() == y) {
+//	    for (Pezzo minaccia : trovaMinacce(coloreAvversario, scacchiera)) {
+//	        if (minaccia.getPosizioneX() == x && minaccia.getPosizioneY() == y) {
 	            return true;
-	        }
-	    }
-
-	    return false;
+//	        }
+//	    }
+//
+//	    return false;
 	}
 	
 	

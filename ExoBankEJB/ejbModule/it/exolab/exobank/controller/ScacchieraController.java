@@ -15,6 +15,7 @@ import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.costanti.Costanti;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 import it.exolab.exobank.validatore.ValidaMosseScacchi;
+import it.exolab.exobank.validatore.ValidatoreScaccoAlRe;
 
 @Stateless(name = "ScacchieraControllerInterface")
 @LocalBean
@@ -39,20 +40,19 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	@Override
 	public Scacchiera mossaConsentita(Pezzo pezzo) throws Exception {
 		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
 		try {
 			Pezzo pezzoSpecifico = (Pezzo) findPezzoById(pezzo, griglia);
 			if (pezzoSpecifico == null) {
 				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
 			}
+			Integer xPartenza = pezzoSpecifico.getPosizioneX();
+			Integer yPartenza = pezzoSpecifico.getPosizioneY();
+			Integer xDestinazione = pezzo.getPosizioneX();
+			Integer yDestinazione = pezzo.getPosizioneY();
 
-			
-
-			if(validatoreScacchi.puoiRimuovereScacco(trovaRe(pezzoSpecifico, griglia), griglia, scacchieraLavoro)) {
-				Integer xPartenza = pezzoSpecifico.getPosizioneX();
-				Integer yPartenza = pezzoSpecifico.getPosizioneY();
-				Integer xDestinazione = pezzo.getPosizioneX();
-				Integer yDestinazione = pezzo.getPosizioneY();
+			if(validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia).getPosizioneX(), trovaRe(pezzoSpecifico, griglia).getPosizioneY(), griglia, trovaRe(pezzoSpecifico, griglia).getColore())) {
 
 				// Utilizza il validatoreScacchi per verificare la validità della mossa
 				if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
@@ -74,6 +74,32 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					scacchieraLavoro.setScacchiera(griglia);
 				} else {
 					throw new Exception("Mossa non consentita");
+				}
+			}else {
+				if(validatoreScacchi.puoiRimuovereScacco(trovaRe(pezzoSpecifico, griglia), griglia, scacchieraLavoro)) {
+					// Utilizza il validatoreScacchi per verificare la validità della mossa
+					if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
+						if (null != griglia[xDestinazione][yDestinazione]) {
+							griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
+							griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
+							// Aggiorna la scacchiera con la nuova posizione
+							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+							pezzoSpecifico.setPosizioneY(yDestinazione);
+						} else {
+							// Aggiorna la scacchiera con la nuova posizione
+							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+							pezzoSpecifico.setPosizioneY(yDestinazione);
+						}
+						scacchieraLavoro.setScacchiera(griglia);
+					} else {
+						throw new Exception("Mossa non consentita");
+					}
+				}else {
+					throw new Exception("SCACCO MATTO!");
 				}
 			}
 			return scacchieraLavoro;
