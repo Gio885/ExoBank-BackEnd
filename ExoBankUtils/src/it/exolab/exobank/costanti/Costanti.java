@@ -86,4 +86,16 @@ public class Costanti {
     public static final String REGINA = "REGINA";
     public static final String RE = "RE";
     
+ // Matrice costante per la disposizione iniziale dei pezzi
+    public static final String[][] SCACCHIERA_INIZIALE = {
+        {TORRE, CAVALLO, ALFIERE, RE, REGINA, ALFIERE, CAVALLO, TORRE},
+        {PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE},
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null},
+        {null, null, null, null, null, null, null, null},
+        {PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE},
+        {TORRE, CAVALLO, ALFIERE, RE, REGINA, ALFIERE, CAVALLO, TORRE}
+    };
+    
 }
