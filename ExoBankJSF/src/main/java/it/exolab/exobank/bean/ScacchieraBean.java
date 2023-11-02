@@ -241,6 +241,7 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato.setColore(pezzo.getColore());
 			pezzoAggiornato.setEsiste(pezzo.isEsiste());
 			pezzoAggiornato.setId(pezzo.getId());
+			pezzoAggiornato.setTipo(pezzo.getTipo());
 			pezzoAggiornato.setPosizioneX(posX);
 			pezzoAggiornato.setPosizioneY(posY);
 			return pezzoAggiornato;
