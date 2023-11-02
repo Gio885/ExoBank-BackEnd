@@ -7,15 +7,17 @@ public class Pezzo implements Serializable {
 
 	private Integer id;
 	private String colore;
+	private String tipo;
 	private Integer posizioneX;
 	private Integer posizioneY;
 	private boolean esiste;
 	
 	
 	
-	public Pezzo(String colore, Integer posizioneX, Integer posizioneY, Integer id, boolean esiste) {
+	public Pezzo(Integer id, String tipo, String colore, Integer posizioneX, Integer posizioneY, boolean esiste) {
 		super();
 		this.id = id;
+		this.tipo = tipo;
 		this.colore = colore;
 		this.posizioneX = posizioneX;
 		this.posizioneY = posizioneY;
@@ -31,6 +33,12 @@ public class Pezzo implements Serializable {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	public String getColore() {
 		return colore;
@@ -60,13 +68,13 @@ public class Pezzo implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Pezzo [id=" + id + ", colore=" + colore + ", posizioneX=" + posizioneX + ", posizioneY=" + posizioneY
-				+ ", esiste=" + esiste + "]";
+		return "Pezzo [id=" + id + ", colore=" + colore + ", tipo=" + tipo + ", posizioneX=" + posizioneX
+				+ ", posizioneY=" + posizioneY + ", esiste=" + esiste + "]";
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(colore, esiste, id, posizioneX, posizioneY);
+		return Objects.hash(colore, esiste, id, posizioneX, posizioneY, tipo);
 	}
 	
 	@Override
