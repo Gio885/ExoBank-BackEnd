@@ -12,5 +12,7 @@ public interface ScacchieraControllerInterface {
 
 	Scacchiera mossaConsentita(Pezzo pezzo) throws Exception;
 
+	Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception;
+
 	
 }
