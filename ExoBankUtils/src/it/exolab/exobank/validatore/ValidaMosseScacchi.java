@@ -46,16 +46,15 @@ public class ValidaMosseScacchi {
         return false; // Restituisci true se la mossa è consentita, altrimenti false.
     }
 	
-	public boolean puoiRimuovereScacco(Integer xRe, Integer yRe, Pezzo[][] griglia, Scacchiera scacchiera) throws Exception {
-	    Pezzo re = griglia[xRe][yRe];
+	public boolean puoiRimuovereScacco(Pezzo re, Pezzo[][] griglia, Scacchiera scacchiera) throws Exception {
 	    ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 	    if (validaScacco.isScaccoMatto(re, griglia, re.getColore())) {
 	        throw new RuntimeException("SCACCO MATTO");
 	    }
 
-	    return validaScacco.puoiRimuovereScaccoMossaRe(re, xRe, yRe, griglia) ||
-	    		validaScacco.puoiRimuovereScaccoCatturaMinaccia(re, xRe, yRe, griglia) ||
-	    		validaScacco.puoiRimuovereScaccoBloccaMinaccia(re, xRe, yRe, griglia);
+	    return validaScacco.puoiRimuovereScaccoMossaRe(re, re.getPosizioneX(), re.getPosizioneY(), griglia) ||
+	    		validaScacco.puoiRimuovereScaccoCatturaMinaccia(re, re.getPosizioneX(), re.getPosizioneY(), griglia) ||
+	    		validaScacco.puoiRimuovereScaccoBloccaMinaccia(re, re.getPosizioneX(), re.getPosizioneY(), griglia);
 	}
 	
 	
