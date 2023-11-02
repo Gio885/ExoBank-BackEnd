@@ -63,23 +63,23 @@ public class ValidatoreMovimentiPezzi {
         throw new Exception("Movimento non valido per la torre.");
     }
 
-    private boolean validaMovimentoTorreVerticale(Integer xPartenza, Integer yPartenza, Integer yDestinazione, Pezzo[][] griglia) {
+    private boolean validaMovimentoTorreVerticale(Integer xPartenza, Integer yPartenza, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
         int minY = Math.min(yPartenza, yDestinazione);
         int maxY = Math.max(yPartenza, yDestinazione);
         for (int i = minY + 1; i < maxY; i++) {
             if (griglia[xPartenza][i] != null) {
-                return false;
+            	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
         return true;
     }
 
-    private boolean validaMovimentoTorreOrizzontale(Integer xPartenza, Integer xDestinazione, Integer yPartenza, Pezzo[][] griglia) {
+    private boolean validaMovimentoTorreOrizzontale(Integer xPartenza, Integer xDestinazione, Integer yPartenza, Pezzo[][] griglia) throws Exception {
         int minX = Math.min(xPartenza, xDestinazione);
         int maxX = Math.max(xPartenza, xDestinazione);
         for (int i = minX + 1; i < maxX; i++) {
             if (griglia[i][yPartenza] != null) {
-                return false;
+            	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
         return true;
@@ -95,7 +95,7 @@ public class ValidatoreMovimentiPezzi {
 
         for (int i = xPartenza + deltaX, j = yPartenza + deltaY; i != xDestinazione && j != yDestinazione; i += deltaX, j += deltaY) {
             if (griglia[i][j] != null) {
-                return false;
+            	throw new Exception("C'è un pezzo prima della destinazione.");
             }
         }
 
@@ -112,7 +112,7 @@ public class ValidatoreMovimentiPezzi {
                 return validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
             } catch (Exception e) {
                 // Personalizza il messaggio di errore se il movimento della torre non è valido
-                throw new Exception("Movimento non valido per la regina: " + e.getMessage());
+                throw new Exception("Movimento non valido per la regina");
             }
         } else if (deltaX == deltaY) {
             try {
@@ -120,7 +120,7 @@ public class ValidatoreMovimentiPezzi {
                 return validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
             } catch (Exception e) {
                 // Personalizza il messaggio di errore se il movimento dell'alfiere non è valido
-                throw new Exception("Movimento non valido per la regina: " + e.getMessage());
+                throw new Exception("Movimento non valido per la regina");
             }
         }
 

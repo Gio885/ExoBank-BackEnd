@@ -150,7 +150,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 			// Inizializza la sesta riga (6) con i pedoni neri
 			for (int colonna = 0; colonna < 8; colonna++) {
-				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 6, colonna, true);
+				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.NERO, 6, colonna, true);
 			}
 
 			// Inizializza l'ultima riga (7) con i pezzi iniziali neri (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
@@ -186,7 +186,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			}
 			return null; // Se nessun pezzo con l'ID specifico è stato trovato
 		} catch (Exception e) {
-			// Gestisci l'eccezione qui
 			e.printStackTrace();
 			throw new Exception("Pezzo non trovato"); // Restituisci un valore adeguato in caso di errore
 		}
