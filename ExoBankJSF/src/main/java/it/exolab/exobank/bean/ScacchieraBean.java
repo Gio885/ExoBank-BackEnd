@@ -169,14 +169,14 @@ public class ScacchieraBean implements Serializable {
 			
 			if(pezzoAggiornato.getColore().equalsIgnoreCase("bianco")
 					&& pezzoAggiornato.getPosizioneX() == 7
-					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone") 
-					) {
+					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone")) {
+				
 				ultimaPosizione = true;
 					
 			} else if(pezzoAggiornato.getColore().equalsIgnoreCase("nero")
 					&& pezzoAggiornato.getPosizioneX() == 0
-					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone") 
-					) {
+					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone")) {
+				
 				ultimaPosizione = true;
 				
 			} else {
@@ -190,9 +190,10 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void trasformaPedone(String nuovoTipo) {
-		//TODO TRASFORMA PEDONE E CHIAMA METODO CONTROLLER
-	}
+//	public void trasformaPedone(String nuovoTipo) {
+//		
+//		scacchieraController.aggiornamentoTipoPedone(pezzo);
+//	}
 
 	public void cambiaTurno() {
 		turno++;
@@ -251,8 +252,7 @@ public class ScacchieraBean implements Serializable {
 		
 	}
 
-	
-	public void switchGioca() {
+	public void gioca() {
 		nuovoGioco = !nuovoGioco;
 		if(nuovoGioco && null == scacchiera) {
 			scacchieraInit();
@@ -282,13 +282,13 @@ public class ScacchieraBean implements Serializable {
 	public void setPartitaTerminata(boolean partitaTerminata) {
 		this.partitaTerminata = partitaTerminata;
 	}
-
-	public boolean isStart() {
+	
+	public boolean isStopTimer() {
 		return stopTimer;
 	}
 
-	public void setStart(boolean start) {
-		this.stopTimer = start;
+	public void setStopTimer(boolean stopTimer) {
+		this.stopTimer = stopTimer;
 	}
 
 	public boolean isGiocaGiocatore1() {
@@ -331,12 +331,12 @@ public class ScacchieraBean implements Serializable {
 		this.griglia = griglia;
 	}
 
-	public boolean isGioca() {
+	public boolean isNuovoGioco() {
 		return nuovoGioco;
 	}
 
-	public void setGioca(boolean gioca) {
-		this.nuovoGioco = gioca;
+	public void setNuovoGioco(boolean nuovoGioco) {
+		this.nuovoGioco = nuovoGioco;
 	}
 
 	public Pezzo getPezzo() {
