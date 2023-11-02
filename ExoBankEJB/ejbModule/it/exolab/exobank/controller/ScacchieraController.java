@@ -4,12 +4,6 @@ package it.exolab.exobank.controller;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import it.exolab.exobank.chess.model.Pedone;
-import it.exolab.exobank.chess.model.Torre;
-import it.exolab.exobank.chess.model.Re;
-import it.exolab.exobank.chess.model.Regina;
-import it.exolab.exobank.chess.model.Cavallo;
-import it.exolab.exobank.chess.model.Alfiere;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.costanti.Costanti;
@@ -43,7 +37,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
 		try {
-			Pezzo pezzoSpecifico = (Pezzo) findPezzoById(pezzo, griglia);
+			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
 			if (pezzoSpecifico == null) {
 				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
 			}
@@ -109,6 +103,23 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		}
 	}
 
+	@Override
+	public Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception {
+		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+
+		try {
+			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
+			if (pezzoSpecifico == null) {
+				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
+			}
+			pezzoSpecifico.setTipo(pezzo.getTipo());
+			return scacchieraLavoro;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
+		}
+	}
+
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
@@ -116,18 +127,18 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			int idPezzo = 1;
 
 			// Inizializza la prima riga (0) con i pezzi iniziali (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-			griglia[0][0] = new Torre(Costanti.BIANCO, 0, 0, idPezzo++, true);
-			griglia[0][1] = new Cavallo(Costanti.BIANCO, 0, 1, idPezzo++, true);
-			griglia[0][2] = new Alfiere(Costanti.BIANCO, 0, 2, idPezzo++, true);
-			griglia[0][3] = new Re(Costanti.BIANCO, 0, 3, idPezzo++, true);
-			griglia[0][4] = new Regina(Costanti.BIANCO, 0, 4, idPezzo++, true);
-			griglia[0][5] = new Alfiere(Costanti.BIANCO, 0, 5, idPezzo++, true);
-			griglia[0][6] = new Cavallo(Costanti.BIANCO, 0, 6, idPezzo++, true);
-			griglia[0][7] = new Torre(Costanti.BIANCO, 0, 7, idPezzo++, true);
+			griglia[0][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 0, true);
+			griglia[0][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 1, true);
+			griglia[0][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 2, true);
+			griglia[0][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.BIANCO, 0, 3, true);
+			griglia[0][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.BIANCO, 0, 4, true);
+			griglia[0][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 5, true);
+			griglia[0][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 6, true);
+			griglia[0][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 7, true);
 
 			// Inizializza la seconda riga (1) con i pedoni bianchi
 			for (int colonna = 0; colonna < 8; colonna++) {
-				griglia[1][colonna] = new Pedone(Costanti.BIANCO, 1, colonna, idPezzo++, true);
+				griglia[1][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 1, colonna, true);
 			}
 
 			// Inizializza le righe 2-5 con caselle vuote
@@ -139,19 +150,19 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 			// Inizializza la sesta riga (6) con i pedoni neri
 			for (int colonna = 0; colonna < 8; colonna++) {
-				griglia[6][colonna] = new Pedone(Costanti.NERO, 6, colonna, idPezzo++, true);
+				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 6, colonna, true);
 			}
 
 			// Inizializza l'ultima riga (7) con i pezzi iniziali neri (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-			griglia[7][0] = new Torre(Costanti.NERO, 7, 0, idPezzo++, true);
-			griglia[7][1] = new Cavallo(Costanti.NERO, 7, 1, idPezzo++, true);
-			griglia[7][2] = new Alfiere(Costanti.NERO, 7, 2, idPezzo++, true);
-			griglia[7][3] = new Re(Costanti.NERO, 7, 3, idPezzo++, true);
-			griglia[7][4] = new Regina(Costanti.NERO, 7, 4, idPezzo++, true);
-			griglia[7][5] = new Alfiere(Costanti.NERO, 7, 5, idPezzo++, true);
-			griglia[7][6] = new Cavallo(Costanti.NERO, 7, 6, idPezzo++, true);
-			griglia[7][7] = new Torre(Costanti.NERO, 7, 7, idPezzo++, true);
-
+			griglia[7][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 0, true);
+			griglia[7][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 1, true);
+			griglia[7][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 2, true);
+			griglia[7][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.NERO, 7, 3, true);
+			griglia[7][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.NERO, 7, 4, true);
+			griglia[7][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 5, true);
+			griglia[7][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 6, true);
+			griglia[7][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 7, true);
+			
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(griglia);
 			scacchieraLavoro.setScacchiera(griglia);
@@ -163,25 +174,13 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		}
 	}
 
-	public Object findPezzoById(Pezzo pezzo, Pezzo[][] griglia) throws Exception {
+	private Pezzo findPezzoById(Pezzo pezzo, Pezzo[][] griglia) throws Exception {
 		try {
 			Integer idPezzo = pezzo.getId();
 			for (int x = 0; x < 8; x++) {
 				for (int y = 0; y < 8; y++) {
 					if (null != griglia[x][y] && griglia[x][y].getId() == idPezzo) {
-						if (griglia[x][y] instanceof Torre) {
-							return (Torre) griglia[x][y];
-						} else if (griglia[x][y] instanceof Alfiere) {
-							return (Alfiere) griglia[x][y];
-						} else if (griglia[x][y] instanceof Re) {
-							return (Re) griglia[x][y];
-						} else if (griglia[x][y] instanceof Regina) {
-							return (Regina) griglia[x][y];
-						} else if (griglia[x][y] instanceof Cavallo) {
-							return (Cavallo) griglia[x][y];
-						} else if (griglia[x][y] instanceof Pedone) {
-							return (Pedone) griglia[x][y];
-						}
+						return griglia[x][y];
 					}
 				}
 			}
@@ -199,7 +198,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		for (int x = 0; x < griglia.length; x++) {
 			for (int y = 0; y < griglia[x].length; y++) {
 				Pezzo pezzoCorrente = griglia[x][y];
-				if (pezzoCorrente != null && pezzoCorrente instanceof Re && pezzoCorrente.getColore().equals(pezzo.getColore())) {
+				if (pezzoCorrente != null && pezzoCorrente.getTipo().equals(Costanti.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
 					return reStessoColore = pezzoCorrente;
 				}
 			}
