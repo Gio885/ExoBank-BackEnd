@@ -1,14 +1,7 @@
 package it.exolab.exobank.validatore;
 
-
-import it.exolab.exobank.chess.model.Alfiere;
-import it.exolab.exobank.chess.model.Cavallo;
-import it.exolab.exobank.chess.model.Pedone;
 import it.exolab.exobank.chess.model.Pezzo;
-import it.exolab.exobank.chess.model.Re;
-import it.exolab.exobank.chess.model.Regina;
 import it.exolab.exobank.chess.model.Scacchiera;
-import it.exolab.exobank.chess.model.Torre;
 import it.exolab.exobank.costanti.Costanti;
 
 public class ValidaMosseScacchi {
@@ -29,17 +22,17 @@ public class ValidaMosseScacchi {
 		ValidatoreMovimentiPezzi validatoreMovimento = new ValidatoreMovimentiPezzi();
 
 		// Aggiungi la logica specifica per ciascun tipo di pezzo qui.
-		if (pezzo instanceof Torre) {
+		if (pezzo.getTipo().equals(Costanti.TORRE)) {
 			return validatoreMovimento.validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo instanceof Alfiere) {
+		} else if (pezzo.getTipo().equals(Costanti.ALFIERE)) {
 			return validatoreMovimento.validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo instanceof Regina) {
+		} else if (pezzo.getTipo().equals(Costanti.REGINA)) {
 			return validatoreMovimento.validaMovimentoRegina(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo instanceof Pedone) {
+		} else if (pezzo.getTipo().equals(Costanti.PEDONE)) {
 			return validatoreMovimento.validaMovimentoPedone(xPartenza, yPartenza, xDestinazione, yDestinazione, pezzo.getColore(), scacchiera);
-		} else if (pezzo instanceof Cavallo) {
+		} else if (pezzo.getTipo().equals(Costanti.CAVALLO)) {
 			return validatoreMovimento.validaMovimentoCavallo(xPartenza, yPartenza, xDestinazione, yDestinazione);
-		} else if (pezzo instanceof Re) {
+		} else if (pezzo.getTipo().equals(Costanti.RE)) {
 			return validatoreMovimento.validaMovimentoRe(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
 		}
 

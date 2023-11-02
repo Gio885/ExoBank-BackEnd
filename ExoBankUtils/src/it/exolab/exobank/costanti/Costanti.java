@@ -1,6 +1,6 @@
 package it.exolab.exobank.costanti;
 
-import javax.ws.rs.core.Response.Status;
+//import javax.ws.rs.core.Response.Status;
 
 public class Costanti {
 	
@@ -79,5 +79,11 @@ public class Costanti {
     public static final int COLONNE = 8;
     public static final String BIANCO = "BIANCO";
     public static final String NERO = "NERO";
+    public static final String PEDONE = "PEDONE";
+    public static final String TORRE = "TORRE";
+    public static final String ALFIERE = "ALFIERE";
+    public static final String CAVALLO = "CAVALLO";
+    public static final String REGINA = "REGINA";
+    public static final String RE = "RE";
     
 }
