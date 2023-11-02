@@ -21,7 +21,6 @@ public class ValidaMosseScacchi {
 
 		ValidatoreMovimentiPezzi validatoreMovimento = new ValidatoreMovimentiPezzi();
 
-		// Aggiungi la logica specifica per ciascun tipo di pezzo qui.
 		if (pezzo.getTipo().equals(Costanti.TORRE)) {
 			return validatoreMovimento.validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
 		} else if (pezzo.getTipo().equals(Costanti.ALFIERE)) {
@@ -36,7 +35,7 @@ public class ValidaMosseScacchi {
 			return validatoreMovimento.validaMovimentoRe(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
 		}
 
-		return false; // Restituisci true se la mossa è consentita, altrimenti false.
+		return false;
 	}
 
 	public boolean puoiRimuovereScacco(Pezzo re, Pezzo[][] griglia, Scacchiera scacchiera) throws Exception {

@@ -17,7 +17,7 @@ public class ValidatoreMovimentiPezzi {
         throw new Exception("Movimento non valido per il pedone.");
     }
 
-    private boolean validaMovimentoPedoneBianco(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) {
+    private boolean validaMovimentoPedoneBianco(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
         if (xDestinazione == xPartenza + 1) {
             if (yDestinazione == yPartenza && griglia[xDestinazione][yDestinazione] == null) {
                 return true;
@@ -30,10 +30,10 @@ public class ValidatoreMovimentiPezzi {
                 return true;
             }
         }
-        return false;
+        throw new Exception("Pedone bianco mossa non consentita.");
     }
 
-    private boolean validaMovimentoPedoneNero(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) {
+    private boolean validaMovimentoPedoneNero(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
         if (xDestinazione == xPartenza - 1) {
             if (yDestinazione == yPartenza && griglia[xDestinazione][yDestinazione] == null) {
                 return true;
@@ -46,7 +46,7 @@ public class ValidatoreMovimentiPezzi {
                 return true;
             }
         }
-        return false;
+        throw new Exception("Pedone nero mossa non consentita.");
     }
 
     public boolean validaMovimentoTorre(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] griglia) throws Exception {
@@ -108,18 +108,14 @@ public class ValidatoreMovimentiPezzi {
 
         if ((deltaX == 0 && deltaY != 0) || (deltaX != 0 && deltaY == 0)) {
             try {
-                // Movimento orizzontale o verticale, quindi validaMovimentoTorre
                 return validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
             } catch (Exception e) {
-                // Personalizza il messaggio di errore se il movimento della torre non è valido
                 throw new Exception("Movimento non valido per la regina");
             }
         } else if (deltaX == deltaY) {
             try {
-                // Movimento diagonale, quindi validaMovimentoAlfiere
                 return validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
             } catch (Exception e) {
-                // Personalizza il messaggio di errore se il movimento dell'alfiere non è valido
                 throw new Exception("Movimento non valido per la regina");
             }
         }
@@ -148,13 +144,11 @@ public class ValidatoreMovimentiPezzi {
         int deltaX = Math.abs(xDestinazione - xPartenza);
         int deltaY = Math.abs(yDestinazione - yPartenza);
 
-        // Il re può muoversi solo in queste 8 posizioni intorno a lui
         if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
             isValid = true;
         }
 
         if (isValid) {
-            // Verifica se la destinazione è una posizione vuota o contiene un pezzo avversario
             if (griglia[xDestinazione][yDestinazione] == null || !griglia[xDestinazione][yDestinazione].getColore().equals(griglia[xPartenza][yPartenza].getColore())) {
                 return true;
             }

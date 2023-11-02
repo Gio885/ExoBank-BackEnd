@@ -1,6 +1,9 @@
 package it.exolab.exobank.controller;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -119,6 +122,29 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
 		}
 	}
+	
+	
+	@Override
+	public List<Pezzo> listaPezziMangiati() throws Exception {
+		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+
+		try {
+			List<Pezzo> listaPezziStatoEsisteFalse = new ArrayList<Pezzo>();
+			for (int x = 0; x < 8; x++) {
+				for (int y = 0; y < 8; y++) {
+					if(griglia[x][y].isEsiste() == false){
+						listaPezziStatoEsisteFalse.add(griglia[x][y]);
+					}
+				}
+			}
+			return listaPezziStatoEsisteFalse;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
+		}
+	}
+	
+	
 
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {

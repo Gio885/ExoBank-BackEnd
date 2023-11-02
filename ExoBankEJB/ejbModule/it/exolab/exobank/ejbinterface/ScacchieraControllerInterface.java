@@ -1,5 +1,7 @@
 package it.exolab.exobank.ejbinterface;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import it.exolab.exobank.chess.model.Pezzo;
@@ -13,6 +15,8 @@ public interface ScacchieraControllerInterface {
 	Scacchiera mossaConsentita(Pezzo pezzo) throws Exception;
 
 	Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception;
+
+	List<Pezzo> listaPezziMangiati() throws Exception;
 
 	
 }
