@@ -154,7 +154,6 @@ public class ScacchieraBean implements Serializable {
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
 			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
-				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
 				ultimaPosizione = true;
 				
 			} else {
