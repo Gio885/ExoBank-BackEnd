@@ -44,6 +44,14 @@
    			update="homeForm"
     		immediate="true" 
     		styleClass="button-scacchi"/>
+   		<p:commandButton
+			style="margin-left:20px;"
+			value="MOSTRA DIALOG"
+	  		action="#{scacchieraBean.mostraDialog()}"
+	  		oncomplete="PF('modalTrasformazionePedone').show()"
+	  		update="homeForm modalTrasformazionePedone"
+	   		immediate="true" 
+	   		styleClass="button-scacchi"/>
 		</div>	
 				
 </ui:composition>
