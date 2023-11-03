@@ -88,8 +88,8 @@ public class ScacchieraBean implements Serializable {
 		try {
 			Calendar tempo = Calendar.getInstance();
 			tempo.set(Calendar.HOUR_OF_DAY, 0);
-			tempo.set(Calendar.MINUTE, 00);
-			tempo.set(Calendar.SECOND, 03);
+			tempo.set(Calendar.MINUTE, 03);
+			tempo.set(Calendar.SECOND, 00);
 			tempoGiocatore1 = new Date();
 			tempoGiocatore1 = tempo.getTime();
 			tempoGiocatore2 = new Date();
