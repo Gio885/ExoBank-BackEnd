@@ -33,9 +33,7 @@ public class ScacchieraBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	//TODO EXCEPTION HANDLING
-	
+		
 	@EJB
 	ScacchieraController scacchieraController = new ScacchieraController();
 	private List<Pezzo> listaPezziMangiati;
@@ -216,6 +214,7 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato.setTipo(nuovoTipo);
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			nuovoTipo = null;
+			ultimaPosizione = false;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -228,7 +227,7 @@ public class ScacchieraBean implements Serializable {
 		ultimaPosizione = true;
 	}
 
-	public void cambiaTurno() {
+	private void cambiaTurno() {
 		turno++;
 		giocaGiocatore1 = !giocaGiocatore1;
 		giocaGiocatore2 = !giocaGiocatore2;
