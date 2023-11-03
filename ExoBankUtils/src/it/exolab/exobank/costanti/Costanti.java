@@ -79,6 +79,7 @@ public class Costanti {
     //SCACCHI
     public static final int RIGHE = 8;
     public static final int COLONNE = 8;
+    public static final int COMPARATORE_STRINGA_UGUALE = 0;
     
  // Matrice costante per la disposizione iniziale dei pezzi
     public static final Tipo[][] SCACCHIERA_INIZIALE = {
