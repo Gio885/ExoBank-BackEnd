@@ -67,7 +67,7 @@ public class ScacchieraBean implements Serializable {
 			scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-			creazioneTimer();			
+//			creazioneTimer();			
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
 			partitaTerminata = false;
@@ -80,16 +80,21 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void sceltaLungezzaPartita() {
+	public void sceltaLungezzaPartita(int scelta) {
 		
+		if(scelta == 1) {
+			creazioneTimer(30, 00);
+		} else if(scelta == 2) {
+			creazioneTimer(00, 10);
+		}
 	}
 	
-	private void creazioneTimer() {
+	private void creazioneTimer(int secondi, int minuti) {
 		try {
 			Calendar tempo = Calendar.getInstance();
 			tempo.set(Calendar.HOUR_OF_DAY, 0);
-			tempo.set(Calendar.MINUTE, 03);
-			tempo.set(Calendar.SECOND, 00);
+			tempo.set(Calendar.MINUTE, minuti);
+			tempo.set(Calendar.SECOND, secondi);
 			tempoGiocatore1 = new Date();
 			tempoGiocatore1 = tempo.getTime();
 			tempoGiocatore2 = new Date();
@@ -142,19 +147,6 @@ public class ScacchieraBean implements Serializable {
 		return cal.getTime();
 	}
 	
-	//FACCIO MOSSA
-	//MOSSA CONSENTITA? OK
-	//PRIMA DI ANNULLARE PEZZOAGGIORNATO CONTROLLO
-	//SE é PEDONE E POSIZOINE ULTIMA POS
-	//AGGIORNO UNA VARIABILE BOOLEANA TRUE
-	//ELSE
-	//PEZZO AGGIORNATO NULL
-	//POI VIENE SELEZIONATO PEZZO
-	//FACCIO CONFERMA CHE CAMBIA IL TIPO AL PEZZO AGGIORNATO
-	//CHIAMO METODO CONTROLLER
-	//PASSO PEZZO AGGIORNATO CON TUTTO
-	//MI RITORNA GRIGLIA
-	//DOPODICHE PEZZO AGGIORNATO = NULL
 	public void mossa (Integer posX, Integer posY) {
 		try {
 			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
@@ -162,6 +154,7 @@ public class ScacchieraBean implements Serializable {
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
 			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
+				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
 				ultimaPosizione = true;
 				
 			} else {
