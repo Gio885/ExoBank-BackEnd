@@ -273,7 +273,7 @@ public class ValidatoreScaccoAlRe {
 	}
 	
 	
-    public List<Pezzo> trovaMinacce(Colore colore, Pezzo[][] scacchiera) throws Exception {
+    private List<Pezzo> trovaMinacce(Colore colore, Pezzo[][] scacchiera) throws Exception {
         List<Pezzo> minacce = new ArrayList<>();
         for (int x = 0; x < scacchiera.length; x++) {
             for (int y = 0; y < scacchiera[x].length; y++) {
