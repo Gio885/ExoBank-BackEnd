@@ -80,12 +80,16 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
+	public void sceltaLungezzaPartita() {
+		
+	}
+	
 	private void creazioneTimer() {
 		try {
 			Calendar tempo = Calendar.getInstance();
 			tempo.set(Calendar.HOUR_OF_DAY, 0);
 			tempo.set(Calendar.MINUTE, 00);
-			tempo.set(Calendar.SECOND, 10);
+			tempo.set(Calendar.SECOND, 03);
 			tempoGiocatore1 = new Date();
 			tempoGiocatore1 = tempo.getTime();
 			tempoGiocatore2 = new Date();
@@ -118,7 +122,8 @@ public class ScacchieraBean implements Serializable {
 		
 		if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
 	        partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore1", null));
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,
+	        		giocaGiocatore1 ? "Il tempo è scaduto, hai perso Giocatore1! :(" : "Il tempo è scaduto hai perso Giocatore2! :(", null));
 
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
 			cal.add(Calendar.SECOND, -1);
