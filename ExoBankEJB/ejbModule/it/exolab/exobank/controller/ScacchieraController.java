@@ -48,11 +48,21 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	            throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
 	        }
 	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
-
-	        if (!validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
-	            eseguiMossa(parametri, scacchieraLavoro);
+	        if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
+	            if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
+	            	throw new Exception("SCACCO MATTO!! Ha vinto il giocatore " + (trovaRe(pezzoSpecifico, griglia).getColore().equals(Colore.BIANCO) ? "Bianco." : "Nero."));
+	            } else {
+	                if (validaScacco.negaScaccoMangiandoMinaccia(pezzo, griglia)) {
+	                	eseguiMossa(parametri, scacchieraLavoro);
+	                } else if (validaScacco.negaScaccoMuovendoIlRe(pezzo, griglia)) {
+	                	eseguiMossa(parametri, scacchieraLavoro);
+	                } else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
+	                	eseguiMossa(parametri, scacchieraLavoro);
+	                } else {
+	                	throw new Exception("SCACCO MATTO!! Ha vinto il giocatore " + (trovaRe(pezzoSpecifico, griglia).getColore().equals(Colore.BIANCO) ? "Bianco." : "Nero."));	                }
+	            }
 	        } else {
-	            throw new Exception("SCACCO MATTO!");
+	        	eseguiMossa(parametri, scacchieraLavoro);    
 	        }
 	        return scacchieraLavoro;
 	    } catch (Exception e) {
@@ -60,7 +70,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	        throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
 	    }
 	}
-
+	
 	@Override
 	public Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception {
 		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
@@ -181,19 +191,48 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	}
 	
 	private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro) throws Exception {
-		// Utilizza il validatoreScacchi per verificare la validità della mossa
-		if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
-			if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
-				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
-				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
-				aggiornaScacchiera(parametri);
-			} else {
-				aggiornaScacchiera(parametri);
-			}
-			scacchieraLavoro.setScacchiera(parametri.getGriglia());
-		} else {
-			throw new Exception("Mossa non consentita");
-		}
+	    // Utilizza il validatoreScacchi per verificare la validità della mossa
+	    if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
+	        if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
+	            parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
+	            parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = null;
+	            // Controlla se la mossa elimina lo stato di scacco
+	            if (!isScaccoDopoMossa(parametri)) {
+	                aggiornaScacchiera(parametri);
+	                scacchieraLavoro.setScacchiera(parametri.getGriglia());
+	            } else {
+	                throw new Exception("Mossa non rimuove lo stato di scacco");
+	            }
+	        } else {
+	            // Controlla se la mossa elimina lo stato di scacco
+	            if (!isScaccoDopoMossa(parametri)) {
+	                aggiornaScacchiera(parametri);
+	                scacchieraLavoro.setScacchiera(parametri.getGriglia());
+	            } else {
+	                throw new Exception("Mossa non rimuove lo stato di scacco");
+	            }
+	        }
+	    } else {
+	        throw new Exception("Mossa non consentita");
+	    }
+	}
+
+	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) {
+	    // Crea una copia temporanea della scacchiera e esegui la mossa
+	    Pezzo[][] griglia = parametri.getGriglia();
+	    griglia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+	    griglia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+	    parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
+	    parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+	    ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+	    // Controlla se il re è in scacco dopo la mossa
+	    try {
+	        Pezzo re = trovaRe(parametri.getPezzo(), griglia);
+	        return validaScacco.isScacco(re, griglia);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return true; // Se si verifica un'eccezione, considera che lo stato di scacco persiste
+	    }
 	}
 	
 	private void aggiornaScacchiera(ParametriValidatoreDto parametri) {

@@ -10,7 +10,7 @@ import it.exolab.exobank.chess.model.Pezzo;
 
 public class ValidatoreScaccoAlRe {
 	
-	private Set<Pezzo> minacceDirette = null;
+	private List<Pezzo> minacceDirette = new ArrayList<Pezzo>();
 	
 	public boolean isScacco(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Colore coloreGiocatore = re.getColore();
@@ -37,7 +37,7 @@ public class ValidatoreScaccoAlRe {
 		}
 	}
 	
-	private boolean negaScaccoMangiandoMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception{
+	public boolean negaScaccoMangiandoMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception{
 		Colore coloreGiocatore = re.getColore();
 		boolean salvo = false;
 		try {
@@ -72,7 +72,7 @@ public class ValidatoreScaccoAlRe {
 		}
 	}
 	
-	private boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
+	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Pezzo reProxy = new Pezzo();
 		boolean salvo = false;
 		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
@@ -172,22 +172,18 @@ public class ValidatoreScaccoAlRe {
 	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 	    Colore coloreRe = re.getColore();
 
-	    // Passo 1: Verifica se il re è sotto scacco
-	    if (!negaScaccoMangiandoMinaccia(re, scacchiera)) {
-	        return false; // Il re non è sotto scacco, quindi non c'è scacco matto
+	    if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
+	        return false;
 	    }
 
-	    // Passo 2: Verifica se il re può muoversi per liberarsi dallo scacco
 	    if (negaScaccoMuovendoIlRe(re, scacchiera)) {
-	        return false; // Il re può muoversi per liberarsi dallo scacco
+	        return false; 
 	    }
 
-	    // Passo 3: Verifica se una pedina alleata può interrompere lo scacco
 	    if (puoInterporreTraReEMinaccia(re, scacchiera)) {
-	        return false; // Una pedina alleata può interrompere lo scacco
+	        return false;
 	    }
 
-	    // Passo 4: Se nessuna delle condizioni precedenti è verificata, allora è uno scacco matto
 	    return true;
 	}
 
