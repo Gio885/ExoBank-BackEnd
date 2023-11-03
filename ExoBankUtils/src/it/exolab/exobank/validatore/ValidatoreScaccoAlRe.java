@@ -3,12 +3,13 @@ package it.exolab.exobank.validatore;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.costanti.Costanti;
 
 public class ValidatoreScaccoAlRe {
 	
-	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera, String coloreRe) throws Exception {
+	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera, Colore coloreRe) throws Exception {
 	    int xRe = re.getPosizioneX();
 	    int yRe = re.getPosizioneY();
 	    ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
@@ -82,7 +83,7 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean puoiRimuovereScaccoCatturaMinaccia(Pezzo re, int xRe, int yRe, Pezzo[][] griglia) throws Exception {
-	    String coloreRe = re.getColore();
+	    Colore coloreRe = re.getColore();
 	    ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 	    // Trova il pezzo minaccioso
 	    Pezzo minaccia = trovaMinacciaRe(xRe, yRe, griglia);
@@ -107,7 +108,7 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean puoiRimuovereScaccoBloccaMinaccia(Pezzo re, int xRe, int yRe, Pezzo[][] griglia) throws Exception {
-	    String coloreRe = re.getColore();
+	    Colore coloreRe = re.getColore();
 	    List<Pezzo> pedineStessoColore = trovaPedineStessoColore(coloreRe, griglia);
 
 	    for (Pezzo minaccia : trovaMinacce(coloreRe, griglia)) {
@@ -120,7 +121,7 @@ public class ValidatoreScaccoAlRe {
 	    return false;
 	}
 
-	private List<Pezzo> trovaPedineStessoColore(String colore, Pezzo[][] griglia) {
+	private List<Pezzo> trovaPedineStessoColore(Colore colore, Pezzo[][] griglia) {
 	    List<Pezzo> pedineStessoColore = new ArrayList<>();
 	    for (int x = 0; x < griglia.length; x++) {
 	        for (int y = 0; y < griglia[0].length; y++) {
@@ -229,7 +230,7 @@ public class ValidatoreScaccoAlRe {
 	}
 	
 	private Pezzo trovaMinacciaRe(int xRe, int yRe, Pezzo[][] griglia) throws Exception {
-	    String coloreRe = griglia[xRe][yRe].getColore();
+	    Colore coloreRe = griglia[xRe][yRe].getColore();
 	    ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 	    // Scorrere la griglia per trovare la minaccia
 	    for (int x = 0; x < griglia.length; x++) {
@@ -249,39 +250,44 @@ public class ValidatoreScaccoAlRe {
 
 	
 
-	public boolean isScacco(Integer x, Integer y, Pezzo[][] scacchiera, String coloreRe) throws Exception {
-	    String coloreAvversario = (coloreRe.equals(Costanti.BIANCO)) ? Costanti.NERO : Costanti.BIANCO; // Calcola il colore avversario
-
-//	    for (Pezzo minaccia : trovaMinacce(coloreAvversario, scacchiera)) {
-//	        if (minaccia.getPosizioneX() == x && minaccia.getPosizioneY() == y) {
-	            return true;
-//	        }
-//	    }
-//
-//	    return false;
+	public boolean isScacco(Pezzo re, Pezzo[][] scacchiera) throws Exception {
+	    Colore coloreGiocatore = re.getColore();
+	    boolean scacco = false;
+	    try {
+	    	List<Pezzo> minacce = trovaMinacce(coloreGiocatore, scacchiera);
+	    	for(Pezzo pezzo : minacce) {
+	    		try {
+	    			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+	    			if(validaMosse.mossaConsentitaPerPezzo(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), scacchiera)) {
+	    				scacco = true;
+	    				break;
+	    			}
+	    		}catch(Exception e) {
+	    			continue;
+	    		}
+	    	}
+	    }catch(Exception e) {
+	    	throw new Exception();
+	    }
+	    return scacco;
 	}
 	
 	
-    public List<Pezzo> trovaMinacce(String colore, Pezzo[][] scacchiera) throws Exception {
+    public List<Pezzo> trovaMinacce(Colore colore, Pezzo[][] scacchiera) throws Exception {
         List<Pezzo> minacce = new ArrayList<>();
-        ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
         for (int x = 0; x < scacchiera.length; x++) {
             for (int y = 0; y < scacchiera[x].length; y++) {
                 Pezzo pezzo = scacchiera[x][y];
                 if (pezzo != null && !pezzo.getColore().equals(colore)) {
-                    for (int i = 0; i < scacchiera.length; i++) {
-                        for (int j = 0; j < scacchiera[i].length; j++) {
-                            if (validaMosse.mossaConsentitaPerPezzo(pezzo, x, y, i, j, scacchiera)) {
-                                minacce.add(pezzo);
-                            }
-                        }
-                    }
+                     minacce.add(pezzo);
                 }
             }
         }
-
         return minacce;
     }
+        
+
+
 
     public List<int[]> trovaTraiettoriaMinacciaRe(Pezzo minaccia, Pezzo re, Pezzo[][] scacchiera) {
         List<int[]> traiettoria = new ArrayList<>();
@@ -306,5 +312,6 @@ public class ValidatoreScaccoAlRe {
 
         return traiettoria;
     }
+    
 
 }
