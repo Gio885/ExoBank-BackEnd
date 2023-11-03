@@ -11,8 +11,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
+import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.controller.ScacchieraController;
 
 /**
@@ -169,15 +171,15 @@ public class ScacchieraBean implements Serializable {
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
-			if(pezzoAggiornato.getColore().equalsIgnoreCase("bianco")
+			if(pezzoAggiornato.getColore().compareTo(Colore.BIANCO) == 0
 					&& pezzoAggiornato.getPosizioneX() == 7
-					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone")) {
+					&& pezzoAggiornato.getTipo().compareTo(Tipo.PEDONE) == 0) {
 				
 				ultimaPosizione = true;
 					
-			} else if(pezzoAggiornato.getColore().equalsIgnoreCase("nero")
-					&& pezzoAggiornato.getPosizioneX() == 0
-					&& pezzoAggiornato.getTipo().equalsIgnoreCase("pedone")) {
+			} else if(pezzoAggiornato.getColore().compareTo(Colore.NERO) == 0
+					&& pezzoAggiornato.getPosizioneX() == 7
+					&& pezzoAggiornato.getTipo().compareTo(Tipo.PEDONE) == 0) {
 				
 				ultimaPosizione = true;
 				
@@ -202,10 +204,10 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void trasformaPedone() {
+	public void trasformaPedone(Tipo nuovoTipo) {
 		
 		try {
-			//aggiorna tipo pezzo
+			pezzoAggiornato.setTipo(nuovoTipo);
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			
 		} catch (Exception e) {
@@ -295,6 +297,14 @@ public class ScacchieraBean implements Serializable {
 		giocaGiocatore2 = false;
 		stopTimer = false;
 		turno = 0;		
+	}
+	
+	public List<Pezzo> getListaPezziMangiati() {
+		return listaPezziMangiati;
+	}
+
+	public void setListaPezziMangiati(List<Pezzo> listaPezziMangiati) {
+		this.listaPezziMangiati = listaPezziMangiati;
 	}
 	
 	public boolean isPartitaTerminata() {
