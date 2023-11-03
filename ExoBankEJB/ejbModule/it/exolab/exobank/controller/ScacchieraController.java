@@ -109,7 +109,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			return true;
 				
 		} else if(pezzo.getColore().compareTo(Colore.NERO) == Costanti.COMPARATORE_STRINGA_UGUALE
-				&& pezzo.getPosizioneX() == 7
+				&& pezzo.getPosizioneX() == 0
 				&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
 			
 			return true;
