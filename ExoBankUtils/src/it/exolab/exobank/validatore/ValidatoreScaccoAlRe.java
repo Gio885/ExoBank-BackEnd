@@ -173,7 +173,7 @@ public class ValidatoreScaccoAlRe {
 	    Colore coloreRe = re.getColore();
 
 	    // Passo 1: Verifica se il re è sotto scacco
-	    if (!isScacco(re, scacchiera)) {
+	    if (!negaScaccoMangiandoMinaccia(re, scacchiera)) {
 	        return false; // Il re non è sotto scacco, quindi non c'è scacco matto
 	    }
 
