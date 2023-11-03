@@ -61,16 +61,17 @@ public class ScacchieraBean implements Serializable {
 			if(scacchiera != null ) {
 				resetGame();
 			}
+			
 			Scacchiera scacchieraOriginale = scacchieraController.scacchieraIniziale();
 			scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
 			creazioneTimer();			
-			giocaGiocatore1=true;
-			giocaGiocatore2=false;
-			partitaTerminata=false;
+			giocaGiocatore1 = true;
+			giocaGiocatore2 = false;
+			partitaTerminata = false;
 			ultimaPosizione = false;
-			turno=1;
+			turno = 1;
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -123,6 +124,7 @@ public class ScacchieraBean implements Serializable {
 				}
 				
 				tempoGiocatore1 = cal.getTime();
+				
 			} else if(giocaGiocatore2) {
 				cal.setTime(tempoGiocatore2);
 				
