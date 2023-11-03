@@ -3,6 +3,7 @@ package it.exolab.exobank.bean;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -36,6 +37,7 @@ public class ScacchieraBean implements Serializable {
 	
 	@EJB
 	ScacchieraController scacchieraController = new ScacchieraController();
+	private List<Pezzo> listaPezziMangiati;
 	private boolean nuovoGioco;
 	private Scacchiera scacchiera;
 	private Pezzo[][] griglia;
@@ -163,7 +165,7 @@ public class ScacchieraBean implements Serializable {
 	//DOPODICHE PEZZO AGGIORNATO = NULL
 	public void mossa (Integer posX, Integer posY) {
 		try {
-			pezzoAggiornato = aggiornaPezzoAggiornato(posX, posY);
+			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
@@ -190,10 +192,32 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-//	public void trasformaPedone(String nuovoTipo) {
-//		
-//		scacchieraController.aggiornamentoTipoPedone(pezzo);
-//	}
+	public void listaPezziMangiati(){
+		try {
+			listaPezziMangiati = scacchieraController.listaPezziMangiati();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+	
+	public void trasformaPedone() {
+		
+		try {
+			//aggiorna tipo pezzo
+			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+		}
+	}
+	
+	public void mostraDialog() {
+		ultimaPosizione = true;
+	}
 
 	public void cambiaTurno() {
 		turno++;
@@ -207,9 +231,6 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	//VALORIZZA CAMPI VARIABILE PEZZO CON CAMPI PEZZO SELEZIONATO.
-	//SE DIVERSO DA NULL AGGIORNA ALTRIMENTI CREA PEZZO E AGGIORNA
-	//SE COLORE UGUALE AGGIORNA
-	//SE COLORE DIVERSO AGGIORNA POSIZOINE (STA CERCANDO DI MANGIARE UN PEZZO AVVERSARIO)
 	public void pezzoSelezionato(Pezzo pezzoSelezionato) {	
 			pezzo = new Pezzo();
 			pezzo = pezzoSelezionato;
@@ -235,7 +256,7 @@ public class ScacchieraBean implements Serializable {
 //		}
 //	}
 	
-	private Pezzo aggiornaPezzoAggiornato(Integer posX, Integer posY) throws Exception {
+	private Pezzo aggiornaPosizionePezzoAggiornato(Integer posX, Integer posY) throws Exception {
 		try {
 			pezzoAggiornato = new Pezzo();
 			pezzoAggiornato.setColore(pezzo.getColore());
