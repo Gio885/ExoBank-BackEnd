@@ -186,21 +186,21 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
 				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
 				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
-				// Aggiorna la scacchiera con la nuova posizione
-				parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()] = null; // Rimuovi il pezzo dalla posizione precedente
-				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
-				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
-				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+				aggiornaScacchiera(parametri);
 			} else {
-				// Aggiorna la scacchiera con la nuova posizione
-				parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()] = null; // Rimuovi il pezzo dalla posizione precedente
-				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
-				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
-				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+				aggiornaScacchiera(parametri);
 			}
 			scacchieraLavoro.setScacchiera(parametri.getGriglia());
 		} else {
 			throw new Exception("Mossa non consentita");
 		}
+	}
+	
+	private void aggiornaScacchiera(ParametriValidatoreDto parametri) {
+		// Aggiorna la scacchiera con la nuova posizione
+		parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()] = null; // Rimuovi il pezzo dalla posizione precedente
+		parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
+		parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
+		parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
 	}
 }

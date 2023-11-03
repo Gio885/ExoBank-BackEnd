@@ -7,7 +7,6 @@ import java.util.Set;
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
-import it.exolab.exobank.costanti.Costanti;
 
 public class ValidatoreScaccoAlRe {
 	
@@ -170,7 +169,26 @@ public class ValidatoreScaccoAlRe {
 		}
 	}
 
-	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera, Colore coloreRe) throws Exception {
+	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
+	    Colore coloreRe = re.getColore();
+
+	    // Passo 1: Verifica se il re è sotto scacco
+	    if (!isScacco(re, scacchiera)) {
+	        return false; // Il re non è sotto scacco, quindi non c'è scacco matto
+	    }
+
+	    // Passo 2: Verifica se il re può muoversi per liberarsi dallo scacco
+	    if (negaScaccoMuovendoIlRe(re, scacchiera)) {
+	        return false; // Il re può muoversi per liberarsi dallo scacco
+	    }
+
+	    // Passo 3: Verifica se una pedina alleata può interrompere lo scacco
+	    if (puoInterporreTraReEMinaccia(re, scacchiera)) {
+	        return false; // Una pedina alleata può interrompere lo scacco
+	    }
+
+	    // Passo 4: Se nessuna delle condizioni precedenti è verificata, allora è uno scacco matto
+	    return true;
 	}
 
 }

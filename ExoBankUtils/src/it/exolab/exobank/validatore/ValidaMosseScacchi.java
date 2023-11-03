@@ -2,9 +2,7 @@ package it.exolab.exobank.validatore;
 
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Pezzo;
-import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
-import it.exolab.exobank.costanti.Costanti;
 
 public class ValidaMosseScacchi {
 
@@ -38,14 +36,6 @@ public class ValidaMosseScacchi {
 		}
 
 		return false;
-	}
-
-	public boolean puoiRimuovereScacco(Pezzo re, Pezzo[][] griglia, Scacchiera scacchiera) throws Exception {
-		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-
-		return validaScacco.puoiRimuovereScaccoMossaRe(re, re.getPosizioneX(), re.getPosizioneY(), griglia) ||
-				validaScacco.puoiRimuovereScaccoCatturaMinaccia(re, re.getPosizioneX(), re.getPosizioneY(), griglia) ||
-				validaScacco.puoiRimuovereScaccoBloccaMinaccia(re, re.getPosizioneX(), re.getPosizioneY(), griglia);
 	}
 
 
