@@ -8,8 +8,11 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+
+import org.primefaces.PrimeFaces;
 
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
@@ -81,8 +84,8 @@ public class ScacchieraBean implements Serializable {
 		try {
 			Calendar tempo = Calendar.getInstance();
 			tempo.set(Calendar.HOUR_OF_DAY, 0);
-			tempo.set(Calendar.MINUTE, 10);
-			tempo.set(Calendar.SECOND, 00);
+			tempo.set(Calendar.MINUTE, 00);
+			tempo.set(Calendar.SECOND, 10);
 			tempoGiocatore1 = new Date();
 			tempoGiocatore1 = tempo.getTime();
 			tempoGiocatore2 = new Date();
@@ -98,57 +101,41 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	public void timer() {
-		Calendar cal = Calendar.getInstance();
 		if(stopTimer) {
 			if(giocaGiocatore1) {
-				cal.setTime(tempoGiocatore1);
-				
-				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        partitaTerminata = true;
-			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore1", null));
-
-				} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
-					cal.add(Calendar.SECOND, -1);
-					
-				} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) == 0) {
-					cal.add(Calendar.MINUTE, -1);
-					cal.add(Calendar.SECOND, 59);
-					
-				} else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
-					cal.add(Calendar.SECOND, -1);
-					
-				} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
-			        stopTimer = !stopTimer;
-				}
-				
-				tempoGiocatore1 = cal.getTime();
+				tempoGiocatore1 = handleTimer(tempoGiocatore1);
 				
 			} else if(giocaGiocatore2) {
-				cal.setTime(tempoGiocatore2);
-				
-				if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
-			        partitaTerminata = true;
-			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore2", null));
-
-				} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
-					cal.add(Calendar.SECOND, -1);
-					
-				} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) == 0) {
-					cal.add(Calendar.MINUTE, -1);
-					cal.add(Calendar.SECOND, 59);
-					
-				} else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
-					cal.add(Calendar.SECOND, -1);
-					
-				} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
-			        stopTimer = !stopTimer;
-				}
-				
-				tempoGiocatore2 = cal.getTime();
+				tempoGiocatore2 = handleTimer(tempoGiocatore2);
 			}
 		}	
 	}
 	
+	private Date handleTimer(Date tempoGiocatore) {
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(tempoGiocatore);
+		
+		if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
+	        partitaTerminata = true;
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,"Il tempo è scaduto, hai perso Giocatore1", null));
+
+		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
+			cal.add(Calendar.SECOND, -1);
+			
+		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) == 0) {
+			cal.add(Calendar.MINUTE, -1);
+			cal.add(Calendar.SECOND, 59);
+			
+		} else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
+			cal.add(Calendar.SECOND, -1);
+			
+		} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
+	        stopTimer = !stopTimer;
+		}
+		
+		return cal.getTime();
+	}
 	
 	//FACCIO MOSSA
 	//MOSSA CONSENTITA? OK
@@ -194,23 +181,26 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void trasformaPedone(String tipo) {
+	public void selezionaNuovoTipo(String tipo) {
 		
-		try {	
-			if(Tipo.REGINA.toString().equalsIgnoreCase(tipo)) {
-				nuovoTipo = Tipo.REGINA;
-				
-			} else if(Tipo.TORRE.toString().equalsIgnoreCase(tipo)) {
-				nuovoTipo = Tipo.TORRE;
-				
-			} else if(Tipo.ALFIERE.toString().equalsIgnoreCase(tipo)) {
-				nuovoTipo = Tipo.ALFIERE;
-				
-			} else if(Tipo.CAVALLO.toString().equalsIgnoreCase(tipo)) {
-				nuovoTipo = Tipo.CAVALLO;
-				
-			}
+		if(Tipo.REGINA.toString().equalsIgnoreCase(tipo)) {
+			nuovoTipo = Tipo.REGINA;
 			
+		} else if(Tipo.TORRE.toString().equalsIgnoreCase(tipo)) {
+			nuovoTipo = Tipo.TORRE;
+			
+		} else if(Tipo.ALFIERE.toString().equalsIgnoreCase(tipo)) {
+			nuovoTipo = Tipo.ALFIERE;
+			
+		} else if(Tipo.CAVALLO.toString().equalsIgnoreCase(tipo)) {
+			nuovoTipo = Tipo.CAVALLO;
+			
+		}
+	}
+	
+	public void confermaNuovoTipo() {
+		
+		try {
 			pezzoAggiornato.setTipo(nuovoTipo);
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			nuovoTipo = null;
@@ -235,7 +225,6 @@ public class ScacchieraBean implements Serializable {
 	
 	public void resetPezzo() {
 		pezzo = null;
-		System.out.println(pezzo);
 	}
 	
 	//VALORIZZA CAMPI VARIABILE PEZZO CON CAMPI PEZZO SELEZIONATO.
