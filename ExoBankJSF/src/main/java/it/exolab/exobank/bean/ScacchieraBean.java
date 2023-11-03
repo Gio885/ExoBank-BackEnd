@@ -53,6 +53,7 @@ public class ScacchieraBean implements Serializable {
 	private boolean stopTimer;
 	private boolean partitaTerminata;
 	private boolean ultimaPosizione;
+	private Tipo nuovoTipo;
 	
 
 	//INIZIALIZZAZIONE SCACCHIERA
@@ -231,25 +232,6 @@ public class ScacchieraBean implements Serializable {
 			System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
 	}
 	
-//	//METODO PER AGGIORNARE POSIZIONE DEL PEZZO
-//	//SE DIVERSO DA NULL AGGIORNA POSIZOINE
-//	//ALTRIMENTI MANDA UN MESSAGGIO DI ERRORE
-//	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
-//		System.out.println("posX " + posX + " posY " + posY);
-//		try {
-//			if(null != pezzo) {
-//				aggiornaPosizionePezzo(posX, posY);
-//				
-//			} else {
-//		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
-//
-//		}
-//	}
-	
 	private Pezzo aggiornaPosizionePezzoAggiornato(Integer posX, Integer posY) throws Exception {
 		try {
 			pezzoAggiornato = new Pezzo();
@@ -404,6 +386,14 @@ public class ScacchieraBean implements Serializable {
 	public void setUltimaPosizione(boolean ultimaPosizione) {
 		this.ultimaPosizione = ultimaPosizione;
 	}
+
+	public Tipo getNuovoTipo() {
+		return nuovoTipo;
+	}
+
+	public void setNuovoTipo(Tipo nuovoTipo) {
+		this.nuovoTipo = nuovoTipo;
+	}
 	
 	
 	
@@ -435,5 +425,25 @@ public class ScacchieraBean implements Serializable {
 //
 //        // Esegui altre azioni o aggiorna il tuo modello dati
 //    }
+	
+//	//METODO PER AGGIORNARE POSIZIONE DEL PEZZO
+//	//SE DIVERSO DA NULL AGGIORNA POSIZOINE
+//	//ALTRIMENTI MANDA UN MESSAGGIO DI ERRORE
+//	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
+//		System.out.println("posX " + posX + " posY " + posY);
+//		try {
+//			if(null != pezzo) {
+//				aggiornaPosizionePezzo(posX, posY);
+//				
+//			} else {
+//		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
+//			}
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
+//
+//		}
+//	}
+	
 
 }
