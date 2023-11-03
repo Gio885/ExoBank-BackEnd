@@ -10,7 +10,7 @@
 			<p:columns var="cell" columnIndexVar="colIndex"
 				value="#{scacchieraBean.griglia}"
 				styleClass="#{(rowIndex + colIndex) % 2 == 0 ? 'chessboard-white-cell' : 'chessboard-black-cell'}">
-				<p:column id="mossa" styleClass="chessboard-cell"
+				<p:column  styleClass="chessboard-cell"
 					columnIndexVar="colIndex">
 					<p:outputPanel
 						rendered="#{null != scacchieraBean.griglia[rowIndex][colIndex].id}"

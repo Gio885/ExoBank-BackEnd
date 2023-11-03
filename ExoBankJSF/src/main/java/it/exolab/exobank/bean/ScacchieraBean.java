@@ -155,12 +155,16 @@ public class ScacchieraBean implements Serializable {
 			
 			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
 				ultimaPosizione = true;
-				
+				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
+				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
+				System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + giocaGiocatore2);
 			} else {
 				ultimaPosizione = false;
 				pezzoAggiornato = null;
 				cambiaTurno();
 			}
+			
+
 
 		} catch(Exception e) {
 			e.printStackTrace();
