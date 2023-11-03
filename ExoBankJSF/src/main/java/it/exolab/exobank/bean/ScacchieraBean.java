@@ -203,6 +203,7 @@ public class ScacchieraBean implements Serializable {
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			nuovoTipo = null;
 			ultimaPosizione = false;
+			cambiaTurno();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
