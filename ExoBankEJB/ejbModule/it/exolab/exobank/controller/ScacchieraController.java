@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
@@ -46,13 +47,10 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	        if (pezzoSpecifico == null) {
 	            throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
 	        }
-	        Integer xPartenza = pezzoSpecifico.getPosizioneX();
-	        Integer yPartenza = pezzoSpecifico.getPosizioneY();
-	        Integer xDestinazione = pezzo.getPosizioneX();
-	        Integer yDestinazione = pezzo.getPosizioneY();
+	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
 
-	        if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
-	            eseguiMossa(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia, scacchieraLavoro);
+	        if (!validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
+	            eseguiMossa(parametri, scacchieraLavoro);
 	        } else {
 	            throw new Exception("SCACCO MATTO!");
 	        }
@@ -182,25 +180,25 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		return reStessoColore;
 	}
 	
-	private void eseguiMossa(Pezzo pezzoSpecifico, int xPartenza, int yPartenza, int xDestinazione, int yDestinazione, Pezzo[][] griglia, Scacchiera scacchieraLavoro) throws Exception {
+	private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro) throws Exception {
 		// Utilizza il validatoreScacchi per verificare la validità della mossa
-		if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
-			if (null != griglia[xDestinazione][yDestinazione]) {
-				griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
-				griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
+		if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
+			if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
+				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
+				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
 				// Aggiorna la scacchiera con la nuova posizione
-				griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-				griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-				pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-				pezzoSpecifico.setPosizioneY(yDestinazione);
+				parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()] = null; // Rimuovi il pezzo dalla posizione precedente
+				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
+				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
+				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
 			} else {
 				// Aggiorna la scacchiera con la nuova posizione
-				griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-				griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-				pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-				pezzoSpecifico.setPosizioneY(yDestinazione);
+				parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()] = null; // Rimuovi il pezzo dalla posizione precedente
+				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
+				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
+				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
 			}
-			scacchieraLavoro.setScacchiera(griglia);
+			scacchieraLavoro.setScacchiera(parametri.getGriglia());
 		} else {
 			throw new Exception("Mossa non consentita");
 		}

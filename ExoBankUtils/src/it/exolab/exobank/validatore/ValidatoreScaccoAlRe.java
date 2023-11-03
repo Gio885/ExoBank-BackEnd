@@ -3,6 +3,7 @@ package it.exolab.exobank.validatore;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.costanti.Costanti;
@@ -258,7 +259,8 @@ public class ValidatoreScaccoAlRe {
 	    	for(Pezzo pezzo : minacce) {
 	    		try {
 	    			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-	    			if(validaMosse.mossaConsentitaPerPezzo(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), scacchiera)) {
+	    			ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), pezzo.getColore(), scacchiera);
+	    			if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 	    				scacco = true;
 	    				break;
 	    			}

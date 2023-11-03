@@ -1,5 +1,6 @@
 package it.exolab.exobank.validatore;
 
+import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
@@ -7,33 +8,33 @@ import it.exolab.exobank.costanti.Costanti;
 
 public class ValidaMosseScacchi {
 
-	public boolean mossaConsentitaPerPezzo(Pezzo pezzo, Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Pezzo[][] scacchiera) throws Exception {
-		if (isDestinazioneFuoriScacchiera(xDestinazione, yDestinazione, scacchiera)) {
+	public boolean mossaConsentitaPerPezzo(ParametriValidatoreDto parametri) throws Exception {
+		if (isDestinazioneFuoriScacchiera(parametri.getxDestinazione(), parametri.getyDestinazione(), parametri.getGriglia())) {
 			throw new Exception("La destinazione è fuori dalla scacchiera.");
 		}
 
-		if (isDestinazioneStessaPosizione(xPartenza, yPartenza, xDestinazione, yDestinazione)) {
+		if (isDestinazioneStessaPosizione(parametri.getxPartenza(), parametri.getxPartenza(), parametri.getxDestinazione(), parametri.getyDestinazione())) {
 			throw new Exception("La destinazione è la stessa posizione di partenza.");
 		}
 
-		if (isDestinazioneStessoColore(xDestinazione, yDestinazione, scacchiera, pezzo)) {
+		if (isDestinazioneStessoColore(parametri.getxDestinazione(), parametri.getyDestinazione(), parametri.getGriglia(), parametri.getPezzo())) {
 			throw new Exception("Il pezzo di destinazione è dello stesso colore del pezzo in movimento.");
 		}
 
 		ValidatoreMovimentiPezzi validatoreMovimento = new ValidatoreMovimentiPezzi();
 
-		if (pezzo.getTipo().equals(Tipo.TORRE)) {
-			return validatoreMovimento.validaMovimentoTorre(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo.getTipo().equals(Tipo.ALFIERE)) {
-			return validatoreMovimento.validaMovimentoAlfiere(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo.getTipo().equals(Tipo.REGINA)) {
-			return validatoreMovimento.validaMovimentoRegina(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
-		} else if (pezzo.getTipo().equals(Tipo.PEDONE)) {
-			return validatoreMovimento.validaMovimentoPedone(xPartenza, yPartenza, xDestinazione, yDestinazione, pezzo.getColore(), scacchiera);
-		} else if (pezzo.getTipo().equals(Tipo.CAVALLO)) {
-			return validatoreMovimento.validaMovimentoCavallo(xPartenza, yPartenza, xDestinazione, yDestinazione);
-		} else if (pezzo.getTipo().equals(Tipo.RE)) {
-			return validatoreMovimento.validaMovimentoRe(xPartenza, yPartenza, xDestinazione, yDestinazione, scacchiera);
+		if (parametri.getPezzo().getTipo().equals(Tipo.TORRE)) {
+			return validatoreMovimento.validaMovimentoTorre(parametri);
+		} else if (parametri.getPezzo().getTipo().equals(Tipo.ALFIERE)) {
+			return validatoreMovimento.validaMovimentoAlfiere(parametri);
+		} else if (parametri.getPezzo().getTipo().equals(Tipo.REGINA)) {
+			return validatoreMovimento.validaMovimentoRegina(parametri);
+		} else if (parametri.getPezzo().getTipo().equals(Tipo.PEDONE)) {
+			return validatoreMovimento.validaMovimentoPedone(parametri);
+		} else if (parametri.getPezzo().getTipo().equals(Tipo.CAVALLO)) {
+			return validatoreMovimento.validaMovimentoCavallo(parametri);
+		} else if (parametri.getPezzo().getTipo().equals(Tipo.RE)) {
+			return validatoreMovimento.validaMovimentoRe(parametri);
 		}
 
 		return false;
