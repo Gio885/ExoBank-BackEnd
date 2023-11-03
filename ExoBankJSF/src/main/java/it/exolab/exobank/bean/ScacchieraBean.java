@@ -67,7 +67,7 @@ public class ScacchieraBean implements Serializable {
 			scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-			creazioneTimer(30, 00);			
+			creazioneTimer(30, 10);			
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
 			partitaTerminata = false;
