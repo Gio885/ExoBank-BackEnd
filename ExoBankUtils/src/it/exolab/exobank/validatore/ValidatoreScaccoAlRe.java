@@ -10,7 +10,7 @@ import it.exolab.exobank.costanti.Costanti;
 
 public class ValidatoreScaccoAlRe {
 	
-	private List<Pezzo> minacceConcrete = null;
+	private List<Pezzo> minacceDirette = null;
 	
 	public boolean isScacco(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Colore coloreGiocatore = re.getColore();
@@ -23,7 +23,7 @@ public class ValidatoreScaccoAlRe {
 					ParametriValidatoreDto parametri = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						scacco = true;
-						minacceConcrete.add(minaccia);
+						minacceDirette.add(minaccia);
 						break;
 					}
 				}catch(Exception e) {
@@ -41,8 +41,7 @@ public class ValidatoreScaccoAlRe {
 		Colore coloreGiocatore = re.getColore();
 		boolean salvo = false;
 		try {
-			List<Pezzo> minacce = trovaMinacce(coloreGiocatore, scacchiera);
-			for(Pezzo minaccia : minacce) {
+			for(Pezzo minaccia : minacceDirette) {
 				try {
 					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 					ParametriValidatoreDto parametriMinaccia = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
@@ -52,7 +51,8 @@ public class ValidatoreScaccoAlRe {
 							try {
 								ParametriValidatoreDto parametriAlleato = new ParametriValidatoreDto(alleato, alleato.getPosizioneX(), alleato.getPosizioneY(), minaccia.getPosizioneX(), minaccia.getPosizioneY(), alleato.getColore(), scacchiera);
 								if(validaMosse.mossaConsentitaPerPezzo(parametriAlleato)) {
-									
+									salvo = true;
+									return salvo;
 								}
 								
 							}catch(Exception e) {
@@ -64,7 +64,7 @@ public class ValidatoreScaccoAlRe {
 					continue;
 				}
 			}
-			return scacco;
+			return salvo;
 			
 		}catch(Exception e) {
 			throw new Exception();
@@ -112,7 +112,7 @@ public class ValidatoreScaccoAlRe {
 		Colore coloreGiocatore = re.getColore();
 		boolean pezzoFrapposto = false;
 		try {
-			for(Pezzo pezzoMinaccia : minacceConcrete) {
+			for(Pezzo pezzoMinaccia : minacceDirette) {
 				try {
 					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 					List<Pezzo> alleati = trovaAlleati(coloreGiocatore, scacchiera);
@@ -120,7 +120,7 @@ public class ValidatoreScaccoAlRe {
 						ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), pezzo.getColore(), scacchiera);
 						if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 							pezzoFrapposto = true;
-							minacceConcrete.remove(pezzoMinaccia);
+							minacceDirette.remove(pezzoMinaccia);
 							break;
 						}
 					}
