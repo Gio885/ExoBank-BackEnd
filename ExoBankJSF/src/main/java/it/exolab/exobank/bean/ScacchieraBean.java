@@ -171,19 +171,11 @@ public class ScacchieraBean implements Serializable {
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
-			if(pezzoAggiornato.getColore().compareTo(Colore.BIANCO) == 0
-					&& pezzoAggiornato.getPosizioneX() == 7
-					&& pezzoAggiornato.getTipo().compareTo(Tipo.PEDONE) == 0) {
-				
-				ultimaPosizione = true;
-					
-			} else if(pezzoAggiornato.getColore().compareTo(Colore.NERO) == 0
-					&& pezzoAggiornato.getPosizioneX() == 7
-					&& pezzoAggiornato.getTipo().compareTo(Tipo.PEDONE) == 0) {
-				
+			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
 				ultimaPosizione = true;
 				
 			} else {
+				ultimaPosizione = false;
 				pezzoAggiornato=null;
 				cambiaTurno();
 			}
