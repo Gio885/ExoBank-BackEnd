@@ -52,7 +52,7 @@ public class ScacchieraBean implements Serializable {
 	private boolean stopTimer;
 	private boolean partitaTerminata;
 	private boolean ultimaPosizione;
-	private String nuovoTipo;
+	private Tipo nuovoTipo;
 	
 
 	//INIZIALIZZAZIONE SCACCHIERA
@@ -196,11 +196,26 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void trasformaPedone(String nuovoTipo) {
+	public void trasformaPedone(String tipo) {
 		
 		try {	
-			pezzoAggiornato.setTipo(Tipo.valueOf(Tipo, nuovoTipo));
+			if(Tipo.REGINA.toString().equalsIgnoreCase(tipo)) {
+				nuovoTipo = Tipo.REGINA;
+				
+			} else if(Tipo.TORRE.toString().equalsIgnoreCase(tipo)) {
+				nuovoTipo = Tipo.TORRE;
+				
+			} else if(Tipo.ALFIERE.toString().equalsIgnoreCase(tipo)) {
+				nuovoTipo = Tipo.ALFIERE;
+				
+			} else if(Tipo.CAVALLO.toString().equalsIgnoreCase(tipo)) {
+				nuovoTipo = Tipo.CAVALLO;
+				
+			}
+			
+			pezzoAggiornato.setTipo(nuovoTipo);
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
+			nuovoTipo = null;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,6 +284,7 @@ public class ScacchieraBean implements Serializable {
 		giocaGiocatore1 = false;
 		giocaGiocatore2 = false;
 		stopTimer = false;
+		nuovoTipo = null;
 		turno = 0;		
 	}
 	
@@ -386,11 +402,11 @@ public class ScacchieraBean implements Serializable {
 		this.ultimaPosizione = ultimaPosizione;
 	}
 
-	public String getNuovoTipo() {
+	public Tipo getNuovoTipo() {
 		return nuovoTipo;
 	}
 
-	public void setNuovoTipo(String nuovoTipo) {
+	public void setNuovoTipo(Tipo nuovoTipo) {
 		this.nuovoTipo = nuovoTipo;
 	}
 	
