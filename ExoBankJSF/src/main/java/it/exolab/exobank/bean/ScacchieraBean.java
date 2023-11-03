@@ -52,7 +52,7 @@ public class ScacchieraBean implements Serializable {
 	private boolean stopTimer;
 	private boolean partitaTerminata;
 	private boolean ultimaPosizione;
-	private Tipo nuovoTipo;
+	private String nuovoTipo;
 	
 
 	//INIZIALIZZAZIONE SCACCHIERA
@@ -196,10 +196,10 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void trasformaPedone(Tipo nuovoTipo) {
+	public void trasformaPedone(String nuovoTipo) {
 		
-		try {
-			pezzoAggiornato.setTipo(nuovoTipo);
+		try {	
+			pezzoAggiornato.setTipo(Tipo.valueOf(Tipo, nuovoTipo));
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			
 		} catch (Exception e) {
@@ -386,11 +386,11 @@ public class ScacchieraBean implements Serializable {
 		this.ultimaPosizione = ultimaPosizione;
 	}
 
-	public Tipo getNuovoTipo() {
+	public String getNuovoTipo() {
 		return nuovoTipo;
 	}
 
-	public void setNuovoTipo(Tipo nuovoTipo) {
+	public void setNuovoTipo(String nuovoTipo) {
 		this.nuovoTipo = nuovoTipo;
 	}
 	

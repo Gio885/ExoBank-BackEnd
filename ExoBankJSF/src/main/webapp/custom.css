@@ -274,14 +274,13 @@ body {
     position: absolute;
     top: 3px;
     left: 3px;
-    background-color:rgb(128, 255, 128,0.5);
+    background-color: transparent;
     transition: border 0.3s, background-color 0.3s; /* Aggiungi una transizione per un effetto di transizione fluida */
-
 }
 
 .p-commandlink-trasparent:hover {
     border: 3px solid rgb(0, 0, 0);
-    background-color: rgba(0, 128, 255, 0.4);
+    background-color: rgba(0, 128, 255, 0.4);   
     top: 2px;
     left: 2px;
     padding:30px;
