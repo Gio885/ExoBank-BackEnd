@@ -1,5 +1,7 @@
 package it.exolab.exobank.costanti;
 
+import it.exolab.exobank.chess.model.Tipo;
+
 //import javax.ws.rs.core.Response.Status;
 
 public class Costanti {
@@ -77,25 +79,17 @@ public class Costanti {
     //SCACCHI
     public static final int RIGHE = 8;
     public static final int COLONNE = 8;
-    public static final String BIANCO = "BIANCO";
-    public static final String NERO = "NERO";
-    public static final String PEDONE = "PEDONE";
-    public static final String TORRE = "TORRE";
-    public static final String ALFIERE = "ALFIERE";
-    public static final String CAVALLO = "CAVALLO";
-    public static final String REGINA = "REGINA";
-    public static final String RE = "RE";
     
  // Matrice costante per la disposizione iniziale dei pezzi
-    public static final String[][] SCACCHIERA_INIZIALE = {
-        {TORRE, CAVALLO, ALFIERE, RE, REGINA, ALFIERE, CAVALLO, TORRE},
-        {PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE},
+    public static final Tipo[][] SCACCHIERA_INIZIALE = {
+        {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE},
+        {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE},
         {null, null, null, null, null, null, null, null},
         {null, null, null, null, null, null, null, null},
         {null, null, null, null, null, null, null, null},
         {null, null, null, null, null, null, null, null},
-        {PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE, PEDONE},
-        {TORRE, CAVALLO, ALFIERE, RE, REGINA, ALFIERE, CAVALLO, TORRE}
+        {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE},
+        {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE}
     };
     
 }

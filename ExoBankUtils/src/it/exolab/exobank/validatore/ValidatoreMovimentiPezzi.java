@@ -1,15 +1,16 @@
 package it.exolab.exobank.validatore;
 
+import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.costanti.Costanti;
 
 public class ValidatoreMovimentiPezzi {
 	
-    public boolean validaMovimentoPedone(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, String colore, Pezzo[][] griglia) throws Exception {
+    public boolean validaMovimentoPedone(Integer xPartenza, Integer yPartenza, Integer xDestinazione, Integer yDestinazione, Colore colore, Pezzo[][] griglia) throws Exception {
         if (xPartenza != xDestinazione || yPartenza != yDestinazione) {
-            if (colore.equals(Costanti.BIANCO)) {
+            if (colore.equals(Colore.BIANCO)) {
                 return validaMovimentoPedoneBianco(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
-            } else if (colore.equals(Costanti.NERO)) {
+            } else if (colore.equals(Colore.NERO)) {
                 return validaMovimentoPedoneNero(xPartenza, yPartenza, xDestinazione, yDestinazione, griglia);
             }
         }

@@ -7,8 +7,10 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
+import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.costanti.Costanti;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 import it.exolab.exobank.validatore.ValidaMosseScacchi;
@@ -49,7 +51,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			Integer xDestinazione = pezzo.getPosizioneX();
 			Integer yDestinazione = pezzo.getPosizioneY();
 
-			if(validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia).getPosizioneX(), trovaRe(pezzoSpecifico, griglia).getPosizioneY(), griglia, trovaRe(pezzoSpecifico, griglia).getColore())) {
+//			if(validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia).getPosizioneX(), trovaRe(pezzoSpecifico, griglia).getPosizioneY(), griglia, trovaRe(pezzoSpecifico, griglia).getColore())) {
 
 				// Utilizza il validatoreScacchi per verificare la validità della mossa
 				if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
@@ -72,33 +74,32 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 				} else {
 					throw new Exception("Mossa non consentita");
 				}
-			}else {
-				if(validatoreScacchi.puoiRimuovereScacco(trovaRe(pezzoSpecifico, griglia), griglia, scacchieraLavoro)) {
-					// Utilizza il validatoreScacchi per verificare la validità della mossa
-					if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
-						if (null != griglia[xDestinazione][yDestinazione]) {
-							griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
-							griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
-							// Aggiorna la scacchiera con la nuova posizione
-							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-							pezzoSpecifico.setPosizioneY(yDestinazione);
-						} else {
-							// Aggiorna la scacchiera con la nuova posizione
-							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
-							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
-							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
-							pezzoSpecifico.setPosizioneY(yDestinazione);
-						}
-						scacchieraLavoro.setScacchiera(griglia);
-					} else {
-						throw new Exception("Mossa non consentita");
-					}
-				}else {
-					throw new Exception("SCACCO MATTO!");
-				}
-			}
+//			}else {
+//				if(validatoreScacchi.puoiRimuovereScacco(trovaRe(pezzoSpecifico, griglia), griglia, scacchieraLavoro)) {
+//					// Utilizza il validatoreScacchi per verificare la validità della mossa
+//					if (validatoreScacchi.mossaConsentitaPerPezzo(pezzoSpecifico, xPartenza, yPartenza, xDestinazione, yDestinazione, griglia)) {
+//						if (null != griglia[xDestinazione][yDestinazione]) {
+//							griglia[xDestinazione][yDestinazione].setEsiste(false); // setto esiste a false così dico che il pezzo non esiste più sulla scacchiera
+//							griglia[xDestinazione][yDestinazione] = null; // setto a null quella cella della griglia così da dire che il pezzo è stato mangiato
+//							// Aggiorna la scacchiera con la nuova posizione
+//							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+//							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+//							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+//							pezzoSpecifico.setPosizioneY(yDestinazione);
+//						} else {
+//							// Aggiorna la scacchiera con la nuova posizione
+//							griglia[xPartenza][yPartenza] = null; // Rimuovi il pezzo dalla posizione precedente
+//							griglia[xDestinazione][yDestinazione] = pezzoSpecifico; // Sposta il pezzo nella nuova posizione
+//							pezzoSpecifico.setPosizioneX(xDestinazione); // Aggiorna le coordinate del pezzo
+//							pezzoSpecifico.setPosizioneY(yDestinazione);
+//						}
+//						scacchieraLavoro.setScacchiera(griglia);
+//					} else {
+//						throw new Exception("Mossa non consentita");
+//					}
+//				}else {
+//					throw new Exception("SCACCO MATTO!");
+//				}
 			return scacchieraLavoro;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,51 +156,15 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			
 			for (int riga = 0; riga < Costanti.RIGHE; riga++) {
 			    for (int colonna = 0; colonna < Costanti.COLONNE; colonna++) {
-			        String tipoPezzo = Costanti.SCACCHIERA_INIZIALE[riga][colonna];
+			        Tipo tipoPezzo = Costanti.SCACCHIERA_INIZIALE[riga][colonna];
 			        if (tipoPezzo != null) {
-			            griglia[riga][colonna] = new Pezzo(idPezzo++, tipoPezzo, (riga < 2) ? Costanti.BIANCO : Costanti.NERO, riga, colonna, true);
+			            griglia[riga][colonna] = new Pezzo(idPezzo++, tipoPezzo, (riga < 2) ? Colore.BIANCO : Colore.NERO, riga, colonna, true);
 			        } else {
 			            griglia[riga][colonna] = null;
 			        }
 			    }
 			}
 			
-//			// Inizializza la prima riga (0) con i pezzi iniziali (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-//			griglia[0][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 0, true);
-//			griglia[0][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 1, true);
-//			griglia[0][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 2, true);
-//			griglia[0][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.BIANCO, 0, 3, true);
-//			griglia[0][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.BIANCO, 0, 4, true);
-//			griglia[0][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.BIANCO, 0, 5, true);
-//			griglia[0][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.BIANCO, 0, 6, true);
-//			griglia[0][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.BIANCO, 0, 7, true);
-//
-//			// Inizializza la seconda riga (1) con i pedoni bianchi
-//			for (int colonna = 0; colonna < 8; colonna++) {
-//				griglia[1][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.BIANCO, 1, colonna, true);
-//			}
-//
-//			// Inizializza le righe 2-5 con caselle vuote
-//			for (int riga = 2; riga < 6; riga++) {
-//				for (int colonna = 0; colonna < 8; colonna++) {
-//					griglia[riga][colonna] = null; // Casella vuota
-//				}
-//			}
-//
-//			// Inizializza la sesta riga (6) con i pedoni neri
-//			for (int colonna = 0; colonna < 8; colonna++) {
-//				griglia[6][colonna] = new Pezzo(idPezzo++, Costanti.PEDONE, Costanti.NERO, 6, colonna, true);
-//			}
-//
-//			// Inizializza l'ultima riga (7) con i pezzi iniziali neri (torre, cavallo, alfiere, re, regina, alfiere, cavallo, torre)
-//			griglia[7][0] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 0, true);
-//			griglia[7][1] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 1, true);
-//			griglia[7][2] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 2, true);
-//			griglia[7][3] = new Pezzo(idPezzo++, Costanti.RE, Costanti.NERO, 7, 3, true);
-//			griglia[7][4] = new Pezzo(idPezzo++, Costanti.REGINA, Costanti.NERO, 7, 4, true);
-//			griglia[7][5] = new Pezzo(idPezzo++, Costanti.ALFIERE, Costanti.NERO, 7, 5, true);
-//			griglia[7][6] = new Pezzo(idPezzo++, Costanti.CAVALLO, Costanti.NERO, 7, 6, true);
-//			griglia[7][7] = new Pezzo(idPezzo++, Costanti.TORRE, Costanti.NERO, 7, 7, true);
 			
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(griglia);
@@ -235,7 +200,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		for (int x = 0; x < griglia.length; x++) {
 			for (int y = 0; y < griglia[x].length; y++) {
 				Pezzo pezzoCorrente = griglia[x][y];
-				if (pezzoCorrente != null && pezzoCorrente.getTipo().equals(Costanti.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
+				if (pezzoCorrente != null && pezzoCorrente.getTipo().equals(Tipo.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
 					return reStessoColore = pezzoCorrente;
 				}
 			}
