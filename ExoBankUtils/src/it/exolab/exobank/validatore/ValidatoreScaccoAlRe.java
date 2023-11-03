@@ -108,21 +108,21 @@ public class ValidatoreScaccoAlRe {
 				
 	}
 	
-	
-
-	public boolean isScacco(Pezzo re, Pezzo[][] scacchiera) throws Exception {
+	public boolean puoInterporreTraReEMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Colore coloreGiocatore = re.getColore();
-		boolean scacco = false;
+		boolean pezzoFrapposto = false;
 		try {
-			List<Pezzo> minacce = trovaMinacce(coloreGiocatore, scacchiera);
-			for(Pezzo pezzo : minacce) {
+			for(Pezzo pezzoMinaccia : minacceConcrete) {
 				try {
 					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-					ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), pezzo.getColore(), scacchiera);
-					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
-						scacco = true;
-						
-						break;
+					List<Pezzo> alleati = trovaAlleati(coloreGiocatore, scacchiera);
+					for(Pezzo pezzo : alleati) {
+						ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzo, pezzo.getPosizioneX(), pezzo.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), pezzo.getColore(), scacchiera);
+						if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
+							pezzoFrapposto = true;
+							minacceConcrete.remove(pezzoMinaccia);
+							break;
+						}
 					}
 				}catch(Exception e) {
 					continue;
@@ -131,7 +131,7 @@ public class ValidatoreScaccoAlRe {
 		}catch(Exception e) {
 			throw new Exception();
 		}
-		return scacco;
+		return pezzoFrapposto;
 	}
 	
 	private List<Pezzo> trovaMinacce(Colore colore, Pezzo[][] scacchiera) throws Exception {
