@@ -178,13 +178,17 @@ public class ScacchieraBean implements Serializable {
 	
 	private void aggiornaListePezziMangiati(){
 		try {
-			for(Pezzo pezzo : scacchieraController.listaPezziMangiati()) {
-				
-				if(pezzo.getColore().toString().equalsIgnoreCase("bianco")) {
-					listaPezziMangiatiBianchi.add(pezzo);
-					
-				} else if(pezzo.getColore().toString().equalsIgnoreCase("nero")) {
-					listaPezziMangiatiNeri.add(pezzo);
+			
+			List<Pezzo> listaPezziMangiati = scacchieraController.listaPezziMangiati();
+			
+			for(Pezzo pezzo : listaPezziMangiati) {
+				if(!listaPezziMangiati.contains(pezzo)) {
+					if(pezzo.getColore().toString().equalsIgnoreCase("bianco")) {
+						listaPezziMangiatiBianchi.add(pezzo);
+						
+					} else if(pezzo.getColore().toString().equalsIgnoreCase("nero")) {
+						listaPezziMangiatiNeri.add(pezzo);
+					}
 				}
 			}
 			
