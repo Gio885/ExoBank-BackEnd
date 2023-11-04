@@ -40,7 +40,8 @@ public class ScacchieraBean implements Serializable {
 		
 	@EJB
 	ScacchieraController scacchieraController = new ScacchieraController();
-	private List<Pezzo> listaPezziMangiati;
+	private List<Pezzo> listaPezziMangiatiBianchi;
+	private List<Pezzo> listaPezziMangiatiNeri;
 	private boolean nuovoGioco;
 	private Scacchiera scacchiera;
 	private Pezzo[][] griglia;
@@ -66,6 +67,8 @@ public class ScacchieraBean implements Serializable {
 			
 			Scacchiera scacchieraOriginale = scacchieraController.scacchieraIniziale();
 			scacchiera = new Scacchiera();
+			listaPezziMangiatiBianchi = new ArrayList<Pezzo>();
+			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
 			creazioneTimer(30, 10);			
@@ -165,7 +168,7 @@ public class ScacchieraBean implements Serializable {
 				cambiaTurno();
 			}
 			
-			listaPezziMangiati();
+			aggiornaListePezziMangiati();
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -173,10 +176,17 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	private void listaPezziMangiati(){
+	private void aggiornaListePezziMangiati(){
 		try {
-			listaPezziMangiati = new ArrayList<Pezzo>();
-			listaPezziMangiati = scacchieraController.listaPezziMangiati();
+			for(Pezzo pezzo : scacchieraController.listaPezziMangiati()) {
+				
+				if(pezzo.getColore().toString().equalsIgnoreCase("bianco")) {
+					listaPezziMangiatiBianchi.add(pezzo);
+					
+				} else if(pezzo.getColore().toString().equalsIgnoreCase("nero")) {
+					listaPezziMangiatiNeri.add(pezzo);
+				}
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -277,17 +287,29 @@ public class ScacchieraBean implements Serializable {
 		giocaGiocatore2 = false;
 		stopTimer = false;
 		nuovoTipo = null;
+		listaPezziMangiatiBianchi = null;
+		listaPezziMangiatiNeri = null;
 		turno = 0;		
 	}
 	
-	public List<Pezzo> getListaPezziMangiati() {
-		return listaPezziMangiati;
+	
+	
+	public List<Pezzo> getListaPezziMangiatiBianchi() {
+		return listaPezziMangiatiBianchi;
 	}
 
-	public void setListaPezziMangiati(List<Pezzo> listaPezziMangiati) {
-		this.listaPezziMangiati = listaPezziMangiati;
+	public void setListaPezziMangiatiBianchi(List<Pezzo> listaPezziMangiatiBianchi) {
+		this.listaPezziMangiatiBianchi = listaPezziMangiatiBianchi;
 	}
-	
+
+	public List<Pezzo> getListaPezziMangiatiNeri() {
+		return listaPezziMangiatiNeri;
+	}
+
+	public void setListaPezziMangiatiNeri(List<Pezzo> listaPezziMangiatiNeri) {
+		this.listaPezziMangiatiNeri = listaPezziMangiatiNeri;
+	}
+
 	public boolean isPartitaTerminata() {
 		return partitaTerminata;
 	}
