@@ -32,11 +32,10 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
 	<p:commandLink 
-		id="pippo"
 		styleClass="p-commandlink-trasparent" 
 		rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}"
 		disabled="#{scacchieraBean.partitaTerminata}"
-      	update="homeForm:scacchiera" 
+      	update="homeForm:scacchiera homeForm:pannelloDestro" 
       	style="top: 7px;left: 7px;"
       	action="#{scacchieraBean.mossa(rowIndex, colIndex)}">
       	</p:commandLink>
@@ -45,7 +44,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 			styleClass="p-commandlink-trasparent" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'BIANCO'}" 
 			disabled="#{scacchieraBean.partitaTerminata}"
-         	update="homeForm:scacchiera" 
+         	update="homeForm:scacchiera homeForm:pannelloDestro" 
          	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
     </ui:fragment>
@@ -54,7 +53,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 			styleClass="p-commandlink-nonDisponibile" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'NERO' and scacchieraBean.griglia[rowIndex][colIndex].id != scacchieraBean.pezzo.id}" 
 			disabled="true"
-         	update="homeForm:scacchiera" 
+         	update="homeForm:scacchiera homeForm:pannelloDestro" 
          	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
     </ui:fragment>
@@ -63,7 +62,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 			styleClass="p-commandlink-trasparent" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'NERO'}" 
 			disabled="#{scacchieraBean.partitaTerminata}"
-          	update="homeForm:scacchiera"
+          	update="homeForm:scacchiera homeForm:pannelloDestro"
           	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
   	</ui:fragment>
@@ -71,7 +70,7 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 		<p:commandLink 
 			styleClass="p-commandlink-nonDisponibile" 
 			rendered="#{scacchieraBean.griglia[rowIndex][colIndex].colore == 'BIANCO' and scacchieraBean.griglia[rowIndex][colIndex].id != scacchieraBean.pezzo.id}" 
-          	update="homeForm:scacchiera" 
+          	update="homeForm:scacchiera homeForm:pannelloDestro" 
           	disabled="true"
           	style="top: 7px;left: 7px;"
 			action="#{scacchieraBean.mossa(rowIndex, colIndex)}"

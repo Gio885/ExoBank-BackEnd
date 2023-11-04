@@ -53,8 +53,10 @@
 				MESSAGGI PRECISI DA STAMPARE A SCHERMO
 				CAPIRE COSA FARE CON GIOCATORE 1 E GIOCATORE 2
 				RIQUADRO LATERALE CAPIRE COSA FARE -->
+	<h:panelGroup id="dialog">
+			<ui:include src="dialog.xhtml"/>
 	
-		<ui:include src="dialog.xhtml"/>
+	</h:panelGroup>
 	
 	<p:outputPanel style="height:2500px">
 		<div class="container1" >	
@@ -68,9 +70,9 @@
 						<ui:include src="pannelloScacchiera.xhtml"/>
 					</h:panelGroup>
 				</div>
-				<h:panelGroup id="pannelloDestro">
+				<h:panelGroup style="margin-left: 20px;">
 					<ui:include src="pannelloDestroScacchiera.xhtml"/>
-				</h:panelGroup>
+				</h:panelGroup>			
 			</div>
 			<br /> 
 			<h:panelGroup id="pannelloBottoni">

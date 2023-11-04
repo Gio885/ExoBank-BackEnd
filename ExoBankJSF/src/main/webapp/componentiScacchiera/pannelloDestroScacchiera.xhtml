@@ -3,16 +3,65 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-	<div class="container1-right-mosse">
-		<div class="container"
-			style="width: 310px; height: 510px; margin-top: 16px;">
-			<p style="font-family: VT323; font-size: 50px">PEDINE MANGIATE</p>
-			<p:messages id="messaggioScacchi" showIcon="false" closable="true"  showDetail="false" >
+	<div class="container1-right-mosse" style="height:850px;border-radius:20px;display:flex;flex-direction: column;justify-content:center;border:2px solid black">
+		<h:panelGroup id="pannelloDestro">
+		<h1 style="font-family: VT323; font-size: 40px;margin-top:20px;margin-bottom:20px">PEDINE MANGIATE</h1>
+			<div style="background-color: white; width: 310px; height: 200px;border-radius:20px;border:3px solid black; margin: auto; margin-top: 20px; flex-wrap: row; word-wrap: break-word;line-height: 2.5;padding-left:10px;padding-right:10px">
+			<h1 style="font-family: VT323; font-size: 35px;margin-top:0px;margin-bottom:0px">Giocatore 1</h1>
+			<c:forEach var="pedinaNera" items="#{scacchieraBean.listaPezziMangiatiNeri}">
+			    <c:choose>
+			        <c:when test="#{pedinaNera.tipo == 'PEDONE'}">
+			            <i class="fa-solid fa-chess-pawn fa-2x" style="color: #000000"/>
+			        </c:when>
+			        <c:when test="#{pedinaNera.tipo == 'TORRE'}">
+			            <i class="fa-solid fa-chess-rook fa-2x" style="color: #000000"/>
+			        </c:when>
+			        <c:when test="#{pedinaNera.tipo == 'CAVALLO'}">
+					<i class="fa-solid fa-chess-knight fa-2x" style ="color : #000000"/>
+			        </c:when>
+			        <c:when test="#{pedinaNera.tipo == 'ALFIERE'}">
+					<i class="fa-solid fa-chess-bishop fa-2x" style ="color : #000000 "/>
+			        </c:when>
+			        <c:when test="#{pedinaNera.tipo == 'REGINA'}">
+					<i class="fa-solid fa-chess-queen fa-2x" style ="color : #000000"/>
+			        </c:when>       
+			    </c:choose>
+			</c:forEach>
+		</div>
+		<div style="background-color:white;width: 310px; height: 200px;margin:auto;border-radius:20px;border:3px solid black;margin-top:20px;flex-wrap: row; word-wrap: break-word;line-height: 2.5;padding-left:10px;padding-right:10px">
+			<h1 style="font-family: VT323;margin-top:0px;margin-bottom:0px; font-size: 35px">Giocatore 2</h1>
+			<c:forEach var="pedinaBianca" items="#{scacchieraBean.listaPezziMangiatiBianchi}">
+		    <c:choose>
+		        <c:when test="#{pedinaBianca.tipo == 'PEDONE'}">
+		            <i class="fa-regular fa-chess-pawn fa-2x" style="color: #000000"/>
+		        </c:when>
+		        <c:when test="#{pedinaBianca.tipo == 'TORRE'}">
+		            <i class="fa-regular fa-chess-rook fa-2x" style="color: #000000"/>
+		        </c:when>
+		        <c:when test="#{pedinaBianca.tipo == 'CAVALLO'}">
+				<i class="fa-regular fa-chess-knight fa-2x" style ="color : #000000"/>
+		        </c:when>
+		        <c:when test="#{pedinaBianca.tipo == 'ALFIERE'}">
+				<i class="fa-regular fa-chess-bishop fa-2x" style ="color : #000000 "/>
+		        </c:when>
+		        <c:when test="#{pedinaBianca.tipo == 'REGINA'}">
+				<i class="fa-regular fa-chess-queen fa-2x" style ="color : #000000"/>
+		        </c:when>       
+		    </c:choose>
+		</c:forEach>	
+		</div>
+		</h:panelGroup>		
+		<div style="background-color:white;width: 310px; height: 250px;margin:auto;margin-top:50px;border:3px solid black;border-radius:20px">
+			<h1 style="font-family: VT323; font-size: 35px">Messaggio</h1>
+			<p:messages style="width:280px;margin-left:15px;margin-top:35px" id="messaggioScacchi" showIcon="false" closable="false"  showDetail="false" >
 				<p:autoUpdate />
 			</p:messages>
-		</div>
+		</div>	
+			
 	</div>
+	
 </ui:composition>
 

@@ -11,84 +11,89 @@
 	<p:dialog id="modalTrasformazionePedone" styleClass="mioDialog" closable="false" widgetVar="modalTrasformazionePedone" modal="true" resizable="false">
 		<h1 style="font-family:VT323; color:black;text-align:center">SELEZIONA PEDINA</h1>	
 		<div class="container" style="flex-direction: row;">
-			<h:panelGroup rendered="#{scacchieraBean.giocaGiocatore1}" >
-				<i class="fa-regular fa-chess-rook fa-4x" style ="color : #000000;">
+				<h:panelGroup id="selezione" rendered="#{scacchieraBean.giocaGiocatore1}" >
+					<i class="fa-regular fa-chess-rook fa-4x" style ="color : #000000;"/>
+                	<p:commandLink
+						disabled="#{scacchieraBean.nuovoTipo.toString() == 'TORRE'}"
+	                	update="selezione"
+	                	styleClass="p-commandlink-trasparent"
+	                    style="top:98px;left:70px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'TORRE') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'TORRE') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('TORRE')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+												
+					<i class="fa-regular fa-chess-knight fa-4x" style ="color : #000000; margin-left:40px"/>
 					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:78px;padding:37px"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('TORRE')}"
-						/>
-				</i>
-	
-				<i class="fa-regular fa-chess-knight fa-4x" style ="color : #000000; margin-left:40px">
+	                    styleClass="p-commandlink-trasparent"
+	                    disabled="#{scacchieraBean.nuovoTipo.toString() == 'CAVALLO'}"
+	                	update="selezione"
+	                    style="top:98px;left:178px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'CAVALLO') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'CAVALLO') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('CAVALLO')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+						
+					<i class="fa-regular fa-chess-bishop fa-4x" style ="color : #000000; margin-left:40px"/>
 					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:182px;padding:37px"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('CAVALLO')}"
-						/>
-				</i>
-				<i class="fa-regular fa-chess-bishop fa-4x" style ="color : #000000; margin-left:40px">
+	                    styleClass="p-commandlink-trasparent"
+	                    disabled="#{scacchieraBean.nuovoTipo.toString() == 'ALFIERE'}"
+	                	update="selezione"
+	                    style="top:98px;left:276px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'ALFIERE') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'ALFIERE') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('ALFIERE')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+						
+					<i class="fa-regular fa-chess-queen fa-4x" style ="color : #000000; margin-left:40px"/>
 					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:275px;padding:37px"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('ALFIERE')}"
-						/>
-				</i>
-				<i class="fa-regular fa-chess-queen fa-4x" style ="color : #000000; margin-left:40px">
+	                	disabled="#{scacchieraBean.nuovoTipo.toString() == 'REGINA'}"
+	                	update="selezione"
+	                    styleClass="p-commandlink-trasparent"
+	                    style="top:98px;left:378px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'REGINA') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'REGINA') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('REGINA')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+				</h:panelGroup>
+				<h:panelGroup id="selezione2" rendered="#{scacchieraBean.giocaGiocatore2}">
+					<i class="fa-solid fa-chess-rook fa-4x" style ="color : #000000"/>
 					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:100px;left:375px;padding:35px"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('REGINA')}"
-						/>
-				</i>		
-			</h:panelGroup>
+						disabled="#{scacchieraBean.nuovoTipo.toString() == 'TORRE'}"
+	                	update="selezione2"
+	                	styleClass="p-commandlink-trasparent"
+	                    style="top:98px;left:70px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'TORRE') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'TORRE') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('TORRE')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+						
+					<i class="fa-solid fa-chess-knight fa-4x" style ="color : #000000;margin-left:40px"/>
+					<p:commandLink
+	                    styleClass="p-commandlink-trasparent"
+	                    disabled="#{scacchieraBean.nuovoTipo.toString() == 'CAVALLO'}"
+	                	update="selezione2"
+	                    style="top:98px;left:178px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'CAVALLO') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'CAVALLO') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('CAVALLO')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+						
+					<i class="fa-solid fa-chess-bishop fa-4x" style ="color : #000000;margin-left:40px"/>
+					<p:commandLink
+	                    styleClass="p-commandlink-trasparent"
+	                    disabled="#{scacchieraBean.nuovoTipo.toString() == 'ALFIERE'}"
+	                	update="selezione2"
+	                    style="top:98px;left:276px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'ALFIERE') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'ALFIERE') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('ALFIERE')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+						
+					<i class="fa-solid fa-chess-queen fa-4x" style ="color : #000000;margin-left:40px"/>
+					<p:commandLink
+	                	disabled="#{scacchieraBean.nuovoTipo.toString() == 'REGINA'}"
+	                	update="selezione2"
+	                    styleClass="p-commandlink-trasparent"
+	                    style="top:98px;left:378px;padding:37px;border: #{(scacchieraBean.nuovoTipo.toString() == 'REGINA') ? '4px solid rgb(0, 0, 0)' : '0px solid transparent'}; background-color: #{(scacchieraBean.nuovoTipo.toString() == 'REGINA') ? 'rgba(0, 128, 255, 0.7)' : 'transparent'}"
+	                    action="#{scacchieraBean.selezionaNuovoTipo('REGINA')}"
+	                    onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
+						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"/>
+				</h:panelGroup>
 			
-			<h:panelGroup rendered="#{scacchieraBean.giocaGiocatore2}">
-				<i class="fa-solid fa-chess-rook fa-4x" style ="color : #000000">
-					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:78px;padding:37px;"
-						onmouseover="this.style.background='rgba(0, 128, 255, 0.3)';this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('TORRE')}"
-						/>
-				</i>	
-				<i class="fa-solid fa-chess-knight fa-4x" style ="color : #000000;margin-left:40px">
-					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:182px;padding:37px;"
-						onmouseover="this.style.background='rgba(0, 128, 255, 0.3)';this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('CAVALLO')}"
-						/>
-				</i>
-				<i class="fa-solid fa-chess-bishop fa-4x" style ="color : #000000;margin-left:40px">
-					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:98px;left:275px;padding:37px;"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)';this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-						action="#{scacchieraBean.selezionaNuovoTipo('ALFIERE')}"
-						/>
-				</i>
-				<i class="fa-solid fa-chess-queen fa-4x" style ="color : #000000;margin-left:40px">
-					<p:commandLink
-						styleClass="p-commandlink-trasparent"
-						style="top:100px;left:375px;padding:35px;"
-						onmouseover="this.style.backgroundColor='rgba(0, 128, 255, 0.3)'; this.style.border='3px solid rgb(0, 0, 0)';"
-						onmouseout="this.style.backgroundColor='transparent';this.style.border='0px'"
-    					action="#{scacchieraBean.selezionaNuovoTipo('REGINA')}"
-						/>
-				</i>	
-			</h:panelGroup>
 		</div>
 		<div class="container" style="background-color: transparent">
 		<p:commandButton
