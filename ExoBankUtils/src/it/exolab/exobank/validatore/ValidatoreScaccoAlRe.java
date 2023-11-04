@@ -2,7 +2,6 @@ package it.exolab.exobank.validatore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
@@ -68,7 +67,7 @@ public class ValidatoreScaccoAlRe {
 			return salvo;
 			
 		}catch(Exception e) {
-			throw new Exception();
+			throw new Exception("Mossa non consentita!");
 		}
 	}
 	
@@ -104,7 +103,7 @@ public class ValidatoreScaccoAlRe {
 			return salvo;		
 					
 		}catch(Exception e) {
-			throw new Exception();
+			throw new Exception("Mossa non consentita!");
 		}
 				
 	}
@@ -130,7 +129,7 @@ public class ValidatoreScaccoAlRe {
 				}
 			}
 		}catch(Exception e) {
-			throw new Exception();
+			throw new Exception("Mossa non consentita!");
 		}
 		return pezzoFrapposto;
 	}
@@ -170,7 +169,6 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
-	    Colore coloreRe = re.getColore();
 
 	    if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
 	        return false;
