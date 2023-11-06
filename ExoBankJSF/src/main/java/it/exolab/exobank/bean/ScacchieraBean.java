@@ -53,6 +53,7 @@ public class ScacchieraBean implements Serializable {
 	private boolean stopTimer;
 	private boolean partitaTerminata;
 	private boolean ultimaPosizione;
+	private Integer tipoPartitaScelta;
 	private Tipo nuovoTipo;
 	
 
@@ -71,16 +72,17 @@ public class ScacchieraBean implements Serializable {
 			griglia = scacchiera.getGriglia();
 //			tempoGiocatore1 = new Date();
 //			tempoGiocatore2 = new Date();
-//			creazioneTimer(30, 10);			
+//			creazioneTimer(30, 10);
+			tipoPartitaScelta = null;
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
 			partitaTerminata = false;
 			ultimaPosizione = false;
 			turno = 1;
 			
-		} catch(Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch(Exception exception) {
+			exception.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 		}
 	}
 	
@@ -88,12 +90,14 @@ public class ScacchieraBean implements Serializable {
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
 			if(scelta == 1) {
+				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 10);
 				tempoGiocatore2 = new Date();
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 10);
 				
 			} else if(scelta == 2) {
+				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(20, 0);
 				tempoGiocatore2 = new Date();
@@ -101,9 +105,9 @@ public class ScacchieraBean implements Serializable {
 			
 			}
 			
-		}catch(Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch(Exception exception) {
+			exception.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 
 		}
 	}
@@ -192,9 +196,9 @@ public class ScacchieraBean implements Serializable {
 			}
 			aggiornaListePezziMangiati();
 
-		} catch(Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch(Exception exception) {
+			exception.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 		}
 	}
 	
@@ -213,9 +217,9 @@ public class ScacchieraBean implements Serializable {
 			}
 			
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch (Exception exception) {
+			exception.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 		}
 	}
 	
@@ -227,9 +231,9 @@ public class ScacchieraBean implements Serializable {
 					nuovoTipo = tipoPezzo;
 				}
 			}
-		} catch(Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch(Exception exception) {
+			exception.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 		}
 	}
 	
@@ -242,9 +246,9 @@ public class ScacchieraBean implements Serializable {
 			ultimaPosizione = false;
 			cambiaTurno();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		} catch (Exception exception) {
+			exception.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
 
 		}
 	}
@@ -284,8 +288,8 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato.setPosizioneY(posY);
 			return pezzoAggiornato;
 			
-		} catch(Exception e) {
-			e.printStackTrace();
+		} catch(Exception exception) {
+			exception.printStackTrace();
 			throw new Exception("errore in aggiornaPezzoAggiornato --> ");
 		}
 		
@@ -316,6 +320,7 @@ public class ScacchieraBean implements Serializable {
 		nuovoTipo = null;
 		listaPezziMangiatiBianchi = null;
 		listaPezziMangiatiNeri = null;
+		tipoPartitaScelta = null;
 		turno = 0;		
 	}
 	
@@ -453,6 +458,14 @@ public class ScacchieraBean implements Serializable {
 
 	public void setNuovoTipo(Tipo nuovoTipo) {
 		this.nuovoTipo = nuovoTipo;
+	}
+
+	public Integer getTipoPartitaScelta() {
+		return tipoPartitaScelta;
+	}
+
+	public void setTipoPartitaScelta(Integer tipoPartitaScelta) {
+		this.tipoPartitaScelta = tipoPartitaScelta;
 	}
 	
 	
