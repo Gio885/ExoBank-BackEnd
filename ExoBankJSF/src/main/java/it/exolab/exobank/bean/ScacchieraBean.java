@@ -219,24 +219,23 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	public void selezionaNuovoTipo(String tipo) {
-		
-		if(Tipo.REGINA.toString().equalsIgnoreCase(tipo)) {
-			nuovoTipo = Tipo.REGINA;
-			
-		} else if(Tipo.TORRE.toString().equalsIgnoreCase(tipo)) {
-			nuovoTipo = Tipo.TORRE;
-			
-		} else if(Tipo.ALFIERE.toString().equalsIgnoreCase(tipo)) {
-			nuovoTipo = Tipo.ALFIERE;
-			
-		} else if(Tipo.CAVALLO.toString().equalsIgnoreCase(tipo)) {
-			nuovoTipo = Tipo.CAVALLO;
-			
+		try {
+			for(Tipo tipoPezzo : Tipo.values()) {
+				if(tipoPezzo.toString().equalsIgnoreCase(tipo)) {
+					nuovoTipo = tipoPezzo;
+				} else {
+			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(
+			        		FacesMessage.SEVERITY_ERROR, "Devi effettuare una scelta!!!", null));
+	
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	
 	public void confermaNuovoTipo() {
-		
 		try {
 			pezzoAggiornato.setTipo(nuovoTipo);
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
