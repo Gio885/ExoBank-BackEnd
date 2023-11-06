@@ -19,10 +19,11 @@ import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.controller.ScacchieraController;
+import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 
 /**
 * Bean class for chess game
-* made with JSF component
+* made with JSF components
 *
 * @author  Armandone
 * @version 0.1
@@ -33,13 +34,12 @@ import it.exolab.exobank.controller.ScacchieraController;
 @SessionScoped
 public class ScacchieraBean implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-		
+	private static final long serialVersionUID = 4821479503167476166L;
+	
 	@EJB
-	ScacchieraController scacchieraController = new ScacchieraController();
+	private ScacchieraControllerInterface scacchieraController;
+	
+	
 	private List<Pezzo> listaPezziMangiatiBianchi;
 	private List<Pezzo> listaPezziMangiatiNeri;
 	private boolean nuovoGioco;
@@ -84,6 +84,7 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
+	//TODO IMPLEMENTARE BOTTONE PER SCEGLIERE LUNGHEZZA PARTITA
 	public void sceltaLungezzaPartita(int scelta) {
 		
 		if(scelta == 1) {
