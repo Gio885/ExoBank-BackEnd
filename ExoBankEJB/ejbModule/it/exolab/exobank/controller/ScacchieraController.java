@@ -39,46 +39,53 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			throw new Exception(Costanti.CONTATTA_ASSISTENZA);
 		}
 	}
-
+	
 	@Override
 	public Scacchiera mossaConsentita(Pezzo pezzo) throws Exception {
-		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
-		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-		ValidaMosseScacchi validatoreScacchi = new ValidaMosseScacchi();
-		try {
-			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
-			if (null == pezzoSpecifico) {
-				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
-			}
-			ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
-			if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
-				if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
-					throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
-				} else {
-					if (validaScacco.negaScaccoMangiandoMinaccia(pezzo, griglia)) {
-						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-					} else if (validaScacco.negaScaccoMuovendoIlRe(pezzo, griglia)) {
-						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-					} else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
-						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-					} else {
-						mossaValida = false;
-						throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);	                }
-				}
-			} else {
-				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);    
-			}
-			return scacchieraLavoro;
-		} catch (MossaNonConsentita eM) {
-			eM.printStackTrace();
-			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		} catch (Scacco s) {
-			s.printStackTrace();
-			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
-		}
+	    Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+	    ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+	    ValidaMosseScacchi validatoreScacchi = new ValidaMosseScacchi();
+	    
+	    try {
+	        Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
+	        if (null == pezzoSpecifico) {
+	            throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
+	        }
+	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
+	        if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
+	            if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
+	                throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
+	            } else {
+	                if (validaScacco.negaScaccoMangiandoMinaccia(pezzo, griglia)) {
+	                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+	                } else if (validaScacco.negaScaccoMuovendoIlRe(pezzo, griglia)) {
+	                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+	                } else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
+	                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+	                } else {
+	                    mossaValida = false;
+	                    throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+	                }
+	            }
+	        } else {
+	            eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+	        }
+
+	        if (!mossaValida) {
+	            throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
+	        }
+
+	        return scacchieraLavoro;
+	    } catch (MossaNonConsentita eM) {
+	        eM.printStackTrace();
+	        throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+	    } catch (Scacco s) {
+	        s.printStackTrace();
+	        throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
+	    }
 	}
 
 	@Override
