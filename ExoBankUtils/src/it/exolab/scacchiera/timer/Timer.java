@@ -13,14 +13,12 @@ public class Timer implements Serializable{
 	
 	private Calendar tempo = Calendar.getInstance();
 	
-	public Date creazioneTimer(int secondi, int minuti, Date tempoGiocatore) throws Exception {
+	public Date creazioneTimer(int secondi, int minuti) throws Exception {
 		try {
 			tempo.set(Calendar.HOUR_OF_DAY, 0);
 			tempo.set(Calendar.MINUTE, minuti);
 			tempo.set(Calendar.SECOND, secondi);
-			tempoGiocatore = new Date();
-			tempoGiocatore = tempo.getTime();
-			return tempoGiocatore;
+			return tempo.getTime();
 			
 		} catch(Exception e) {
 			e.printStackTrace();

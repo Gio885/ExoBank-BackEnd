@@ -71,8 +71,8 @@ public class ScacchieraBean implements Serializable {
 			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-			tempoGiocatore1 = new Date();
-			tempoGiocatore2 = new Date();
+//			tempoGiocatore1 = new Date();
+//			tempoGiocatore2 = new Date();
 //			creazioneTimer(30, 10);			
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
@@ -90,11 +90,15 @@ public class ScacchieraBean implements Serializable {
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
 			if(scelta == 1) {
+				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 10);
+				tempoGiocatore2 = new Date();
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 10);
 				
 			} else if(scelta == 2) {
+				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(20, 0);
+				tempoGiocatore2 = new Date();
 				tempoGiocatore2 = new Timer().creazioneTimer(20, 0);
 			
 			}
