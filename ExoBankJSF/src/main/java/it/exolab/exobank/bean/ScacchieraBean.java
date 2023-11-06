@@ -307,7 +307,7 @@ public class ScacchieraBean implements Serializable {
 	
 	//SVUOTO LE VARIABILI
 	public void resetGame() {
-		scacchieraController.resetGame();
+//		scacchieraController.resetGame();
 		scacchiera = null;
 		griglia = null;
 		pezzo = null;
