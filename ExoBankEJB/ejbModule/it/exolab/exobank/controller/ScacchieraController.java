@@ -130,16 +130,10 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		}
 	}
 
-	@Override
-	public void resetGame() {
-		pezziMangiati.removeAll(pezziMangiati);
-		scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
-	}
-
-
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
+			pezziMangiati.removeAll(pezziMangiati);
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
 			scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);

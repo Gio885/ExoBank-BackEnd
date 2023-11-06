@@ -20,7 +20,5 @@ public interface ScacchieraControllerInterface {
 
 	boolean controlloPedoneUltimaPosizione(Pezzo pezzo) throws Exception;
 
-	void resetGame();
-
 	
 }
