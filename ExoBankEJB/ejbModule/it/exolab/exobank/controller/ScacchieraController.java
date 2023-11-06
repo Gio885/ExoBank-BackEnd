@@ -30,7 +30,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	@Override
 	public Scacchiera scacchieraIniziale() throws Exception{
 		try {
-			Scacchiera scacchieraIniziale = creazioneScacchieraIniziale();
+			Scacchiera scacchieraIniziale = new Scacchiera();
+			scacchieraIniziale.setScacchiera(creazioneScacchieraIniziale().getGriglia());
 			scacchieraLavoro.setScacchiera(scacchieraIniziale.getGriglia());
 			return scacchieraIniziale;
 		} catch (Exception e) {
