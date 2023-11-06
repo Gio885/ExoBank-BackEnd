@@ -25,12 +25,13 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 	private Scacchiera scacchieraLavoro = new Scacchiera();
 	private List<Pezzo> pezziMangiati = new ArrayList<Pezzo>();
+	boolean mossaValida = false;
 
 	@Override
 	public Scacchiera scacchieraIniziale() throws Exception{
 		try {
 			Scacchiera scacchieraIniziale = creazioneScacchieraIniziale();
-			scacchieraLavoro = scacchieraIniziale;
+			scacchieraLavoro.setScacchiera(scacchieraIniziale.getGriglia());
 			return scacchieraIniziale;
 		} catch (Exception e) {
 			// Gestisci l'eccezione qui
@@ -61,6 +62,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					} else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
 						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
 					} else {
+						mossaValida = false;
 						throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);	                }
 				}
 			} else {
@@ -204,6 +206,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		} else {
 			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
+		mossaValida = true;
 	}
 
 	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
