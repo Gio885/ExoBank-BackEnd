@@ -20,6 +20,7 @@ import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.controller.ScacchieraController;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
+import it.exolab.scacchiera.timer.Timer;
 
 /**
 * Bean class for chess game
@@ -71,7 +72,9 @@ public class ScacchieraBean implements Serializable {
 			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-			creazioneTimer(30, 10);			
+			tempoGiocatore1 = new Timer().creazioneTimer(0, 10, tempoGiocatore1);
+			tempoGiocatore2 = new Timer().creazioneTimer(0, 10, tempoGiocatore2);
+//			creazioneTimer(30, 10);			
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
 			partitaTerminata = false;
@@ -85,30 +88,32 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	//TODO IMPLEMENTARE BOTTONE PER SCEGLIERE LUNGHEZZA PARTITA
-	public void sceltaLungezzaPartita(int scelta) {
-		
-		if(scelta == 1) {
-			creazioneTimer(30, 00);
-		} else if(scelta == 2) {
-			creazioneTimer(00, 10);
-		}
-	}
+//	public void sceltaLungezzaPartita(int scelta) {
+//		
+//		if(scelta == 1) {
+//			creazioneTimer(30, 00);
+//		} else if(scelta == 2) {
+//			creazioneTimer(00, 10);
+//		}
+//	}
 	
-	private void creazioneTimer(int secondi, int minuti) {
-		try {
-			Calendar tempo = Calendar.getInstance();
-			tempo.set(Calendar.HOUR_OF_DAY, 0);
-			tempo.set(Calendar.MINUTE, minuti);
-			tempo.set(Calendar.SECOND, secondi);
-			tempoGiocatore1 = new Date();
-			tempoGiocatore1 = tempo.getTime();
-			tempoGiocatore2 = new Date();
-			tempoGiocatore2 = tempo.getTime();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}		
-	}
+//	
+//	private void creazioneTimer(int secondi, int minuti) {
+//		try {
+//			Calendar tempo = Calendar.getInstance();
+//			tempo.set(Calendar.HOUR_OF_DAY, 0);
+//			tempo.set(Calendar.MINUTE, minuti);
+//			tempo.set(Calendar.SECOND, secondi);
+//			tempoGiocatore1 = new Date();
+//			tempoGiocatore1 = tempo.getTime();
+//			tempoGiocatore2 = new Date();
+//			tempoGiocatore2 = tempo.getTime();
+//			
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+//		}		
+//	}
 	
 	public void start() {
 		stopTimer = !stopTimer;
@@ -154,6 +159,7 @@ public class ScacchieraBean implements Serializable {
 	
 	public void mossa (Integer posX, Integer posY) {
 		try {
+			System.out.println("posX: " + posX + "posY: " + posY);
 			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
@@ -282,6 +288,7 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	public void resetGame() {
+		
 		scacchiera = null;
 		griglia = null;
 		pezzo = null;
