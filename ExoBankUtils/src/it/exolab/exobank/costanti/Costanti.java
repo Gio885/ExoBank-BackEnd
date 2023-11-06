@@ -105,13 +105,17 @@ public class Costanti {
 					tipoCorrente = null;
 				}
 
-				scacchiera[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+				if(null != tipoCorrente) {
+					scacchiera[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+				}else {
+					scacchiera[index][j_index] = null;
+				}
 			}
 		}
 
 		return scacchiera;
 	};
-	
+
 	// MESSAGGI ERRORE
 	public static final String ERRORE_STATO_SCACCO_NON_RIMOSSO = "Mossa non rimuove lo stato di scacco";
 	public static final String MOSSA_NON_CONSENTITA = "Mossa non consentita";
