@@ -33,7 +33,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		} catch (Exception e) {
 			// Gestisci l'eccezione qui
 			e.printStackTrace();
-			throw new Exception("Contatta assistenza non ti si è creata la scacchiera iniziale");
+			throw new Exception(Costanti.CONTATTA_ASSISTENZA);
 		}
 	}
 
@@ -44,13 +44,13 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		ValidaMosseScacchi validatoreScacchi = new ValidaMosseScacchi();
 		try {
 			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
-			if (pezzoSpecifico == null) {
-				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
+			if (null == pezzoSpecifico) {
+				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
 			}
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
 			if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
 				if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
-					throw new Exception("SCACCO MATTO!! Ha vinto il giocatore " + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
+					throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
 				} else {
 					if (validaScacco.negaScaccoMangiandoMinaccia(pezzo, griglia)) {
 						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
@@ -59,7 +59,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					} else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
 						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
 					} else {
-						throw new Exception("Mossa non consentita non esci dallo scacco");	                }
+						throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);	                }
 				}
 			} else {
 				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);    
@@ -67,7 +67,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			return scacchieraLavoro;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
+			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
 		}
 	}
 
@@ -78,13 +78,13 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		try {
 			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
 			if (pezzoSpecifico == null) {
-				throw new Exception("Nessun pezzo con l'ID specifico è stato trovato.");
+				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
 			}
 			pezzoSpecifico.setTipo(pezzo.getTipo());
 			return scacchieraLavoro;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception(e.getMessage() != null ? e.getMessage() : "Contatta l'assistenza, si è verificato un errore.");
+			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
 		}
 	}
 
@@ -92,7 +92,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	@Override
 	public List<Pezzo> listaPezziMangiati() throws Exception {
 	    if (pezziMangiati == null) {
-	        throw new Exception("Nessun pezzo mangiato per ora.");
+	        throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
 	    }
 	    
 	    return pezziMangiati;
@@ -131,9 +131,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
 			return scacchiera;
 		} catch (Exception e) {
-			// Gestisci l'eccezione qui
 			e.printStackTrace();
-			throw new Exception("Griglia non creata contatta assistenza"); // Restituisci un valore adeguato in caso di errore
+			throw new Exception(Costanti.ERRORE_SCACCHIERA_INIZIALE);
 		}
 	}
 
@@ -150,7 +149,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			return null; // Se nessun pezzo con l'ID specifico è stato trovato
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Pezzo non trovato"); // Restituisci un valore adeguato in caso di errore
+			throw new Exception(Costanti.NESSUN_PEZZO_TROVATO); // Restituisci un valore adeguato in caso di errore
 		}
 	}
 
@@ -182,7 +181,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					aggiornaScacchiera(parametri);
 					scacchieraLavoro.setScacchiera(parametri.getGriglia());
 				} else {
-					throw new Exception("Mossa non rimuove lo stato di scacco");
+					throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 				}
 			} else {
 				// Controlla se la mossa elimina lo stato di scacco
@@ -190,11 +189,11 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					aggiornaScacchiera(parametri);
 					scacchieraLavoro.setScacchiera(parametri.getGriglia());
 				} else {
-					throw new Exception("Mossa non rimuove lo stato di scacco");
+					throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 				}
 			}
 		} else {
-			throw new Exception("Mossa non consentita");
+			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
 	}
 

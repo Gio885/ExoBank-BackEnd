@@ -5,6 +5,12 @@ import java.util.Arrays;
 
 public class Scacchiera implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8483670828409228104L;
+	
+	
 	private Pezzo[][] griglia = new Pezzo[8][8];
 
 	public Pezzo[][] getGriglia() {
