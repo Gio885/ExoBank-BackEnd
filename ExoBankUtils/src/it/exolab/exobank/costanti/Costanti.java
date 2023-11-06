@@ -88,8 +88,7 @@ public class Costanti {
 
 	public static Pezzo[][] inizializzaScacchieraIniziale() {
 		Pezzo[][] scacchiera = new Pezzo[8][8];
-		Tipo[] primaRiga = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
-		Tipo[] ultimaRiga = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.REGINA, Tipo.RE, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
+		Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
 		Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
 
 		Tipo tipoCorrente = null;
@@ -98,7 +97,7 @@ public class Costanti {
 		for (int index = 0; index < 8; index++) {
 			for (int j_index = 0; j_index < 8; j_index++) {
 				if (index == 0 || index == 7) {
-					tipoCorrente = (index == 0) ? primaRiga[j_index] : ultimaRiga[j_index];
+					tipoCorrente = primaRigaEUltima[j_index];
 				} else if (index == 1 || index == 6) {
 					tipoCorrente = pedoni[j_index];
 				} else {
