@@ -31,6 +31,10 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
+	
+	
+	
+	<!-- CELLE VUOTE -->
 	<p:commandLink 
 		styleClass="p-commandlink-trasparent" 
 		rendered="#{null == scacchieraBean.griglia[rowIndex][colIndex].id}"
@@ -39,6 +43,8 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
       	style="top: 7px;left: 7px;"
       	action="#{scacchieraBean.mossa(rowIndex, colIndex)}">
       	</p:commandLink>
+    
+    <!-- QUANDO IL TURNO E PARI QUINDI GIOCA IL GIOCATORE2 RENDERIZZO LE CELLE CON LE PEDINE BIANCHE -->
 	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 0}">
 		<p:commandLink 
 			styleClass="p-commandlink-trasparent" 
@@ -48,6 +54,8 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
          	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
     </ui:fragment>
+    
+    <!-- QUANDO IL TURNO E PARI QUINDI GIOCA IL GIOCATORE2 BLOCCO LE CELLE CON I PEZZI NERI-->
     <ui:fragment rendered="#{scacchieraBean.turno % 2 == 0}">
 		<p:commandLink 
 			styleClass="p-commandlink-nonDisponibile" 
@@ -57,6 +65,8 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
          	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
     </ui:fragment>
+   	
+   	<!-- QUANDO IL TURNO E DISPARI QUINDI GIOCA IL GIOCATORE1 RENDERIZZO LE CELLE CON I PEZZI NERI-->
 	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 1}">
 		<p:commandLink 
 			styleClass="p-commandlink-trasparent" 
@@ -66,6 +76,8 @@ SI VERFICA UN AZIONE ALL'INTERNO DEL COMPONENTE UI
           	style="top: 7px;left: 7px;"
           	action="#{scacchieraBean.mossa(rowIndex, colIndex)}" />
   	</ui:fragment>
+  	
+  	<!-- QUANDO IL TURNO E DISPARI QUINDI GIOCA IL GIOCATORE1 BLOCCO LE CELLE CON I PEZZI BIANCHI-->
   	<ui:fragment rendered="#{scacchieraBean.turno % 2 == 1}">
 		<p:commandLink 
 			styleClass="p-commandlink-nonDisponibile" 

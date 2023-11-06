@@ -272,6 +272,7 @@ body {
 
 /* AREA DI CLICK COMMAND LINK DISPONIBILI*/
 .p-commandlink-trasparent {
+	text-decoration: none !important;
     padding: 32px; 
     position: absolute;
     top: 3px;
@@ -295,8 +296,8 @@ body {
     position: absolute;
     top: 7px;
     left: 7px;
-    background-color:rgba(255, 255, 255, 0.7);
-}
+    background-color:rgba(255, 255, 255, 0.7);    
+    }
 
 /* COMMAND BUTTON SOVRASCRITTO DALLO STILE BUTTON-SCACCHI*/
 .button-scacchi {
@@ -320,6 +321,20 @@ display:none;
     background: #D7C99C !important;
     border: 5px solid #191919 !important;
     }
+
+.menuButton.ui-menubutton.ui-widget button{
+	background-color: white !important;
+	font-family: VT323;
+	font-size: 20px;
+	line-height: 3.0;
+	border:3px solid black;
+	border-radius: 5px;
+}
+.selezione.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.mygreen {
+	background-color: red;
+	
+}
+
 
 
 /*NON DOVREBBE SERVIRE NON USATO*/

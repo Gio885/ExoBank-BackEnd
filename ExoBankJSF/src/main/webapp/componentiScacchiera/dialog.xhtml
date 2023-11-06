@@ -111,15 +111,23 @@
 <!-- DIALOG CHE SI APRE TRAMITE IL BOTTONE NELLA LOGIN.XHTML DOVE CE oncomplete="PF('modalDialog').show()" CON L'UPDATE DELLA FORM E MODAL DIALOG -->
 	<p:dialog  id="modalInizio" styleClass="mioDialog" closable="false" widgetVar="modalInizio" modal="true" resizable="false">
 		<h1 style="font-family:VT323; color:black;text-align:center">CHESS</h1>
-		<div class="container" style="background-color: 'white';flex-direction: row; flex-wrap: wrap;width:200px">
+		<div class="container" style="background-color: 'white';flex-direction: row; flex-wrap: wrap;width:250px">
 		    <i class="fa-regular fa-chess-king fa-3x" style ="color : #000000;margin-right:40px"/>
 			<i class="fa-solid fa-chess-king fa-3x" style ="color : #000000"/>
-	    	<p:selectOneRadio id="coloreGiocatore"  style="margin-top:20px;margin-bottom:20px" >
-	            <f:selectItem  itemLabel="Bianco" itemValue="Bianco"  />
-	            <f:selectItem  itemLabel="Nero" itemValue="Nero"  />
+	    	<p:selectOneRadio  id="coloreGiocatore"  style="margin-top:20px;margin-bottom:20px;" >
+	            <f:selectItem  itemLabel="Bianco" itemValue="Bianco" />
+	     		<f:selectItem  itemLabel="Nero" itemValue="Nero"  />
 	    	</p:selectOneRadio>
 	    	<br/>
+	    	<p:menuButton styleClass="menuButton" value="Seleziona tipo partita">
+		    	<p:menuitem action="#{scacchieraBean.sceltaLungezzaPartita(1)}" value="Partita Veloce" style="font-size:20px;font-family:VT323;color:black;background-color:white"/>
+		    	<p:menuitem action="#{scacchieraBean.sceltaLungezzaPartita(2)}" value="Partita Classica"/>
+	    	</p:menuButton>
+	    
+	    	
+	    	
 	    	<p:commandButton 
+	    		style="margin-top:10px"
 	    		styleClass="button-scacchi"
 	    		value="INIZIA" 
 	    		update="homeForm" 
