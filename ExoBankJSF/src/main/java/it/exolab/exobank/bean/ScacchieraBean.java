@@ -9,7 +9,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -18,7 +17,6 @@ import org.primefaces.PrimeFaces;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
-import it.exolab.exobank.controller.ScacchieraController;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 import it.exolab.scacchiera.timer.Timer;
 
@@ -86,7 +84,7 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	//TODO IMPLEMENTARE BOTTONE PER SCEGLIERE LUNGHEZZA PARTITA
+	//METODO PER BOTTONE SCELTA LUNGHEZZA PARTITA
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
 			if(scelta == 1) {
@@ -128,10 +126,12 @@ public class ScacchieraBean implements Serializable {
 //		}		
 //	}
 	
+	//AGGIORNA VARIABILE STOPTIMER PER FERMARE O FAR RIPARTIRE IL TIMER
 	public void start() {
 		stopTimer = !stopTimer;
 	}
 	
+	//METODO PER GESTIONE TIMER
 	public void timer() {
 		if(stopTimer) {
 			if(giocaGiocatore1) {
@@ -143,6 +143,7 @@ public class ScacchieraBean implements Serializable {
 		}	
 	}
 	
+	//METODO PER GESTIONE TIMER
 	private Date handleTimer(Date tempoGiocatore) {
 		
 		Calendar cal = Calendar.getInstance();
@@ -170,6 +171,7 @@ public class ScacchieraBean implements Serializable {
 		return cal.getTime();
 	}
 	
+	//METODO PER GESTIRE MOSSA: PRENDE NUOVE POSIZIONI AGGIORNA IL PEZZO CON NUOVE POSIZIONI E AGGIORNA SCACCHIERA
 	public void mossa (Integer posX, Integer posY) {
 		try {
 			System.out.println("posX: " + posX + "posY: " + posY);
@@ -186,8 +188,8 @@ public class ScacchieraBean implements Serializable {
 				ultimaPosizione = false;
 				pezzoAggiornato = null;
 				cambiaTurno();
+				
 			}
-			
 			aggiornaListePezziMangiati();
 
 		} catch(Exception e) {
@@ -196,13 +198,12 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
+	//METODO PER AGGIORNARE LISTE DEI PEZZI MANGIATI
 	private void aggiornaListePezziMangiati(){
-		try {
-			
+		try {	
 			List<Pezzo> listaPezziMangiati = scacchieraController.listaPezziMangiati();
 			
 			for(Pezzo pezzo : listaPezziMangiati) {
-			
 				if(pezzo.getColore().toString().equalsIgnoreCase("bianco") && !listaPezziMangiatiBianchi.contains(pezzo)) {
 					listaPezziMangiatiBianchi.add(pezzo);
 					
@@ -218,15 +219,12 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
+	//METODO PER TRASFORMAZIONE PEDONE: PRENDE PARAMETRO IN INPUT E RIEMPIE VARIABILE NUOVOTIPO
 	public void selezionaNuovoTipo(String tipo) {
 		try {
 			for(Tipo tipoPezzo : Tipo.values()) {
 				if(tipoPezzo.toString().equalsIgnoreCase(tipo)) {
 					nuovoTipo = tipoPezzo;
-				} else {
-			        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(
-			        		FacesMessage.SEVERITY_ERROR, "Devi effettuare una scelta!!!", null));
-	
 				}
 			}
 		} catch(Exception e) {
@@ -235,6 +233,7 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
+	//METODO PER TRASFORMAZIONE PEDONE: INVIA PEZZO CON TIPO AGGIORNATO
 	public void confermaNuovoTipo() {
 		try {
 			pezzoAggiornato.setTipo(nuovoTipo);
@@ -250,16 +249,18 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-	public void mostraDialog() {
-		ultimaPosizione = true;
-	}
-
+//	public void mostraDialog() {
+//		ultimaPosizione = true;
+//	}
+	
+	//CAMBIO TURNO
 	private void cambiaTurno() {
 		turno++;
 		giocaGiocatore1 = !giocaGiocatore1;
 		giocaGiocatore2 = !giocaGiocatore2;
 	}
 	
+	//SVUOTA IL PEZZO
 	public void resetPezzo() {
 		pezzo = null;
 	}
@@ -271,6 +272,7 @@ public class ScacchieraBean implements Serializable {
 			System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
 	}
 	
+	//COSTRUISCO L'OGGETTO CON POSIZIONI AGGIORNATE DA MANDARE A BACK END
 	private Pezzo aggiornaPosizionePezzoAggiornato(Integer posX, Integer posY) throws Exception {
 		try {
 			pezzoAggiornato = new Pezzo();
@@ -288,17 +290,18 @@ public class ScacchieraBean implements Serializable {
 		}
 		
 	}
-
+	
+	//METODO PER INIZIALIZZARE NUOVO GIOCO
 	public void gioca() {
 		nuovoGioco = !nuovoGioco;
 		if(nuovoGioco && null == scacchiera) {
 			scacchieraInit();
-		} 
-		else if(!nuovoGioco){
+		} else if(!nuovoGioco){
 			resetGame();
 		}	
 	}
 	
+	//SVUOTO LE VARIABILI
 	public void resetGame() {
 		scacchieraController.resetGame();
 		scacchiera = null;
@@ -317,6 +320,10 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	
+	/**
+	 * GETTERS E SETTERS
+	 * 
+	 */
 	
 	public List<Pezzo> getListaPezziMangiatiBianchi() {
 		return listaPezziMangiatiBianchi;
