@@ -133,7 +133,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	@Override
 	public void resetGame() {
 		pezziMangiati.removeAll(pezziMangiati);
-		scacchieraLavoro = null;
+		scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
 	}
 
 
