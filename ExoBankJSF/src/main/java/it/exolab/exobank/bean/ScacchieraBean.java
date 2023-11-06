@@ -40,7 +40,6 @@ public class ScacchieraBean implements Serializable {
 	@EJB
 	private ScacchieraControllerInterface scacchieraController;
 	
-	
 	private List<Pezzo> listaPezziMangiatiBianchi;
 	private List<Pezzo> listaPezziMangiatiNeri;
 	private boolean nuovoGioco;
@@ -72,8 +71,8 @@ public class ScacchieraBean implements Serializable {
 			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-			tempoGiocatore1 = new Timer().creazioneTimer(0, 10, tempoGiocatore1);
-			tempoGiocatore2 = new Timer().creazioneTimer(0, 10, tempoGiocatore2);
+			tempoGiocatore1 = new Date();
+			tempoGiocatore2 = new Date();
 //			creazioneTimer(30, 10);			
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
@@ -88,14 +87,24 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	//TODO IMPLEMENTARE BOTTONE PER SCEGLIERE LUNGHEZZA PARTITA
-//	public void sceltaLungezzaPartita(int scelta) {
-//		
-//		if(scelta == 1) {
-//			creazioneTimer(30, 00);
-//		} else if(scelta == 2) {
-//			creazioneTimer(00, 10);
-//		}
-//	}
+	public void sceltaLungezzaPartita(int scelta) {
+		try {
+			if(scelta == 1) {
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, tempoGiocatore1);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, tempoGiocatore2);
+				
+			} else if(scelta == 2) {
+				tempoGiocatore1 = new Timer().creazioneTimer(20, 0, tempoGiocatore1);
+				tempoGiocatore2 = new Timer().creazioneTimer(20, 0, tempoGiocatore2);
+			
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
+		}
+	}
 	
 //	
 //	private void creazioneTimer(int secondi, int minuti) {
