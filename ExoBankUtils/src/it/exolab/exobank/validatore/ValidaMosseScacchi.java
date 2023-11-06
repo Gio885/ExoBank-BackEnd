@@ -11,7 +11,7 @@ public class ValidaMosseScacchi {
 			throw new Exception("La destinazione è fuori dalla scacchiera.");
 		}
 
-		if (isDestinazioneStessaPosizione(parametri.getxPartenza(), parametri.getxPartenza(), parametri.getxDestinazione(), parametri.getyDestinazione())) {
+		if (isDestinazioneStessaPosizione(parametri.getxPartenza(), parametri.getyPartenza(), parametri.getxDestinazione(), parametri.getyDestinazione())) {
 			throw new Exception("La destinazione è la stessa posizione di partenza.");
 		}
 

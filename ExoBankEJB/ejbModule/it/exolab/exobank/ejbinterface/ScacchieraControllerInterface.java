@@ -20,5 +20,7 @@ public interface ScacchieraControllerInterface {
 
 	boolean controlloPedoneUltimaPosizione(Pezzo pezzo);
 
+	void resetGame();
+
 	
 }

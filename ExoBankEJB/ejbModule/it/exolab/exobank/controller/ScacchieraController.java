@@ -50,7 +50,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
 			if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
 				if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
-					throw new Exception("SCACCO MATTO!! Ha vinto il giocatore " + (trovaRe(pezzoSpecifico, griglia).getColore().equals(Colore.BIANCO) ? "Bianco." : "Nero."));
+					throw new Exception("SCACCO MATTO!! Ha vinto il giocatore " + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
 				} else {
 					if (validaScacco.negaScaccoMangiandoMinaccia(pezzo, griglia)) {
 						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
@@ -116,30 +116,19 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			return false;
 		}
 	}
+	
+	@Override
+	public void resetGame() {
+		pezziMangiati.removeAll(pezziMangiati);
+	}
 
 
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
-			Pezzo[][] griglia = new Pezzo[Costanti.RIGHE][Costanti.COLONNE];
-			int idPezzo = 1;
-
-
-			for (int riga = 0; riga < Costanti.RIGHE; riga++) {
-				for (int colonna = 0; colonna < Costanti.COLONNE; colonna++) {
-					Tipo tipoPezzo = Costanti.SCACCHIERA_INIZIALE[riga][colonna];
-					if (tipoPezzo != null) {
-						griglia[riga][colonna] = new Pezzo(idPezzo++, tipoPezzo, (riga < 2) ? Colore.BIANCO : Colore.NERO, riga, colonna, true);
-					} else {
-						griglia[riga][colonna] = null;
-					}
-				}
-			}
-
-
 			Scacchiera scacchiera = new Scacchiera();
-			scacchiera.setScacchiera(griglia);
-			scacchieraLavoro.setScacchiera(griglia);
+			scacchiera.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
+			scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
 			return scacchiera;
 		} catch (Exception e) {
 			// Gestisci l'eccezione qui
