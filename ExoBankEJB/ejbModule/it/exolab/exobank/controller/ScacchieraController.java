@@ -138,7 +138,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			griglia = Costanti.SCACCHIERA_INIZIALE;
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(griglia);
-			scacchieraLavoro.setScacchiera(griglia);
 			return scacchiera;
 		} catch (Exception e) {
 			e.printStackTrace();
