@@ -45,12 +45,14 @@ public class ValidatoreScaccoAlRe {
 			for(Pezzo minaccia : minacceDirette) {
 				try {
 					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-					ParametriValidatoreDto parametriMinaccia = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
+					ParametriValidatoreDto parametriMinaccia = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), 
+							minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametriMinaccia)) {
 						List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
 						for(Pezzo alleato : alleati) {
 							try {
-								ParametriValidatoreDto parametriAlleato = new ParametriValidatoreDto(alleato, alleato.getPosizioneX(), alleato.getPosizioneY(), minaccia.getPosizioneX(), minaccia.getPosizioneY(), alleato.getColore(), scacchiera);
+								ParametriValidatoreDto parametriAlleato = new ParametriValidatoreDto(alleato, alleato.getPosizioneX(), 
+										alleato.getPosizioneY(), minaccia.getPosizioneX(), minaccia.getPosizioneY(), alleato.getColore(), scacchiera);
 								if(validaMosse.mossaConsentitaPerPezzo(parametriAlleato)) {
 									minacceDirette.remove(minaccia);
 									salvo = true;
