@@ -18,7 +18,7 @@ public interface ScacchieraControllerInterface {
 
 	List<Pezzo> listaPezziMangiati() throws Exception;
 
-	boolean controlloPedoneUltimaPosizione(Pezzo pezzo);
+	boolean controlloPedoneUltimaPosizione(Pezzo pezzo) throws Exception;
 
 	void resetGame();
 

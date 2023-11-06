@@ -3,10 +3,11 @@ package it.exolab.exobank.validatore;
 
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
+import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidatoreMovimentiPezzi {
 
-	public boolean validaMovimentoPedone(ParametriValidatoreDto parametri) throws Exception {
+	public boolean validaMovimentoPedone(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (parametri.getxPartenza() != parametri.getxDestinazione() || parametri.getyPartenza() != parametri.getyDestinazione()) {
 			if (parametri.getColore().equals(Colore.BIANCO)) {
 				return validaMovimentoPedoneBianco(parametri);
@@ -15,11 +16,11 @@ public class ValidatoreMovimentiPezzi {
 			}
 		}
 
-		throw new Exception("Movimento non valido per il pedone.");
+		throw new MossaNonConsentita("Movimento non valido per il pedone.");
 	}
 
 
-	private boolean validaMovimentoPedoneBianco(ParametriValidatoreDto parametri) throws Exception {
+	private boolean validaMovimentoPedoneBianco(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (parametri.getxDestinazione() == parametri.getxPartenza() + 1) {
 			if (parametri.getyDestinazione() == parametri.getyPartenza() && parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] == null) {
 				return true;
@@ -32,10 +33,10 @@ public class ValidatoreMovimentiPezzi {
 				return true;
 			}
 		}
-		throw new Exception("Pedone bianco mossa non consentita.");
+		throw new MossaNonConsentita("Pedone bianco mossa non consentita.");
 	}
 
-	private boolean validaMovimentoPedoneNero(ParametriValidatoreDto parametri) throws Exception {
+	private boolean validaMovimentoPedoneNero(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (parametri.getxDestinazione() == parametri.getxPartenza() - 1) {
 			if (parametri.getyDestinazione() == parametri.getyPartenza() && parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] == null) {
 				return true;
@@ -48,12 +49,12 @@ public class ValidatoreMovimentiPezzi {
 				return true;
 			}
 		}
-		throw new Exception("Pedone nero mossa non consentita.");
+		throw new MossaNonConsentita("Pedone nero mossa non consentita.");
 	}
 
-	public boolean validaMovimentoTorre(ParametriValidatoreDto parametri) throws Exception {
+	public boolean validaMovimentoTorre(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (parametri.getxPartenza() != parametri.getxDestinazione() && parametri.getyPartenza() != parametri.getyDestinazione()) {
-			throw new Exception("La torre può muoversi solo in orizzontale o verticale.");
+			throw new MossaNonConsentita("La torre può muoversi solo in orizzontale o verticale.");
 		}
 
 		if (parametri.getxPartenza().equals(parametri.getxDestinazione())) {
@@ -62,34 +63,34 @@ public class ValidatoreMovimentiPezzi {
 			return validaMovimentoTorreOrizzontale(parametri);
 		}
 
-		throw new Exception("Movimento non valido per la torre.");
+		throw new MossaNonConsentita("Movimento non valido per la torre.");
 	}
 
-	private boolean validaMovimentoTorreVerticale(ParametriValidatoreDto parametri) throws Exception {
+	private boolean validaMovimentoTorreVerticale(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		int minY = Math.min(parametri.getyPartenza(), parametri.getyDestinazione());
 		int maxY = Math.max(parametri.getyPartenza(), parametri.getyDestinazione());
 		for (int index = minY + 1; index < maxY; index++) {
 			if (parametri.getGriglia()[parametri.getxPartenza()][index] != null) {
-				throw new Exception("C'è un pezzo prima della destinazione.");
+				throw new MossaNonConsentita("C'è un pezzo prima della destinazione.");
 			}
 		}
 		return true;
 	}
 
-	private boolean validaMovimentoTorreOrizzontale(ParametriValidatoreDto parametri) throws Exception {
+	private boolean validaMovimentoTorreOrizzontale(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		int minX = Math.min(parametri.getxPartenza(), parametri.getxDestinazione());
 		int maxX = Math.max(parametri.getxPartenza(), parametri.getxDestinazione());
 		for (int index = minX + 1; index < maxX; index++) {
 			if (parametri.getGriglia()[index][parametri.getyPartenza()] != null) {
-				throw new Exception("C'è un pezzo prima della destinazione.");
+				throw new MossaNonConsentita("C'è un pezzo prima della destinazione.");
 			}
 		}
 		return true;
 	}
 
-	public boolean validaMovimentoAlfiere(ParametriValidatoreDto parametri) throws Exception {
+	public boolean validaMovimentoAlfiere(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (Math.abs(parametri.getxDestinazione() - parametri.getxPartenza()) != Math.abs(parametri.getyDestinazione() - parametri.getyPartenza())) {
-			throw new Exception("L'alfiere deve muoversi lungo diagonali.");
+			throw new MossaNonConsentita("L'alfiere deve muoversi lungo diagonali.");
 		}
 
 		int deltaX = (parametri.getxDestinazione() - parametri.getxPartenza()) > 0 ? 1 : -1;
@@ -97,14 +98,14 @@ public class ValidatoreMovimentiPezzi {
 
 		for (int index = parametri.getxPartenza() + deltaX, j_index = parametri.getyPartenza() + deltaY; index != parametri.getxDestinazione() && j_index != parametri.getyDestinazione(); index += deltaX, j_index += deltaY) {
 			if (parametri.getGriglia()[index][j_index] != null) {
-				throw new Exception("C'è un pezzo prima della destinazione.");
+				throw new MossaNonConsentita("C'è un pezzo prima della destinazione.");
 			}
 		}
 
 		return true;
 	}
 
-	public boolean validaMovimentoRegina(ParametriValidatoreDto parametri) throws Exception {
+	public boolean validaMovimentoRegina(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		int deltaX = Math.abs(parametri.getxDestinazione() - parametri.getxPartenza());
 		int deltaY = Math.abs(parametri.getyDestinazione() - parametri.getyPartenza());
 
@@ -112,13 +113,13 @@ public class ValidatoreMovimentiPezzi {
 			try {
 				return validaMovimentoTorre(parametri);
 			} catch (Exception e) {
-				throw new Exception("Movimento non valido per la regina");
+				throw new MossaNonConsentita("Movimento non valido per la regina");
 			}
 		} else if (deltaX == deltaY) {
 			try {
 				return validaMovimentoAlfiere(parametri);
 			} catch (Exception e) {
-				throw new Exception("Movimento non valido per la regina");
+				throw new MossaNonConsentita("Movimento non valido per la regina");
 			}
 		}
 
@@ -140,7 +141,7 @@ public class ValidatoreMovimentiPezzi {
 		return isValid;
 	}
 
-	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws Exception {
+	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		boolean isValid = false;
 
 		int deltaX = Math.abs(parametri.getxDestinazione() - parametri.getxPartenza());
@@ -155,7 +156,7 @@ public class ValidatoreMovimentiPezzi {
 			}
 		}
 
-		throw new Exception("Movimento non valido per il re.");
+		throw new MossaNonConsentita("Movimento non valido per il re.");
 	}
 
 	

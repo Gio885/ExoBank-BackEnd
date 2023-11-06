@@ -16,6 +16,8 @@ import it.exolab.exobank.costanti.Costanti;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 import it.exolab.exobank.validatore.ValidaMosseScacchi;
 import it.exolab.exobank.validatore.ValidatoreScaccoAlRe;
+import it.exolab.scacchiera.ex.MossaNonConsentita;
+import it.exolab.scacchiera.ex.Scacco;
 
 @Stateless(name = "ScacchieraControllerInterface")
 @LocalBean
@@ -59,12 +61,18 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					} else if (validaScacco.puoInterporreTraReEMinaccia(pezzo, griglia)) {
 						eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
 					} else {
-						throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);	                }
+						throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);	                }
 				}
 			} else {
 				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);    
 			}
 			return scacchieraLavoro;
+		} catch (MossaNonConsentita eM) {
+			eM.printStackTrace();
+			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+		} catch (Scacco s) {
+			s.printStackTrace();
+			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
@@ -77,7 +85,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 		try {
 			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
-			if (pezzoSpecifico == null) {
+			if (null == pezzoSpecifico) {
 				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
 			}
 			pezzoSpecifico.setTipo(pezzo.getTipo());
@@ -91,32 +99,37 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 	@Override
 	public List<Pezzo> listaPezziMangiati() throws Exception {
-	    if (pezziMangiati == null) {
-	        throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
-	    }
-	    
-	    return pezziMangiati;
+		if (null == pezziMangiati) {
+			throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
+		}
+
+		return pezziMangiati;
 	}
 
 
 	@Override
-	public boolean controlloPedoneUltimaPosizione(Pezzo pezzo) {
-		if(pezzo.getColore().compareTo(Colore.BIANCO) == Costanti.COMPARATORE_STRINGA_UGUALE
-				&& pezzo.getPosizioneX() == 7
-				&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
+	public boolean controlloPedoneUltimaPosizione(Pezzo pezzo) throws Exception {
+		try {
+			if(pezzo.getColore().compareTo(Colore.BIANCO) == Costanti.COMPARATORE_STRINGA_UGUALE
+					&& pezzo.getPosizioneX() == 7
+					&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
 
-			return true;
+				return true;
 
-		} else if(pezzo.getColore().compareTo(Colore.NERO) == Costanti.COMPARATORE_STRINGA_UGUALE
-				&& pezzo.getPosizioneX() == 0
-				&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
+			} else if(pezzo.getColore().compareTo(Colore.NERO) == Costanti.COMPARATORE_STRINGA_UGUALE
+					&& pezzo.getPosizioneX() == 0
+					&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
 
-			return true;
-		} else {
-			return false;
+				return true;
+			} else {
+				return false;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(Costanti.PEDONE_NON_ULTIMA_POS);
 		}
 	}
-	
+
 	@Override
 	public void resetGame() {
 		pezziMangiati.removeAll(pezziMangiati);
@@ -159,7 +172,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		for (int x = 0; x < griglia.length; x++) {
 			for (int y = 0; y < griglia[x].length; y++) {
 				Pezzo pezzoCorrente = griglia[x][y];
-				if (pezzoCorrente != null && pezzoCorrente.getTipo().equals(Tipo.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
+				if (null != pezzoCorrente && pezzoCorrente.getTipo().equals(Tipo.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
 					return reStessoColore = pezzoCorrente;
 				}
 			}
@@ -197,7 +210,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		}
 	}
 
-	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) {
+	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
 		// Crea una copia temporanea della scacchiera e esegui la mossa
 		Pezzo[][] griglia = parametri.getGriglia();
 		griglia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
@@ -208,10 +221,17 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		// Controlla se il re è in scacco dopo la mossa
 		try {
 			Pezzo re = trovaRe(parametri.getPezzo(), griglia);
-			return validaScacco.isScacco(re, griglia);
-		} catch (Exception e) {
+			if(!validaScacco.isScacco(re, griglia)) {
+				return false;
+			}else {
+				throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+			}
+		} catch (Scacco s) {
+			s.printStackTrace();
+			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+		}catch (Exception e) {
 			e.printStackTrace();
-			return true; // Se si verifica un'eccezione, considera che lo stato di scacco persiste
+			throw new Exception(e.getMessage() != null ? e.getMessage() :Costanti.CONTATTA_ASSISTENZA);
 		}
 	}
 

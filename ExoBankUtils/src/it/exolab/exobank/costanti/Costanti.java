@@ -120,5 +120,6 @@ public class Costanti {
 	public static final String NESSUN_PEZZO_MANGIATO = "Nessun pezzo mangiato per ora.";
 	public static final String NESSUN_PEZZO_TROVATO = "Nessun pezzo con l'ID specifico è stato trovato.";
 	public static final String ERRORE_SCACCHIERA_INIZIALE = "Griglia non creata contatta assistenza";
+	public static final String PEDONE_NON_ULTIMA_POS = "Pedone non in ultima posizione";
 
 }

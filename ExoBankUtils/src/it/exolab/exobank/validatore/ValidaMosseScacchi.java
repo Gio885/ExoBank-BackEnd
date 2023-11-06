@@ -3,20 +3,21 @@ package it.exolab.exobank.validatore;
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Tipo;
+import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidaMosseScacchi {
 
-	public boolean mossaConsentitaPerPezzo(ParametriValidatoreDto parametri) throws Exception {
+	public boolean mossaConsentitaPerPezzo(ParametriValidatoreDto parametri) throws MossaNonConsentita {
 		if (isDestinazioneFuoriScacchiera(parametri.getxDestinazione(), parametri.getyDestinazione(), parametri.getGriglia())) {
-			throw new Exception("La destinazione è fuori dalla scacchiera.");
+			throw new MossaNonConsentita("La destinazione è fuori dalla scacchiera.");
 		}
 
 		if (isDestinazioneStessaPosizione(parametri.getxPartenza(), parametri.getyPartenza(), parametri.getxDestinazione(), parametri.getyDestinazione())) {
-			throw new Exception("La destinazione è la stessa posizione di partenza.");
+			throw new MossaNonConsentita("La destinazione è la stessa posizione di partenza.");
 		}
 
 		if (isDestinazioneStessoColore(parametri.getxDestinazione(), parametri.getyDestinazione(), parametri.getGriglia(), parametri.getPezzo())) {
-			throw new Exception("Il pezzo di destinazione è dello stesso colore del pezzo in movimento.");
+			throw new MossaNonConsentita("Il pezzo di destinazione è dello stesso colore del pezzo in movimento.");
 		}
 
 		ValidatoreMovimentiPezzi validatoreMovimento = new ValidatoreMovimentiPezzi();
