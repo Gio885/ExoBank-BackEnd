@@ -134,9 +134,10 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
 			pezziMangiati.removeAll(pezziMangiati);
+			Pezzo[][] griglia = Costanti.SCACCHIERA_INIZIALE;
 			Scacchiera scacchiera = new Scacchiera();
-			scacchiera.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
-			scacchieraLavoro.setScacchiera(Costanti.SCACCHIERA_INIZIALE);
+			scacchiera.setScacchiera(griglia);
+			scacchieraLavoro.setScacchiera(griglia);
 			return scacchiera;
 		} catch (Exception e) {
 			e.printStackTrace();
