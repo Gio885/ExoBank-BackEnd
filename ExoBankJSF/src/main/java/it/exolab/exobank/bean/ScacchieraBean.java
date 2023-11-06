@@ -90,12 +90,12 @@ public class ScacchieraBean implements Serializable {
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
 			if(scelta == 1) {
-				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, tempoGiocatore1);
-				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, tempoGiocatore2);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 10);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 10);
 				
 			} else if(scelta == 2) {
-				tempoGiocatore1 = new Timer().creazioneTimer(20, 0, tempoGiocatore1);
-				tempoGiocatore2 = new Timer().creazioneTimer(20, 0, tempoGiocatore2);
+				tempoGiocatore1 = new Timer().creazioneTimer(20, 0);
+				tempoGiocatore2 = new Timer().creazioneTimer(20, 0);
 			
 			}
 			
