@@ -63,8 +63,7 @@ public class ScacchieraBean implements Serializable {
 			if(scacchiera != null ) {
 				resetGame();
 			}
-			Scacchiera scacchieraOriginale = new Scacchiera();
-			scacchieraOriginale = scacchieraController.scacchieraIniziale();
+			Scacchiera scacchieraOriginale = scacchieraController.scacchieraIniziale();
 			scacchiera = new Scacchiera();
 			listaPezziMangiatiBianchi = new ArrayList<Pezzo>();
 			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
@@ -321,7 +320,7 @@ public class ScacchieraBean implements Serializable {
 		listaPezziMangiatiBianchi = null;
 		listaPezziMangiatiNeri = null;
 		tipoPartitaScelta = null;
-		turno = 0;		
+		turno = 0;
 	}
 	
 	
