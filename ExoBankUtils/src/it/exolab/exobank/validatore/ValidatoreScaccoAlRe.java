@@ -21,7 +21,8 @@ public class ValidatoreScaccoAlRe {
 			for(Pezzo minaccia : minacce) {
 				try {
 					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-					ParametriValidatoreDto parametri = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
+					ParametriValidatoreDto parametri = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(),
+							re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						scacco = true;
 						minacceDirette.add(minaccia);
@@ -80,7 +81,8 @@ public class ValidatoreScaccoAlRe {
 		boolean salvo = false;
 		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 		try {
-			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(re, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), re.getColore(), scacchiera);
+			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(re, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
+					re.getPosizioneY(), re.getColore(), scacchiera);
 			for(int righe = - 1; righe <= 1; righe++) {
 				for(int colonne = - 1; colonne <= 1; colonne++) {
 					try {
@@ -142,9 +144,7 @@ public class ValidatoreScaccoAlRe {
 	    // Verifica se l'alleato può essere posizionato nella croce diagonale del re
 	    if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
 	        // Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
-	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(
-	            alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
-
+	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
 	        ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 	        if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
 	            return true;
