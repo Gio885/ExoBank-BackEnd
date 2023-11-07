@@ -170,7 +170,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
     }
 
     private Pezzo trovaRe(Pezzo pezzo, Pezzo[][] griglia) {
-        Pezzo reStessoColore = null;
+        Pezzo reStessoColore = new Pezzo();
 
         for (int x = 0; x < griglia.length; x++) {
             for (int y = 0; y < griglia[x].length; y++) {
@@ -231,8 +231,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
         // Esegui la mossa sulla copia della griglia
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setPosizioneX(parametri.getxDestinazione());
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
         ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
@@ -250,8 +248,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
     private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
         Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setPosizioneX(parametri.getxDestinazione());
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
         
 //        eseguiMossaSullaCopia(grigliaCopia, parametri);
