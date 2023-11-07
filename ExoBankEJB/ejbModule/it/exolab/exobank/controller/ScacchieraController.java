@@ -269,7 +269,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Pezzo pezzoOriginale = grigliaOriginale[x][y];
+            	Pezzo pezzoOriginale = new Pezzo();
+                pezzoOriginale = grigliaOriginale[x][y];
                 if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
                     grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
                 }
