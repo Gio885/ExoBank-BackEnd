@@ -56,9 +56,11 @@ public class ValidatoreScaccoAlRe {
 								ParametriValidatoreDto parametriAlleato = new ParametriValidatoreDto(alleato, alleato.getPosizioneX(), 
 										alleato.getPosizioneY(), minaccia.getPosizioneX(), minaccia.getPosizioneY(), alleato.getColore(), scacchiera);
 								if(validaMosse.mossaConsentitaPerPezzo(parametriAlleato)) {
-									minacceDirette.remove(minaccia);
-									salvo = true;
-									return salvo;
+									if(!isScacco(re, scacchiera)) {
+										salvo = true;
+										return salvo;
+										}
+									
 								}
 								
 							}catch(Exception e) {
@@ -139,63 +141,23 @@ public class ValidatoreScaccoAlRe {
 	    return pezzoFrapposto;
 	}
 	
-//	private boolean puoEsserePosizionatoNellaCroceDiagonale(Pezzo re, Pezzo alleato, Pezzo[][] scacchiera) throws MossaNonConsentita {
-//	    int reX = re.getPosizioneX();
-//	    int reY = re.getPosizioneY();
-//	    int alleatoX = alleato.getPosizioneX();
-//	    int alleatoY = alleato.getPosizioneY();
-//
-//	    // Verifica se l'alleato può essere posizionato nella croce diagonale del re
-//	    if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
-//	        // Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
-//	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
-//	        ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-//	        if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
-//	            return true;
-//	        }
-//	    }
-//
-//	    return false;
-//	}
-	
-	private boolean puoEsserePosizionatoNellaCroceDiagonale(Pezzo re, Pezzo alleato, Pezzo[][] scacchiera) {
+	private boolean puoEsserePosizionatoNellaCroceDiagonale(Pezzo re, Pezzo alleato, Pezzo[][] scacchiera) throws MossaNonConsentita {
 	    int reX = re.getPosizioneX();
 	    int reY = re.getPosizioneY();
 	    int alleatoX = alleato.getPosizioneX();
 	    int alleatoY = alleato.getPosizioneY();
 
-	    // Calcola la differenza tra le coordinate X e Y del re e dell'alleato
-	    int diffX = Math.abs(reX - alleatoX);
-	    int diffY = Math.abs(reY - alleatoY);
-
-	    // Verifica se l'alleato può essere posizionato nella diagonale o nella croce del re
-	    if (diffX == diffY || reX == alleatoX || reY == alleatoY) {
-	        // Controlla se ci sono ostacoli lungo il percorso tra il re e l'alleato
-	        if (!ciSonoOstacoliTraReEAlleato(reX, reY, alleatoX, alleatoY, scacchiera)) {
+	    // Verifica se l'alleato può essere posizionato nella croce diagonale del re
+	    if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
+	        // Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
+	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
+	        ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+	        if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
 	            return true;
 	        }
 	    }
 
 	    return false;
-	}
-
-	private boolean ciSonoOstacoliTraReEAlleato(int reX, int reY, int alleatoX, int alleatoY, Pezzo[][] scacchiera) {
-	    // Verifica se ci sono ostacoli lungo il percorso tra il re e l'alleato
-	    int deltaX = Integer.compare(alleatoX - reX, 0);
-	    int deltaY = Integer.compare(alleatoY - reY, 0);
-
-	    int x = reX + deltaX;
-	    int y = reY + deltaY;
-
-	    while (x != alleatoX || y != alleatoY) {
-	        if (scacchiera[x][y] != null) {
-	            return true; // C'è un ostacolo sul percorso
-	        }
-	        x += deltaX;
-	        y += deltaY;
-	    }
-
-	    return false; // Non ci sono ostacoli sul percorso
 	}
 
 	
