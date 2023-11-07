@@ -29,7 +29,7 @@ import it.exolab.scacchiera.timer.Timer;
 * @since   24-10-2023 
 */
 
-@Named
+@Named("scacchieraBean")
 @SessionScoped
 public class ScacchieraBean implements Serializable {
 
@@ -48,6 +48,7 @@ public class ScacchieraBean implements Serializable {
 	private Integer turno;
 	private Date tempoGiocatore1;
 	private Date tempoGiocatore2;
+	private Calendar cal;
 	private boolean giocaGiocatore1;
 	private boolean giocaGiocatore2;
 	private boolean stopTimer;
@@ -88,19 +89,21 @@ public class ScacchieraBean implements Serializable {
 	//METODO PER BOTTONE SCELTA LUNGHEZZA PARTITA
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
+			cal = Calendar.getInstance();
+			
 			if(scelta == 1) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
-				tempoGiocatore1 = new Timer().creazioneTimer(0, 10);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, cal);
 				tempoGiocatore2 = new Date();
-				tempoGiocatore2 = new Timer().creazioneTimer(0, 10);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, cal);
 				
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
-				tempoGiocatore1 = new Timer().creazioneTimer(20, 0);
+				tempoGiocatore1 = new Timer().creazioneTimer(20, 0, cal);
 				tempoGiocatore2 = new Date();
-				tempoGiocatore2 = new Timer().creazioneTimer(20, 0);
+				tempoGiocatore2 = new Timer().creazioneTimer(20, 0, cal);
 			
 			}
 			
@@ -149,7 +152,6 @@ public class ScacchieraBean implements Serializable {
 	//METODO PER GESTIONE TIMER
 	private Date handleTimer(Date tempoGiocatore) {
 		
-		Calendar cal = Calendar.getInstance();
 		cal.setTime(tempoGiocatore);
 		
 		if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
