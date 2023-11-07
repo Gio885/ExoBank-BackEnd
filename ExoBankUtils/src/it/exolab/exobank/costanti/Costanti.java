@@ -85,8 +85,8 @@ public class Costanti {
 
 	// Matrice costante per la disposizione iniziale dei pezzi
 //	public static final Pezzo[][] SCACCHIERA_INIZIALE = inizializzaScacchieraIniziale();
-
-//	public static Pezzo[][] inizializzaScacchieraIniziale() {
+//
+//	public static final Pezzo[][] inizializzaScacchieraIniziale() {
 //		Pezzo[][] scacchiera = new Pezzo[8][8];
 //		Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
 //		Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
