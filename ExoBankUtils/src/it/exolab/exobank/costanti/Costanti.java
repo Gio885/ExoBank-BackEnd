@@ -84,36 +84,36 @@ public class Costanti {
 	public static final int COMPARATORE_STRINGA_UGUALE = 0;
 
 	// Matrice costante per la disposizione iniziale dei pezzi
-	public static final Pezzo[][] SCACCHIERA_INIZIALE = inizializzaScacchieraIniziale();
+//	public static final Pezzo[][] SCACCHIERA_INIZIALE = inizializzaScacchieraIniziale();
 
-	public static Pezzo[][] inizializzaScacchieraIniziale() {
-		Pezzo[][] scacchiera = new Pezzo[8][8];
-		Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
-		Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
-
-		Tipo tipoCorrente = null;
-		int idPezzo = 1;
-
-		for (int index = 0; index < 8; index++) {
-			for (int j_index = 0; j_index < 8; j_index++) {
-				if (index == 0 || index == 7) {
-					tipoCorrente = primaRigaEUltima[j_index];
-				} else if (index == 1 || index == 6) {
-					tipoCorrente = pedoni[j_index];
-				} else {
-					tipoCorrente = null;
-				}
-
-				if(null != tipoCorrente) {
-					scacchiera[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
-				}else {
-					scacchiera[index][j_index] = null;
-				}
-			}
-		}
-
-		return scacchiera;
-	};
+//	public static Pezzo[][] inizializzaScacchieraIniziale() {
+//		Pezzo[][] scacchiera = new Pezzo[8][8];
+//		Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
+//		Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
+//
+//		Tipo tipoCorrente = null;
+//		int idPezzo = 1;
+//
+//		for (int index = 0; index < 8; index++) {
+//			for (int j_index = 0; j_index < 8; j_index++) {
+//				if (index == 0 || index == 7) {
+//					tipoCorrente = primaRigaEUltima[j_index];
+//				} else if (index == 1 || index == 6) {
+//					tipoCorrente = pedoni[j_index];
+//				} else {
+//					tipoCorrente = null;
+//				}
+//
+//				if(null != tipoCorrente) {
+//					scacchiera[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+//				}else {
+//					scacchiera[index][j_index] = null;
+//				}
+//			}
+//		}
+//
+//		return scacchiera;
+//	};
 
 	// MESSAGGI ERRORE
 	public static final String ERRORE_STATO_SCACCO_NON_RIMOSSO = "Mossa non rimuove lo stato di scacco";

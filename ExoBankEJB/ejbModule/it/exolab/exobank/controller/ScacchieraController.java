@@ -143,9 +143,32 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	// Metodo per creare la scacchiera iniziale
 	private Scacchiera creazioneScacchieraIniziale() throws Exception {
 		try {
-			pezziMangiati.removeAll(pezziMangiati);
 			Pezzo[][] griglia = new Pezzo[8][8];
-			griglia = Costanti.SCACCHIERA_INIZIALE;
+			Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
+			Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
+
+			Tipo tipoCorrente = null;
+			int idPezzo = 1;
+
+			for (int index = 0; index < 8; index++) {
+				for (int j_index = 0; j_index < 8; j_index++) {
+					if (index == 0 || index == 7) {
+						tipoCorrente = primaRigaEUltima[j_index];
+					} else if (index == 1 || index == 6) {
+						tipoCorrente = pedoni[j_index];
+					} else {
+						tipoCorrente = null;
+					}
+
+					if(null != tipoCorrente) {
+						griglia[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+					}else {
+						griglia[index][j_index] = null;
+					}
+				}
+			}
+			
+			pezziMangiati.removeAll(pezziMangiati);
 			Scacchiera scacchiera = new Scacchiera();
 			scacchiera.setScacchiera(griglia);
 			return scacchiera;
