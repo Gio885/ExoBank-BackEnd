@@ -230,14 +230,19 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         scacchiera.setScacchiera(grigliaCopia);
 
         // Esegui la mossa sulla copia della griglia
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+        Pezzo appoggio = new Pezzo();
+        appoggio = parametri.getPezzo();
+        appoggio.setPosizioneX(parametri.getxDestinazione());
+        appoggio.setPosizioneY(parametri.getyDestinazione());
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
+//        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
         ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
         // Controlla se il re è in scacco dopo la mossa
         try {
-            Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
+            Pezzo re = trovaRe(appoggio/*parametri.getPezzo()*/, grigliaCopia);
             return validaScacco.isScacco(re, grigliaCopia);
         } catch (Scacco s) {
             s.printStackTrace();
