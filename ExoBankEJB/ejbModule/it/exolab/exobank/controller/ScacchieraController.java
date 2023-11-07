@@ -217,12 +217,14 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
 				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
 				pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
+				Pezzo appoggio = parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()];
 				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = null;
 				// Controlla se la mossa elimina lo stato di scacco
 				if (!isScaccoDopoMossa(parametri)) {
 					aggiornaScacchiera(parametri);
 					scacchieraLavoro.setScacchiera(parametri.getGriglia());
 				} else {
+					parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
 					throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 				}
 			} else {
