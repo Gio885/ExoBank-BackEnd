@@ -94,16 +94,16 @@ public class ScacchieraBean implements Serializable {
 			if(scelta == 1) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
-				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, cal);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, 0, cal);
 				tempoGiocatore2 = new Date();
-				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, cal);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, 0, cal);
 				
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
-				tempoGiocatore1 = new Timer().creazioneTimer(20, 0, cal);
+				tempoGiocatore1 = new Timer().creazioneTimer(5, 20, 0, cal);
 				tempoGiocatore2 = new Date();
-				tempoGiocatore2 = new Timer().creazioneTimer(20, 0, cal);
+				tempoGiocatore2 = new Timer().creazioneTimer(5, 20, 0, cal);
 			
 			}
 			
@@ -518,6 +518,4 @@ public class ScacchieraBean implements Serializable {
 //
 //		}
 //	}
-	
-
 }

@@ -11,9 +11,9 @@ public class Timer implements Serializable{
 	 */
 	private static final long serialVersionUID = 1870060318924075186L;
 		
-	public Date creazioneTimer(int secondi, int minuti, Calendar tempo) throws Exception {
+	public Date creazioneTimer(int ore, int minuti, int secondi, Calendar tempo) throws Exception {
 		try {
-			tempo.set(Calendar.HOUR_OF_DAY, 0);
+			tempo.set(Calendar.HOUR_OF_DAY, ore);
 			tempo.set(Calendar.MINUTE, minuti);
 			tempo.set(Calendar.SECOND, secondi);
 			return tempo.getTime();
