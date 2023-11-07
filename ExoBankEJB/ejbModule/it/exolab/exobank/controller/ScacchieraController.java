@@ -1,6 +1,5 @@
 package it.exolab.exobank.controller;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,315 +22,262 @@ import it.exolab.scacchiera.ex.Scacco;
 @LocalBean
 public class ScacchieraController implements ScacchieraControllerInterface {
 
-	private Scacchiera scacchieraLavoro = new Scacchiera();
-	private List<Pezzo> pezziMangiati = new ArrayList<Pezzo>();
-	private boolean reSottoScacco = false;
+    private Scacchiera scacchieraLavoro = new Scacchiera();
+    private List<Pezzo> pezziMangiati = new ArrayList<Pezzo>();
+    private boolean reSottoScacco = false;
 
-	@Override
-	public Scacchiera scacchieraIniziale() throws Exception{
-		try {
-			Scacchiera scacchieraIniziale = new Scacchiera();
-			scacchieraIniziale.setScacchiera(creazioneScacchieraIniziale().getGriglia());
-			scacchieraLavoro.setScacchiera(scacchieraIniziale.getGriglia());
-			return scacchieraIniziale;
-		} catch (Exception e) {
-			// Gestisci l'eccezione qui
-			e.printStackTrace();
-			throw new Exception(Costanti.CONTATTA_ASSISTENZA);
-		}
-	}
+    @Override
+    public Scacchiera scacchieraIniziale() throws Exception {
+        try {
+            Scacchiera scacchieraIniziale = creazioneScacchieraIniziale();
+            scacchieraLavoro.setScacchiera(scacchieraIniziale.getGriglia());
+            return scacchieraIniziale;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(Costanti.CONTATTA_ASSISTENZA);
+        }
+    }
 
-	@Override
-	public Scacchiera mossaConsentita(Pezzo pezzo) throws Exception {
-		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
-		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-		ValidaMosseScacchi validatoreScacchi = new ValidaMosseScacchi();
+    @Override
+    public Scacchiera mossaConsentita(Pezzo pezzo) throws Exception {
+        Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+        ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+        ValidaMosseScacchi validatoreScacchi = new ValidaMosseScacchi();
 
-		try {
-			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
-			if (null == pezzoSpecifico) {
-				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
-			}
-			ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
-			if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
-				reSottoScacco = true;
-				//				if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
-				//					throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
-				//				} else {
-				//						                if (validaScacco.negaScaccoMangiandoMinaccia(trovaRe(pezzoSpecifico, griglia), griglia)/*(pezzo, griglia)*/) {
-				//						                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-				//						                } else if (validaScacco.negaScaccoMuovendoIlRe(trovaRe(pezzoSpecifico, griglia), griglia)/*(pezzo, griglia)*/) {
-				//						                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-				//						                } else if (validaScacco.puoInterporreTraReEMinaccia(trovaRe(pezzoSpecifico, griglia), griglia)/*(pezzo, griglia)*/) {
-				//						                    eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-				//						                } else {
-				//						                    mossaValida = false;
-				//						                    throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-				//						                }
-				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-				if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
-					throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
-				}
-				//				}
-			} else {
-				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-			}
+        try {
+            Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
+            if (pezzoSpecifico == null) {
+                throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
+            }
 
-			return scacchieraLavoro;
-		} catch (MossaNonConsentita eM) {
-			eM.printStackTrace();
-			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		} catch (Scacco s) {
-			s.printStackTrace();
-			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
-		}
-	}
+            ParametriValidatoreDto parametri = new ParametriValidatoreDto(pezzoSpecifico, pezzoSpecifico.getPosizioneX(), pezzoSpecifico.getPosizioneY(), pezzo.getPosizioneX(), pezzo.getPosizioneY(), pezzo.getColore(), griglia);
 
-	@Override
-	public Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception {
-		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
+            if (validaScacco.isScacco(trovaRe(pezzoSpecifico, griglia), griglia)) {
+                reSottoScacco = true;
+                eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+                if (validaScacco.isScaccoMatto(trovaRe(pezzoSpecifico, griglia), griglia)) {
+                    throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(pezzoSpecifico, griglia).getColore()) ? "Bianco." : "Nero."));
+                }
+            } else {
+                eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
+            }
 
-		try {
-			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
-			if (null == pezzoSpecifico) {
-				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
-			}
-			pezzoSpecifico.setTipo(pezzo.getTipo());
-			return scacchieraLavoro;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
-		}
-	}
+            return scacchieraLavoro;
+        } catch (MossaNonConsentita eM) {
+            eM.printStackTrace();
+            throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+        } catch (Scacco s) {
+            s.printStackTrace();
+            throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
+        }
+    }
 
+    @Override
+    public Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception {
+        Pezzo[][] griglia = scacchieraLavoro.getGriglia();
 
-	@Override
-	public List<Pezzo> listaPezziMangiati() throws Exception {
-		if (null == pezziMangiati) {
-			throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
-		}
+        try {
+            Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
+            if (pezzoSpecifico == null) {
+                throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
+            }
+            pezzoSpecifico.setTipo(pezzo.getTipo());
+            return scacchieraLavoro;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
+        }
+    }
 
-		return pezziMangiati;
-	}
+    @Override
+    public List<Pezzo> listaPezziMangiati() throws Exception {
+        if (pezziMangiati.isEmpty()) {
+            throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
+        }
 
+        return pezziMangiati;
+    }
 
-	@Override
-	public boolean controlloPedoneUltimaPosizione(Pezzo pezzo) throws Exception {
-		try {
-			if(pezzo.getColore().compareTo(Colore.BIANCO) == Costanti.COMPARATORE_STRINGA_UGUALE
-					&& pezzo.getPosizioneX() == 7
-					&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
+    @Override
+    public boolean controlloPedoneUltimaPosizione(Pezzo pezzo) throws Exception {
+        try {
+            if (pezzo.getColore() == Colore.BIANCO && pezzo.getPosizioneX() == 7 && pezzo.getTipo() == Tipo.PEDONE) {
+                return true;
+            } else if (pezzo.getColore() == Colore.NERO && pezzo.getPosizioneX() == 0 && pezzo.getTipo() == Tipo.PEDONE) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(Costanti.PEDONE_NON_ULTIMA_POS);
+        }
+    }
 
-				return true;
+    private Scacchiera creazioneScacchieraIniziale() throws Exception {
+        try {
+            Pezzo[][] griglia = new Pezzo[8][8];
+            Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
+            Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
+            int idPezzo = 1;
 
-			} else if(pezzo.getColore().compareTo(Colore.NERO) == Costanti.COMPARATORE_STRINGA_UGUALE
-					&& pezzo.getPosizioneX() == 0
-					&& pezzo.getTipo().compareTo(Tipo.PEDONE) == Costanti.COMPARATORE_STRINGA_UGUALE) {
+            for (int index = 0; index < 8; index++) {
+                for (int j_index = 0; j_index < 8; j_index++) {
+                    Tipo tipoCorrente = null;
 
-				return true;
-			} else {
-				return false;
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(Costanti.PEDONE_NON_ULTIMA_POS);
-		}
-	}
+                    if (index == 0 || index == 7) {
+                        tipoCorrente = primaRigaEUltima[j_index];
+                    } else if (index == 1 || index == 6) {
+                        tipoCorrente = pedoni[j_index];
+                    }
 
-	// Metodo per creare la scacchiera iniziale
-	private Scacchiera creazioneScacchieraIniziale() throws Exception {
-		try {
-			Pezzo[][] griglia = new Pezzo[8][8];
-			Tipo[] primaRigaEUltima = {Tipo.TORRE, Tipo.CAVALLO, Tipo.ALFIERE, Tipo.RE, Tipo.REGINA, Tipo.ALFIERE, Tipo.CAVALLO, Tipo.TORRE};
-			Tipo[] pedoni = {Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE, Tipo.PEDONE};
+                    if (tipoCorrente != null) {
+                        griglia[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+                    } else {
+                        griglia[index][j_index] = null;
+                    }
+                }
+            }
 
-			Tipo tipoCorrente = null;
-			int idPezzo = 1;
+            pezziMangiati.clear();
+            Scacchiera scacchiera = new Scacchiera();
+            scacchiera.setScacchiera(griglia);
+            return scacchiera;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(Costanti.ERRORE_SCACCHIERA_INIZIALE);
+        }
+    }
 
-			for (int index = 0; index < 8; index++) {
-				for (int j_index = 0; j_index < 8; j_index++) {
-					if (index == 0 || index == 7) {
-						tipoCorrente = primaRigaEUltima[j_index];
-					} else if (index == 1 || index == 6) {
-						tipoCorrente = pedoni[j_index];
-					} else {
-						tipoCorrente = null;
-					}
+    private Pezzo findPezzoById(Pezzo pezzo, Pezzo[][] griglia) throws Exception {
+        try {
+            int idPezzo = pezzo.getId();
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
+                    if (griglia[x][y] != null && griglia[x][y].getId() == idPezzo) {
+                        return griglia[x][y];
+                    }
+                }
+            }
+            return null; // Se nessun pezzo con l'ID specifico è stato trovato
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
+        }
+    }
 
-					if(null != tipoCorrente) {
-						griglia[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
-					}else {
-						griglia[index][j_index] = null;
-					}
-				}
-			}
+    private Pezzo trovaRe(Pezzo pezzo, Pezzo[][] griglia) {
+        Pezzo reStessoColore = null;
 
-			pezziMangiati.removeAll(pezziMangiati);
-			Scacchiera scacchiera = new Scacchiera();
-			scacchiera.setScacchiera(griglia);
-			return scacchiera;
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(Costanti.ERRORE_SCACCHIERA_INIZIALE);
-		}
-	}
+        for (int x = 0; x < griglia.length; x++) {
+            for (int y = 0; y < griglia[x].length; y++) {
+                Pezzo pezzoCorrente = griglia[x][y];
+                if (pezzoCorrente != null && pezzoCorrente.getTipo() == Tipo.RE && pezzoCorrente.getColore() == pezzo.getColore()) {
+                    return reStessoColore = pezzoCorrente;
+                }
+            }
+        }
+        return reStessoColore;
+    }
 
-	private Pezzo findPezzoById(Pezzo pezzo, Pezzo[][] griglia) throws Exception {
-		try {
-			Integer idPezzo = pezzo.getId();
-			for (int x = 0; x < 8; x++) {
-				for (int y = 0; y < 8; y++) {
-					if (null != griglia[x][y] && griglia[x][y].getId() == idPezzo) {
-						return griglia[x][y];
-					}
-				}
-			}
-			return null; // Se nessun pezzo con l'ID specifico è stato trovato
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception(Costanti.NESSUN_PEZZO_TROVATO); // Restituisci un valore adeguato in caso di errore
-		}
-	}
+    private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro, ValidaMosseScacchi validatoreScacchi) throws Exception {
+        if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
+            throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
+        }
 
-	private Pezzo trovaRe(Pezzo pezzo, Pezzo[][] griglia) {
-		Pezzo reStessoColore = null;
+        // Utilizza il validatoreScacchi per verificare la validità della mossa
+        if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
+            if (parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] != null) {
+                parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
+                pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
+            }
 
-		for (int x = 0; x < griglia.length; x++) {
-			for (int y = 0; y < griglia[x].length; y++) {
-				Pezzo pezzoCorrente = griglia[x][y];
-				if (null != pezzoCorrente && pezzoCorrente.getTipo().equals(Tipo.RE) && pezzoCorrente.getColore().equals(pezzo.getColore())) {
-					return reStessoColore = pezzoCorrente;
-				}
-			}
-		}
-		return reStessoColore;
-	}
+            // Controlla se la mossa elimina lo stato di scacco
+            if (!isScaccoDopoMossa(parametri)) {
+                reSottoScacco = false;
+                aggiornaScacchiera(parametri);
+                scacchieraLavoro.setScacchiera(parametri.getGriglia());
+            } else {
+                throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+            }
+        } else {
+            throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
+        }
+    }
 
+    private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
+        // Crea una copia temporanea della scacchiera ed esegui la mossa
+        Scacchiera scacchiera = new Scacchiera();
+        Pezzo[][] grigliaOriginale = parametri.getGriglia();
+        Pezzo[][] grigliaCopia = new Pezzo[8][8];
 
-	private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro, ValidaMosseScacchi validatoreScacchi) throws Exception {
-		if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
-	        throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
-	    }
-		
-		// Utilizza il validatoreScacchi per verificare la validità della mossa
-	    if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
-	        if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
-	            parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
-	            pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
-	        }
-	        // Controlla se la mossa elimina lo stato di scacco
-	        if (!isScaccoDopoMossa(parametri)) {
-	        	reSottoScacco = false;
-	            aggiornaScacchiera(parametri);
-	            scacchieraLavoro.setScacchiera(parametri.getGriglia());
-	        } else {
-	            throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-	        }
-	    } else {
-	        throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
-	    }
-	}
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Pezzo pezzoOriginale = grigliaOriginale[x][y];
+                if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
+                    grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
+                }
+            }
+        }
 
-	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
-		// Crea una copia temporanea della scacchiera ed esegui la mossa
-		Scacchiera scacchiera = new Scacchiera();
-		Pezzo[][] grigliaOriginale = parametri.getGriglia();
-		Pezzo[][] grigliaCopia = new Pezzo[8][8];
+        scacchiera.setScacchiera(grigliaCopia);
 
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				Pezzo pezzoOriginale = new Pezzo();
-				pezzoOriginale = grigliaOriginale[x][y];
-				if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
-					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
-				}
-			}
-		}
+        // Esegui la mossa sulla copia della griglia
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+        parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
+        parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
 
-		scacchiera.setScacchiera(grigliaCopia);
+        ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
-		// Esegui la mossa sulla copia della griglia
-		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-		grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
-		parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
-		parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+        // Controlla se il re è in scacco dopo la mossa
+        try {
+            Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
+            return validaScacco.isScacco(re, grigliaCopia);
+        } catch (Scacco s) {
+            s.printStackTrace();
+            throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+        }
+    }
 
-		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+    private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
+        Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
+        eseguiMossaSullaCopia(grigliaCopia, parametri);
 
-		// Controlla se il re è in scacco dopo la mossa
-		try {
-			Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
-			return validaScacco.isScacco(re, grigliaCopia);
-		} catch (Scacco s) {
-			s.printStackTrace();
-			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		}
-	}
+        ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+        Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
 
-	private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
-		// Crea una copia temporanea della scacchiera ed esegui la mossa
-		Scacchiera scacchiera = new Scacchiera();
-		Pezzo[][] grigliaOriginale = parametri.getGriglia();
-		Pezzo[][] grigliaCopia = new Pezzo[8][8];
+        if (!validaScacco.isScacco(re, grigliaCopia)) {
+            return true;
+        } else {
+            throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+        }
+    }
 
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				Pezzo pezzoOriginale = grigliaOriginale[x][y];
-				if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
-					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
-				}
-			}
-		}
+    private void eseguiMossaSullaCopia(Pezzo[][] grigliaCopia, ParametriValidatoreDto parametri) {
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+        parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
+        parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+    }
 
-		scacchiera.setScacchiera(grigliaCopia);
+    private Pezzo[][] creaCopiaScacchiera(Pezzo[][] grigliaOriginale) {
+        Pezzo[][] grigliaCopia = new Pezzo[8][8];
 
-		// Esegui la mossa sulla copia della griglia
-		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-		grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
-		parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
-		parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Pezzo pezzoOriginale = grigliaOriginale[x][y];
+                if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
+                    grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
+                }
+            }
+        }
 
-		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-
-		// Controlla se il re è in scacco dopo la mossa
-		try {
-			Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
-			return !validaScacco.isScacco(re, grigliaCopia);
-		} catch (Scacco s) {
-			s.printStackTrace();
-			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-		}
-	}
-
-	//	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
-	//		// Crea una copia temporanea della scacchiera e esegui la mossa
-	//		Scacchiera scacchiera = new Scacchiera();
-	//		scacchiera.setScacchiera(parametri.getGriglia());
-	//		Pezzo[][] griglia = scacchiera.getGriglia();
-	//		griglia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-	//		griglia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
-	//		parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
-	//		parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
-	//		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-	//		// Controlla se il re è in scacco dopo la mossa
-	//		try {
-	//			Pezzo re = trovaRe(parametri.getPezzo(), griglia);
-	//			if(!validaScacco.isScacco(re, griglia)) {
-	//				return false;
-	//			}else {
-	//				throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-	//			}
-	//		} catch (Scacco s) {
-	//			s.printStackTrace();
-	//			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-	//		}catch (Exception e) {
-	//			e.printStackTrace();
-	//			throw new Exception(e.getMessage() != null ? e.getMessage() :Costanti.CONTATTA_ASSISTENZA);
-	//		}
-	//	}
+        return grigliaCopia;
+    }
 
 	private void aggiornaScacchiera(ParametriValidatoreDto parametri) {
 		// Aggiorna la scacchiera con la nuova posizione
