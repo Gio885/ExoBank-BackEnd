@@ -6,6 +6,7 @@ import java.util.List;
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
+import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidatoreScaccoAlRe {
@@ -121,6 +122,9 @@ public class ValidatoreScaccoAlRe {
 
 	    try {
 	        List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
+
+	        // Rimuovi il re dalla lista dei pezzi alleati
+	        alleati.removeIf(pezzo -> pezzo.getTipo() == Tipo.RE && pezzo.getColore() == coloreGiocatore);
 
 	        for (Pezzo pezzo : alleati) {
 	            if (puoEsserePosizionatoNellaCroceDiagonale(re, pezzo, scacchiera)) {
