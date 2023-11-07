@@ -231,7 +231,12 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
         // Esegui la mossa sulla copia della griglia
         Pezzo appoggio = new Pezzo();
-        appoggio = parametri.getPezzo();
+        appoggio.setColore(parametri.getPezzo().getColore());
+        appoggio.setEsiste(parametri.getPezzo().isEsiste());
+        appoggio.setId(parametri.getPezzo().getId());
+        appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
+        appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
+        appoggio.setTipo(parametri.getPezzo().getTipo());
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
@@ -253,7 +258,12 @@ public class ScacchieraController implements ScacchieraControllerInterface {
     private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
         Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
         Pezzo appoggio = new Pezzo();
-        appoggio = parametri.getPezzo();
+        appoggio.setColore(parametri.getPezzo().getColore());
+        appoggio.setEsiste(parametri.getPezzo().isEsiste());
+        appoggio.setId(parametri.getPezzo().getId());
+        appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
+        appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
+        appoggio.setTipo(parametri.getPezzo().getTipo());
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
