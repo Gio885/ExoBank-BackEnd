@@ -184,15 +184,14 @@ public class ScacchieraController implements ScacchieraControllerInterface {
     }
 
     private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro, ValidaMosseScacchi validatoreScacchi) throws Exception {
-        if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
-            throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
-        }
-
         // Utilizza il validatoreScacchi per verificare la validità della mossa
         if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
             if (parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] != null) {
                 parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
                 pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
+            }
+            if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
+                throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
             }
 
             // Controlla se la mossa elimina lo stato di scacco
@@ -216,7 +215,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
-                Pezzo pezzoOriginale = grigliaOriginale[x][y];
+                Pezzo pezzoOriginale = new Pezzo();
+                pezzoOriginale = grigliaOriginale[x][y];
                 if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
                     grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
                 }
