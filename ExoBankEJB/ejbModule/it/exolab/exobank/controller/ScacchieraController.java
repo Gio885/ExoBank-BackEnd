@@ -212,33 +212,27 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 
 	private void eseguiMossa(ParametriValidatoreDto parametri, Scacchiera scacchieraLavoro, ValidaMosseScacchi validatoreScacchi) throws Exception {
-		boolean mossaValida = true;
-
-		if (reSottoScacco) {
-			if (!mossaRimuoveScacco(parametri)) {
-				throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
-			} else {
-				reSottoScacco = false;
-			}
-		}
-
+		if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
+	        throw new Exception("Mossa non valida: devi rimuovere lo scacco.");
+	    }
+		
 		// Utilizza il validatoreScacchi per verificare la validità della mossa
-		if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
-			if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
-				parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
-				pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
-			}
-
-			// Controlla se la mossa elimina lo stato di scacco
-			if (!isScaccoDopoMossa(parametri)) {
-				aggiornaScacchiera(parametri);
-				scacchieraLavoro.setScacchiera(parametri.getGriglia());
-			} else {
-				throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
-			}
-		} else {
-			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
-		}
+	    if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
+	        if (null != parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]) {
+	            parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
+	            pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
+	        }
+	        // Controlla se la mossa elimina lo stato di scacco
+	        if (!isScaccoDopoMossa(parametri)) {
+	        	reSottoScacco = false;
+	            aggiornaScacchiera(parametri);
+	            scacchieraLavoro.setScacchiera(parametri.getGriglia());
+	        } else {
+	            throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+	        }
+	    } else {
+	        throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
+	    }
 	}
 
 	private boolean isScaccoDopoMossa(ParametriValidatoreDto parametri) throws Exception {
@@ -249,7 +243,8 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				Pezzo pezzoOriginale = grigliaOriginale[x][y];
+				Pezzo pezzoOriginale = new Pezzo();
+				pezzoOriginale = grigliaOriginale[x][y];
 				if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
 					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
 				}
