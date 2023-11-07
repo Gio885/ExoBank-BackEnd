@@ -247,13 +247,17 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
     private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
         Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+        Pezzo appoggio = new Pezzo();
+        appoggio = parametri.getPezzo();
+        appoggio.setPosizioneX(parametri.getxDestinazione());
+        appoggio.setPosizioneY(parametri.getyDestinazione());
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
         
 //        eseguiMossaSullaCopia(grigliaCopia, parametri);
 
         ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-        Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
+        Pezzo re = trovaRe(appoggio, grigliaCopia);
 
         if (!validaScacco.isScacco(re, grigliaCopia)) {
             return true;
