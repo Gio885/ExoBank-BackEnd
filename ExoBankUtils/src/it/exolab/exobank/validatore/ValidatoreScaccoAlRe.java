@@ -10,9 +10,9 @@ import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidatoreScaccoAlRe {
-	
+
 	private List<Pezzo> minacceDirette = new ArrayList<Pezzo>();
-	
+
 	public boolean isScacco(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Colore coloreGiocatore = re.getColore();
 		boolean scacco = false;
@@ -34,12 +34,12 @@ public class ValidatoreScaccoAlRe {
 				}
 			}
 			return scacco;
-			
+
 		}catch(Exception e) {
 			throw new Exception();
 		}
 	}
-	
+
 	public boolean negaScaccoMangiandoMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception{
 		Colore coloreGiocatore = re.getColore();
 		boolean salvo = false;
@@ -59,10 +59,10 @@ public class ValidatoreScaccoAlRe {
 									if(!isScacco(re, scacchiera)) {
 										salvo = true;
 										return salvo;
-										}
-									
+									}
+
 								}
-								
+
 							}catch(Exception e) {
 								continue;
 							}
@@ -73,12 +73,12 @@ public class ValidatoreScaccoAlRe {
 				}
 			}
 			return salvo;
-			
+
 		}catch(Exception e) {
 			throw new Exception("Mossa non consentita!");
 		}
 	}
-	
+
 	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Pezzo reProxy = new Pezzo();
 		boolean salvo = false;
@@ -110,57 +110,61 @@ public class ValidatoreScaccoAlRe {
 				}
 			}
 			return salvo;		
-					
+
 		}catch(Exception e) {
 			throw new Exception("Mossa non consentita!");
 		}
-				
+
 	}
 
-	
+
 	public boolean puoInterporreTraReEMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception {
-	    Colore coloreGiocatore = re.getColore();
-	    boolean pezzoFrapposto = false;
+		Colore coloreGiocatore = re.getColore();
+		boolean pezzoFrapposto = false;
 
-	    try {
-	        List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
+		try {
+			List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
 
-	        // Rimuovi il re dalla lista dei pezzi alleati
-	        alleati.removeIf(pezzo -> pezzo.getTipo() == Tipo.RE && pezzo.getColore() == coloreGiocatore);
+			// Rimuovi il re dalla lista dei pezzi alleati
+			alleati.removeIf(pezzo -> pezzo.getTipo() == Tipo.RE && pezzo.getColore() == coloreGiocatore);
 
-	        for (Pezzo pezzo : alleati) {
-	            if (puoEsserePosizionatoNellaCroceDiagonale(re, pezzo, scacchiera)) {
-	                pezzoFrapposto = true;
-	                break;
-	            }
-	        }
-	    } catch (Exception e) {
-	        throw new Exception("Mossa non consentita!");
-	    }
+			for (Pezzo pezzo : alleati) {
+				try {
+					if (puoEsserePosizionatoNellaCroceDiagonale(re, pezzo, scacchiera)) {
+						pezzoFrapposto = true;
+						break;
+					}
+				}catch (MossaNonConsentita mn) {
+					continue;
+				}
+			}
+		} catch (Exception e) {
+			throw new Exception("Mossa non consentita!");
+		}
 
-	    return pezzoFrapposto;
+		return pezzoFrapposto;
 	}
-	
+
 	private boolean puoEsserePosizionatoNellaCroceDiagonale(Pezzo re, Pezzo alleato, Pezzo[][] scacchiera) throws MossaNonConsentita {
-	    int reX = re.getPosizioneX();
-	    int reY = re.getPosizioneY();
-	    int alleatoX = alleato.getPosizioneX();
-	    int alleatoY = alleato.getPosizioneY();
+		int reX = re.getPosizioneX();
+		int reY = re.getPosizioneY();
+		int alleatoX = alleato.getPosizioneX();
+		int alleatoY = alleato.getPosizioneY();
 
-	    // Verifica se l'alleato può essere posizionato nella croce diagonale del re
-	    if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
-	        // Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
-	        ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
-	        ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-	        if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
-	            return true;
-	        }
-	    }
+		// Verifica se l'alleato può essere posizionato nella croce diagonale del re
+		if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
+			// Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
+			ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
+			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+			if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
+				return true;
+			}
+		}
 
-	    return false;
+		return false;
 	}
 
-	
+
 	private List<Pezzo> trovaMinacceOAlleati(Colore colore, Pezzo[][] scacchiera, boolean alleato) throws Exception {
 		try {
 			List<Pezzo> listaPezzi = new ArrayList<>();
@@ -183,23 +187,23 @@ public class ValidatoreScaccoAlRe {
 			throw new Exception();
 		}
 	}
-	
+
 
 	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 
-	    if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
-	        return false;
-	    }
+		if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
+			return false;
+		}
 
-	    if (negaScaccoMuovendoIlRe(re, scacchiera)) {
-	        return false; 
-	    }
+		if (negaScaccoMuovendoIlRe(re, scacchiera)) {
+			return false; 
+		}
 
-	    if (puoInterporreTraReEMinaccia(re, scacchiera)) {
-	        return false;
-	    }
+		if (puoInterporreTraReEMinaccia(re, scacchiera)) {
+			return false;
+		}
 
-	    return true;
+		return true;
 	}
 
 }
