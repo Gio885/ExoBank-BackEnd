@@ -215,21 +215,25 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         Pezzo[][] grigliaOriginale = parametri.getGriglia();
         Pezzo[][] grigliaCopia = new Pezzo[8][8];
 
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                Pezzo pezzoOriginale = new Pezzo();
-                pezzoOriginale = grigliaOriginale[x][y];
-                if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
-                    grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
-                }
-            }
-        }
+//        for (int x = 0; x < 8; x++) {
+//            for (int y = 0; y < 8; y++) {
+//                Pezzo pezzoOriginale = new Pezzo();
+//                pezzoOriginale = grigliaOriginale[x][y];
+//                if (pezzoOriginale != null && pezzoOriginale.isEsiste()) {
+//                    grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
+//                }
+//            }
+//        }
+        
+        grigliaCopia = creaCopiaScacchiera(grigliaOriginale);
 
         scacchiera.setScacchiera(grigliaCopia);
 
         // Esegui la mossa sulla copia della griglia
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()].setPosizioneX(parametri.getxDestinazione());
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()].setPosizioneY(parametri.getyDestinazione());
 
         ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
@@ -245,7 +249,11 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
     private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
         Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
-        eseguiMossaSullaCopia(grigliaCopia, parametri);
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()].setPosizioneX(parametri.getxDestinazione());
+        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()].setPosizioneY(parametri.getyDestinazione());
+//        eseguiMossaSullaCopia(grigliaCopia, parametri);
 
         ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
         Pezzo re = trovaRe(parametri.getPezzo(), grigliaCopia);
@@ -257,10 +265,10 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         }
     }
 
-    private void eseguiMossaSullaCopia(Pezzo[][] grigliaCopia, ParametriValidatoreDto parametri) {
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
-        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
-    }
+//    private void eseguiMossaSullaCopia(Pezzo[][] grigliaCopia, ParametriValidatoreDto parametri) {
+//        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
+//        grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
+//    }
 
     private Pezzo[][] creaCopiaScacchiera(Pezzo[][] grigliaOriginale) {
         Pezzo[][] grigliaCopia = new Pezzo[8][8];
