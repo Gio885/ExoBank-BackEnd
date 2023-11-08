@@ -73,9 +73,6 @@ public class ScacchieraBean implements Serializable {
 			listaPezziMangiatiNeri = new ArrayList<Pezzo>();
 			scacchiera.setScacchiera(scacchieraOriginale.getGriglia());
 			griglia = scacchiera.getGriglia();
-//			tempoGiocatore1 = new Date();
-//			tempoGiocatore2 = new Date();
-//			creazioneTimer(30, 10);
 			tipoPartitaScelta = null;
 			giocaGiocatore1 = true;
 			giocaGiocatore2 = false;
@@ -104,9 +101,9 @@ public class ScacchieraBean implements Serializable {
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Date();
-				tempoGiocatore1 = new Timer().creazioneTimer(5, 20, 0, cal);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 59, 59, cal);
 				tempoGiocatore2 = new Date();
-				tempoGiocatore2 = new Timer().creazioneTimer(5, 20, 0, cal);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 59, 59, cal);
 			
 			}
 			
@@ -116,24 +113,6 @@ public class ScacchieraBean implements Serializable {
 
 		}
 	}
-	
-//	
-//	private void creazioneTimer(int secondi, int minuti) {
-//		try {
-//			Calendar tempo = Calendar.getInstance();
-//			tempo.set(Calendar.HOUR_OF_DAY, 0);
-//			tempo.set(Calendar.MINUTE, minuti);
-//			tempo.set(Calendar.SECOND, secondi);
-//			tempoGiocatore1 = new Date();
-//			tempoGiocatore1 = tempo.getTime();
-//			tempoGiocatore2 = new Date();
-//			tempoGiocatore2 = tempo.getTime();
-//			
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-//		}		
-//	}
 	
 	//AGGIORNA VARIABILE STOPTIMER PER FERMARE O FAR RIPARTIRE IL TIMER
 	public void start() {
@@ -152,7 +131,7 @@ public class ScacchieraBean implements Serializable {
 		}	
 	}
 	
-	//METODO PER GESTIONE TIMER
+	//METODO PER GESTIONE/AGGIORNAMENTO TIMER
 	private Date handleTimer(Date tempoGiocatore) {
 		
 		cal.setTime(tempoGiocatore);
@@ -162,16 +141,14 @@ public class ScacchieraBean implements Serializable {
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO,
 	        		giocaGiocatore1 ? "Il tempo è scaduto, hai perso Giocatore1! :(" : "Il tempo è scaduto hai perso Giocatore2! :(", null));
 
-		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0) {
+		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0 
+					|| cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
 			cal.add(Calendar.SECOND, -1);
 			
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) == 0) {
 			cal.add(Calendar.MINUTE, -1);
 			cal.add(Calendar.SECOND, 59);
-			
-		} else if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
-			cal.add(Calendar.SECOND, -1);
-			
+
 		} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
 	        stopTimer = !stopTimer;
 		}
@@ -180,24 +157,15 @@ public class ScacchieraBean implements Serializable {
 	}
 	
 	//METODO PER GESTIRE MOSSA: PRENDE NUOVE POSIZIONI AGGIORNA IL PEZZO CON NUOVE POSIZIONI E AGGIORNA SCACCHIERA
-	public void mossa (Integer posX, Integer posY) {
+	public void mossa (Integer posX, Integer posY) throws Exception {
 		try {
-			System.out.println("posX: " + posX + "posY: " + posY);
+			System.out.println("posX: " + posX + " posY: " + posY);
 			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
 			pezzo = null;
-			
-			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
-				scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
-				ultimaPosizione = true;
-				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
-				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
-				
-			} else {
-				scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
-				ultimaPosizione = false;
-				pezzoAggiornato = null;
-				cambiaTurno();
-			}
+			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
+			ultimaPosizione = false;
+			pezzoAggiornato = null;
+			cambiaTurno();
 			aggiornaListePezziMangiati();
 			
 		} catch(MossaNonConsentita mossaNonConsentita) {
@@ -205,16 +173,23 @@ public class ScacchieraBean implements Serializable {
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
 		
 		} catch(ScaccoMatto scaccoMatto) {
+			stopTimer = true;
 			partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
 				
 		} catch(Scacco scacco) {
-			ultimaPosizione = false;
-			pezzoAggiornato = null;
-			aggiornaListePezziMangiati();
-			cambiaTurno();
+			
+			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
+				ultimaPosizione = true;
+				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
+				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
+				
+			} else {
+				ultimaPosizione = false;
+				pezzoAggiornato = null;
+				cambiaTurno();
+			}
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
-		
 		
 		} catch(Exception exception) {
 			exception.printStackTrace();
@@ -284,10 +259,6 @@ public class ScacchieraBean implements Serializable {
 		}
 	}
 	
-//	public void mostraDialog() {
-//		ultimaPosizione = true;
-//	}
-	
 	//CAMBIO TURNO
 	private void cambiaTurno() {
 		turno++;
@@ -307,7 +278,7 @@ public class ScacchieraBean implements Serializable {
 	public void pezzoSelezionato(Pezzo pezzoSelezionato) {	
 			pezzo = new Pezzo();
 			pezzo = pezzoSelezionato;
-			System.out.println(this.pezzo.getId() + " " + this.pezzo.getColore() + " " + this.pezzo.getPosizioneX() + " " + this.pezzo.getPosizioneY());
+			System.out.println(pezzoSelezionato.toString());
 	}
 	
 	//COSTRUISCO L'OGGETTO CON POSIZIONI AGGIORNATE DA MANDARE A BACK END
@@ -341,7 +312,6 @@ public class ScacchieraBean implements Serializable {
 	
 	//SVUOTO LE VARIABILI
 	public void resetGame() {
-//		scacchieraController.resetGame();
 		scacchiera = null;
 		griglia = null;
 		pezzo = null;
@@ -468,11 +438,9 @@ public class ScacchieraBean implements Serializable {
 		this.scacchiera = scacchiera;
 	}
 
-
 	public Integer getTurno() {
 		return turno;
 	}
-
 
 	public void setTurno(Integer turno) {
 		this.turno = turno;
@@ -501,9 +469,6 @@ public class ScacchieraBean implements Serializable {
 	public void setTipoPartitaScelta(Integer tipoPartitaScelta) {
 		this.tipoPartitaScelta = tipoPartitaScelta;
 	}
-	
-	
-	
 	
 //	public void trovaPezzo(Integer id) {
 //	for(Pezzo[] arrayPezzi : griglia) {
