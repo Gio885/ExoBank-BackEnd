@@ -96,8 +96,8 @@ public class ScacchieraBean implements Serializable {
 
 			if(scelta == 1) {
 				tipoPartitaScelta = scelta;
-				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, 0, cal);
-				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, 0, cal);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 0, 20, cal);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 0, 20, cal);
 				
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
@@ -141,10 +141,11 @@ public class ScacchieraBean implements Serializable {
 		cal.setTime(tempoGiocatore);
 		
 		if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
+	        stopTimer = !stopTimer;
 	        partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR,
 	        		giocaGiocatore1 ? "Il tempo è scaduto, hai perso Giocatore1! :(" : "Il tempo è scaduto hai perso Giocatore2! :(", null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+			PrimeFaces.current().ajax().update("homeForm");
 
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0 
 					|| cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
@@ -154,8 +155,6 @@ public class ScacchieraBean implements Serializable {
 			cal.add(Calendar.MINUTE, -1);
 			cal.add(Calendar.SECOND, 59);
 
-		} else if(cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == -1) {
-	        stopTimer = !stopTimer;
 		}
 		
 		return cal.getTime();
@@ -180,7 +179,7 @@ public class ScacchieraBean implements Serializable {
 			stopTimer = false;
 			partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+			PrimeFaces.current().ajax().update("homeForm");
 				
 		} catch(Scacco scacco) {
 			gestionePedoneUltimaPosizione();
