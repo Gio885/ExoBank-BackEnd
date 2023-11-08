@@ -35,9 +35,9 @@
 		ignoreAutoUpdate="true"
 		interval="1" 
 		onstart="#{scacchieraBean.stopTimer}"
-		stop="#{!(scacchieraBean.stopTimer) or scacchieraBean.partitaTerminata}" 
+		stop="#{!(scacchieraBean.stopTimer)}" 
 		listener="#{scacchieraBean.timer}"
-		update="#{scacchieraBean.partitaTerminata ? 'scacchiera pannelloBottoni pannelloDestro' : 'tempo pannelloDestro'}"
+		update="#{scacchieraBean.partitaTerminata ? 'scacchiera pannelloBottoni homeForm:messaggioScacchi' : 'tempo'}"
 />
 		
 </ui:composition>
