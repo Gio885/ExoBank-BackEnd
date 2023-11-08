@@ -261,6 +261,39 @@ body {
 }
 
 
+body .ui-messages {
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    position: relative;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+body .ui-messages>div {
+    padding:0px !important;
+    border-radius: 3px;
+    border-width: 0 0 0 0 !important;
+    height: 40px;
+    width: 240px;
+    margin: 0 0 0 0 !important;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+}
+
+
+
+
+
+.ui-messages.ui-messages-noicon ul {
+    margin: 0 0 0 0 !important;
+}
 
 
 /* CENTRATURA COMMAND LINK */
