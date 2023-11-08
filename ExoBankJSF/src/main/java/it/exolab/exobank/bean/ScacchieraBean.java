@@ -18,6 +18,7 @@ import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
+import it.exolab.scacchiera.ex.MossaNonConsentita;
 import it.exolab.scacchiera.ex.Scacco;
 import it.exolab.scacchiera.timer.Timer;
 
@@ -198,6 +199,10 @@ public class ScacchieraBean implements Serializable {
 			}
 			aggiornaListePezziMangiati();
 			
+		} catch(MossaNonConsentita mossaNonConsentita) {
+			pezzoAggiornato = null;
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
+
 		} catch(Scacco scacco) {
 			ultimaPosizione = false;
 			pezzoAggiornato = null;
