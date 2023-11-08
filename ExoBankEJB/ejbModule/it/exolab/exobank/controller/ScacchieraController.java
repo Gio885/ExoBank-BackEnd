@@ -73,7 +73,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			return scacchieraLavoro;
 		} catch (MossaNonConsentita eM) {
 			eM.printStackTrace();
-			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+			throw new MossaNonConsentita(Costanti.MOSSA_NON_CONSENTITA);
 		} catch (Scacco s) {
 			s.printStackTrace();
 			throw new Scacco(s.getMessage() != null ? s.getMessage() :Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
