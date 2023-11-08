@@ -18,6 +18,7 @@ import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
+import it.exolab.scacchiera.ex.Scacco;
 import it.exolab.scacchiera.timer.Timer;
 
 /**
@@ -196,6 +197,13 @@ public class ScacchieraBean implements Serializable {
 				
 			}
 			aggiornaListePezziMangiati();
+			
+		} catch(Scacco scacco) {
+			ultimaPosizione = false;
+			pezzoAggiornato = null;
+			cambiaTurno();
+			aggiornaListePezziMangiati();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
 
 		} catch(Exception exception) {
 			exception.printStackTrace();
