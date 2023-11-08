@@ -111,23 +111,34 @@
 <!-- DIALOG CHE SI APRE TRAMITE IL BOTTONE NELLA LOGIN.XHTML DOVE CE oncomplete="PF('modalDialog').show()" CON L'UPDATE DELLA FORM E MODAL DIALOG -->
 	<p:dialog  id="modalInizio" styleClass="mioDialog" closable="false" widgetVar="modalInizio" modal="true" resizable="false">
 		<h1 style="font-family:VT323; color:black;text-align:center">CHESS</h1>
-		<div class="container" style="background-color: 'white';flex-direction: row; flex-wrap: wrap;width:250px">
+		<div class="container" style="background-color: 'white';flex-direction: row; flex-wrap: wrap;width:220px">
 		    <i class="fa-regular fa-chess-king fa-3x" style ="color : #000000;margin-right:40px"/>
 			<i class="fa-solid fa-chess-king fa-3x" style ="color : #000000"/>
-	    	<p:selectOneRadio  id="coloreGiocatore"  style="margin-top:20px;margin-bottom:20px;" >
-	            <f:selectItem  itemLabel="Bianco" itemValue="Bianco" />
-	     		<f:selectItem  itemLabel="Nero" itemValue="Nero"  />
+	    	<p:selectOneRadio id="coloreGiocatore"  style="margin-top:20px;margin-bottom:20px" >
+	            <f:selectItem  itemLabel="Bianco" itemValue="Bianco"  />
+	            <f:selectItem  itemLabel="Nero" itemValue="Nero"  />
 	    	</p:selectOneRadio>
 	    	<br/>
-	    	<p:menuButton styleClass="menuButton" value="Seleziona tipo partita">
-		    	<p:menuitem action="#{scacchieraBean.sceltaLungezzaPartita(1)}" value="Partita Veloce" style="font-size:20px;font-family:VT323;color:black;background-color:white"/>
-		    	<p:menuitem action="#{scacchieraBean.sceltaLungezzaPartita(2)}" value="Partita Classica"/>
-	    	</p:menuButton>
-	    
-	    	
+	    	<p:commandLink
+	    		id="commandLink1"
+	    		disabled="#{1 == scacchieraBean.tipoPartitaScelta}"
+	    		styleClass="p-commandLink-transparent" 
+	    		style="background-color: #{(1 == scacchieraBean.tipoPartitaScelta) ? 'rgba(0,128,255,0.3)' : '#D7C99C' } ; color:black;font-size:24px;font-family:VT323;padding:15px;border:4px solid black;border-radius:15px;text-decoration:none "
+	    		value="Partita veloce"
+	    		update="commandLink1 commandLink2 tempo"
+	    		action="#{scacchieraBean.sceltaLungezzaPartita(1)}"
+	    		/>
+	    		<p:commandLink
+	    		id="commandLink2"
+	    		disabled="#{2 == scacchieraBean.tipoPartitaScelta}"
+	    		styleClass="p-commandLink-transparent" 
+	    		style="background-color: #{(2 == scacchieraBean.tipoPartitaScelta) ? 'rgba(0,128,255,0.3)' : '#D7C99C' } ; color:black;font-size:24px;font-family:VT323;padding:15px;border:4px solid black;border-radius:15px;margin-top:10px;margin-bottom:10px;text-decoration:none "
+	    		value="Partita Lunga"
+	    		update="commandLink1 commandLink2 tempo"
+	    		action="#{scacchieraBean.sceltaLungezzaPartita(2)}"
+	    		/>
 	    	
 	    	<p:commandButton 
-	    		style="margin-top:10px"
 	    		styleClass="button-scacchi"
 	    		value="INIZIA" 
 	    		update="homeForm" 
