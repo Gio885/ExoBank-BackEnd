@@ -117,7 +117,6 @@ public class ValidatoreScaccoAlRe {
 								reProxy.setPosizioneX(parametriDto.getxDestinazione());
 								reProxy.setPosizioneY(parametriDto.getyDestinazione());
 								Pezzo[][] griglia = tabella.getGriglia();
-								griglia[reProxy.getPosizioneX()][reProxy.getPosizioneY()] = reProxy; 
 								if(null != griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()]) {
 									Pezzo appoggio = new Pezzo();
 									appoggio.setColore(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getColore());
