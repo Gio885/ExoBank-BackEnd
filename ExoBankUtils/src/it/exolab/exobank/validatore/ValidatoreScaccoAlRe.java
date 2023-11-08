@@ -61,14 +61,15 @@ public class ValidatoreScaccoAlRe {
 								Integer alleatoPosXOriginale = alleato.getPosizioneX();
 								Integer alleatoPosYOriginale = alleato.getPosizioneY();
 								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
+									scacchiera[minaccia.getPosizioneX()][minaccia.getPosizioneY()] = alleato;
 									if(!isScacco(re, scacchiera)) {
 										salvo = true;
-										resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale);
-										resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale);
+										resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale, scacchiera);
+										resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
 										return salvo;
 									}
-									resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale);
-									resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale);
+									resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale, scacchiera);
+									resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
 								}
 
 							}catch(Exception e) {
@@ -233,9 +234,8 @@ public class ValidatoreScaccoAlRe {
 		dto.setGriglia(scacchiera);
 	}
 	
-	private void resetPosizione(Pezzo pezzo, Integer posX, Integer posY) {
-		pezzo.setPosizioneX(posX);
-		pezzo.setPosizioneY(posY);
+	private void resetPosizione(Pezzo pezzo, Integer posX, Integer posY, Pezzo[][] scacchiera) {
+		scacchiera[posX][posY] = pezzo;
 	}
 
 
