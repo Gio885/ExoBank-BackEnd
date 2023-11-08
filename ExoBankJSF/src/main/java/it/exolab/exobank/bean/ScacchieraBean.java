@@ -90,19 +90,17 @@ public class ScacchieraBean implements Serializable {
 	public void sceltaLungezzaPartita(int scelta) {
 		try {
 			cal = Calendar.getInstance();
-			
+			tempoGiocatore1 = new Date();
+			tempoGiocatore1 = new Date();
+
 			if(scelta == 1) {
 				tipoPartitaScelta = scelta;
-				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, 0, cal);
-				tempoGiocatore2 = new Date();
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, 0, cal);
 				
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
-				tempoGiocatore1 = new Date();
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 59, 59, cal);
-				tempoGiocatore2 = new Date();
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 59, 59, cal);
 			
 			}
@@ -163,9 +161,17 @@ public class ScacchieraBean implements Serializable {
 			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
 			pezzo = null;
 			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
-			ultimaPosizione = false;
-			pezzoAggiornato = null;
-			cambiaTurno();
+			
+			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
+				ultimaPosizione = true;
+				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
+				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
+				
+			} else {
+				ultimaPosizione = false;
+				pezzoAggiornato = null;
+				cambiaTurno();
+			}
 			aggiornaListePezziMangiati();
 			
 		} catch(MossaNonConsentita mossaNonConsentita) {
@@ -307,6 +313,9 @@ public class ScacchieraBean implements Serializable {
 			
 			if(nuovoGioco && null == scacchiera) {
 				scacchieraInit();
+				if(turno == 1) {
+					FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tocca al bianco!", null));
+				}
 				
 			} else if(!nuovoGioco){
 				resetGame();
