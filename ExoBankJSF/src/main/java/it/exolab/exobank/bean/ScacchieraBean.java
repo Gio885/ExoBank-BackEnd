@@ -201,8 +201,8 @@ public class ScacchieraBean implements Serializable {
 		} catch(Scacco scacco) {
 			ultimaPosizione = false;
 			pezzoAggiornato = null;
-			cambiaTurno();
 			aggiornaListePezziMangiati();
+			cambiaTurno();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
 
 		} catch(Exception exception) {
@@ -253,8 +253,16 @@ public class ScacchieraBean implements Serializable {
 			griglia = scacchieraController.aggiornamentoTipoPedone(pezzoAggiornato).getGriglia();
 			nuovoTipo = null;
 			ultimaPosizione = false;
+			aggiornaListePezziMangiati();
 			cambiaTurno();
 			
+		} catch (Scacco scacco) {
+			nuovoTipo = null;
+			ultimaPosizione = false;
+			aggiornaListePezziMangiati();
+			cambiaTurno();
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
+
 		} catch (Exception exception) {
 			exception.printStackTrace();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
