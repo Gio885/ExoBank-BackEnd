@@ -17,6 +17,7 @@ import it.exolab.exobank.validatore.ValidaMosseScacchi;
 import it.exolab.exobank.validatore.ValidatoreScaccoAlRe;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
 import it.exolab.scacchiera.ex.Scacco;
+import it.exolab.scacchiera.ex.ScaccoMatto;
 
 @Stateless(name = "ScacchieraControllerInterface")
 @LocalBean
@@ -56,16 +57,18 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			if (validaScacco.isScacco(trovaRe(coloreAlleato, griglia), griglia)) {
 				reSottoScacco = true;
 				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
-				if (validaScacco.isScaccoMatto(trovaRe(coloreAlleato, griglia), griglia)) {
-					throw new Exception(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(coloreAlleato, griglia).getColore()) ? "Bianco." : "Nero."));
-				}
 			} else {
 				eseguiMossa(parametri, scacchieraLavoro, validatoreScacchi);
 			}
 
 			if (validaScacco.isScacco(trovaRe(coloreNemico, griglia), griglia)) {
-				throw new Scacco("Scacco");
+				if (validaScacco.isScaccoMatto(trovaRe(coloreAlleato, griglia), griglia)) {
+					throw new ScaccoMatto(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(coloreAlleato, griglia).getColore()) ? "Nero." : "Bianco."));
+				}
+				throw new Scacco("Scacco al RE " + (Colore.BIANCO.equals(pezzoSpecifico.getColore()) ? " Nero." : " Bianco."));
 			}
+
+			
 
 			return scacchieraLavoro;
 		} catch (MossaNonConsentita eM) {
@@ -74,6 +77,9 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		} catch (Scacco s) {
 			s.printStackTrace();
 			throw new Scacco(s.getMessage() != null ? s.getMessage() :Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+		}catch (ScaccoMatto sm) {
+			sm.printStackTrace();
+			throw new Scacco(sm.getMessage() != null ? sm.getMessage() :Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
@@ -99,10 +105,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 	@Override
 	public List<Pezzo> listaPezziMangiati() throws Exception {
-		if (pezziMangiati.isEmpty()) {
-			throw new Exception(Costanti.NESSUN_PEZZO_MANGIATO);
-		}
-
 		return pezziMangiati;
 	}
 
