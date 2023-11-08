@@ -7,6 +7,7 @@ import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Tipo;
+import it.exolab.exobank.costanti.Costanti;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidatoreScaccoAlRe {
@@ -75,7 +76,7 @@ public class ValidatoreScaccoAlRe {
 			return salvo;
 
 		}catch(Exception e) {
-			throw new Exception("Mossa non consentita!");
+			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
 	}
 
@@ -112,7 +113,7 @@ public class ValidatoreScaccoAlRe {
 			return salvo;		
 
 		}catch(Exception e) {
-			throw new Exception("Mossa non consentita!");
+			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
 
 	}
@@ -139,7 +140,7 @@ public class ValidatoreScaccoAlRe {
 				}
 			}
 		} catch (Exception e) {
-			throw new Exception("Mossa non consentita!");
+			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
 
 		return pezzoFrapposto;
@@ -191,19 +192,23 @@ public class ValidatoreScaccoAlRe {
 
 	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 
-		if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
-			return false;
+		try {
+			if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
+				return false;
+			}
+	
+			if (negaScaccoMuovendoIlRe(re, scacchiera)) {
+				return false; 
+			}
+	
+			if (puoInterporreTraReEMinaccia(re, scacchiera)) {
+				return false;
+			}
+	
+			return true;
+		}catch(Exception e) {
+			throw new Exception();
 		}
-
-		if (negaScaccoMuovendoIlRe(re, scacchiera)) {
-			return false; 
-		}
-
-		if (puoInterporreTraReEMinaccia(re, scacchiera)) {
-			return false;
-		}
-
-		return true;
 	}
 
 }
