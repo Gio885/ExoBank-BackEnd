@@ -6,6 +6,7 @@ import java.util.List;
 import it.exolab.exobank.chess.dto.ParametriValidatoreDto;
 import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
+import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
 import it.exolab.exobank.costanti.Costanti;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
@@ -60,8 +61,6 @@ public class ValidatoreScaccoAlRe {
 								Integer alleatoPosXOriginale = alleato.getPosizioneX();
 								Integer alleatoPosYOriginale = alleato.getPosizioneY();
 								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
-									alleato.setPosizioneX(minaccia.getPosizioneX());
-									alleato.setPosizioneY(minaccia.getPosizioneY());
 									if(!isScacco(re, scacchiera)) {
 										salvo = true;
 										resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale);
@@ -89,12 +88,20 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
-		boolean salvo = false;
+		Scacchiera tabella = new Scacchiera();
+		tabella.setScacchiera(scacchiera);
 		Pezzo reProxy = new Pezzo();
+		reProxy.setColore(re.getColore());
+		reProxy.setEsiste(re.isEsiste());
+		reProxy.setId(re.getId());
+		reProxy.setPosizioneX(re.getPosizioneX());
+		reProxy.setPosizioneY(re.getPosizioneY());
+		reProxy.setTipo(re.getTipo());
+		
+
+		boolean salvo = false;
 		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 		try {
-			Integer rePosXOriginale = re.getPosizioneX();
-			Integer rePosOriginale = re.getPosizioneX();
 			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(re, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
 					re.getPosizioneY(), re.getColore(), scacchiera);
 			for(int righe = - 1; righe <= 1; righe++) {
@@ -105,14 +112,30 @@ public class ValidatoreScaccoAlRe {
 						}else {
 							parametriDto.setxDestinazione(re.getPosizioneX() + righe);
 							parametriDto.setyDestinazione(re.getPosizioneY() + colonne);
-							reProxy.setTipo(Tipo.RE);
 							if(validaMosse.mossaConsentitaPerPezzo(parametriDto)) {
 								reProxy.setPosizioneX(parametriDto.getxDestinazione());
 								reProxy.setPosizioneY(parametriDto.getyDestinazione());
-								reProxy.setColore(parametriDto.getColore());
-								if(!isScacco(reProxy, scacchiera)) {
+								Pezzo[][] griglia = tabella.getGriglia();
+								griglia[reProxy.getPosizioneX()][reProxy.getPosizioneY()] = reProxy; 
+								if(null != griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()]) {
+									Pezzo appoggio = new Pezzo();
+									appoggio.setColore(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getColore());
+									appoggio.setEsiste(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].isEsiste());
+									appoggio.setId(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getId());
+									appoggio.setPosizioneX(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getPosizioneX());
+									appoggio.setPosizioneY(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getPosizioneY());
+									appoggio.setTipo(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getTipo());
+									griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = reProxy;
+									griglia[re.getPosizioneX()][re.getPosizioneY()] = null;
+								}else {
+									griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = reProxy;
+									griglia[re.getPosizioneX()][re.getPosizioneY()] = null;
+								}
+								if(!isScacco(reProxy, griglia)) {
 									salvo = true;
 									return salvo;
+								}else {
+									tabella.setScacchiera(scacchiera);
 								}
 							}
 						}
@@ -219,17 +242,17 @@ public class ValidatoreScaccoAlRe {
 	public boolean isScaccoMatto(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 
 		try {
+			if (puoInterporreTraReEMinaccia(re, scacchiera)) {
+				return false;
+			}
+			if (negaScaccoMuovendoIlRe(re, scacchiera)) {
+				return false; 
+			}
 			if (negaScaccoMangiandoMinaccia(re, scacchiera)) {
 				return false;
 			}
 	
-			if (negaScaccoMuovendoIlRe(re, scacchiera)) {
-				return false; 
-			}
 	
-			if (puoInterporreTraReEMinaccia(re, scacchiera)) {
-				return false;
-			}
 	
 			return true;
 		}catch(Exception e) {
