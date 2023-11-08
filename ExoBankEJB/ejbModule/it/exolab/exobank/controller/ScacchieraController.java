@@ -222,10 +222,10 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 				aggiornaScacchiera(parametri);
 				scacchieraLavoro.setScacchiera(parametri.getGriglia());
 			} else {
-				throw new Exception(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+				throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 			}
 		} else {
-			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
+			throw new MossaNonConsentita(Costanti.MOSSA_NON_CONSENTITA);
 		}
 	}
 
@@ -269,9 +269,9 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		try {
 			Pezzo re = trovaRe(appoggio.getColore()/*parametri.getPezzo()*/, grigliaCopia);
 			return validaScacco.isScacco(re, grigliaCopia);
-		} catch (Scacco s) {
+		} catch (MossaNonConsentita s) {
 			s.printStackTrace();
-			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 		}
 	}
 
@@ -297,7 +297,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		if (!validaScacco.isScacco(re, grigliaCopia)) {
 			return true;
 		} else {
-			throw new Scacco(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+			throw new MossaNonConsentita(Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 		}
 	}
 
