@@ -187,7 +187,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         // Utilizza il validatoreScacchi per verificare la validità della mossa
         if (validatoreScacchi.mossaConsentitaPerPezzo(parametri)) {
             if (parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] != null) {
-                parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
                 pezziMangiati.add(parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()]);
             }
             if (reSottoScacco && !mossaRimuoveScacco(parametri)) {
@@ -240,6 +239,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
 //        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
@@ -267,6 +267,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
+        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
         
 //        eseguiMossaSullaCopia(grigliaCopia, parametri);
