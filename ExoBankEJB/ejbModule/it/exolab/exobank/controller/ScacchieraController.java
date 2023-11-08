@@ -89,14 +89,28 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 	@Override
 	public Scacchiera aggiornamentoTipoPedone(Pezzo pezzo) throws Exception {
 		Pezzo[][] griglia = scacchieraLavoro.getGriglia();
-
+		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+		Colore coloreAlleato = pezzo.getColore();
+		Colore coloreNemico = Colore.BIANCO.equals(pezzo.getColore()) ? Colore.NERO : Colore.BIANCO;
 		try {
 			Pezzo pezzoSpecifico = findPezzoById(pezzo, griglia);
 			if (pezzoSpecifico == null) {
 				throw new Exception(Costanti.NESSUN_PEZZO_TROVATO);
 			}
 			pezzoSpecifico.setTipo(pezzo.getTipo());
+			if (validaScacco.isScacco(trovaRe(coloreNemico, griglia), griglia)) {
+				if (validaScacco.isScaccoMatto(trovaRe(coloreAlleato, griglia), griglia)) {
+					throw new ScaccoMatto(Costanti.SCACCO_MATTO + (Colore.BIANCO.equals(trovaRe(coloreAlleato, griglia).getColore()) ? "Nero." : "Bianco."));
+				}
+				throw new Scacco("Scacco al RE " + (Colore.BIANCO.equals(pezzoSpecifico.getColore()) ? " Nero." : " Bianco."));
+			}
 			return scacchieraLavoro;
+		} catch (Scacco s) {
+			s.printStackTrace();
+			throw new Scacco(s.getMessage() != null ? s.getMessage() :Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
+		}catch (ScaccoMatto sm) {
+			sm.printStackTrace();
+			throw new Scacco(sm.getMessage() != null ? sm.getMessage() :Costanti.ERRORE_STATO_SCACCO_NON_RIMOSSO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception(e.getMessage() != null ? e.getMessage() : Costanti.CONTATTA_ASSISTENZA);
