@@ -173,7 +173,7 @@ public class ScacchieraBean implements Serializable {
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
 		
 		} catch(ScaccoMatto scaccoMatto) {
-			stopTimer = true;
+			stopTimer = false;
 			partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
 				
@@ -327,7 +327,6 @@ public class ScacchieraBean implements Serializable {
 		tipoPartitaScelta = null;
 		turno = 0;
 	}
-	
 	
 	/**
 	 * GETTERS E SETTERS
