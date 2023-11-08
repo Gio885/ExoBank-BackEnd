@@ -79,44 +79,44 @@ public class ValidatoreScaccoAlRe {
 		}
 	}
 
-//	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
-//		Pezzo reProxy = new Pezzo();
-//		boolean salvo = false;
-//		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-//		try {
-//			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(reProxy, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
-//					re.getPosizioneY(), re.getColore(), scacchiera);
-//			for(int righe = - 1; righe <= 1; righe++) {
-//				for(int colonne = - 1; colonne <= 1; colonne++) {
-//					try {
-//						if(righe == 0 && colonne == 0) {
-//							continue;
-//						}else {
-//							parametriDto.setxDestinazione(re.getPosizioneX() + righe);
-//							parametriDto.setyDestinazione(re.getPosizioneY() + colonne);
-//							reProxy.setTipo(Tipo.RE);
-//							if(validaMosse.mossaConsentitaPerPezzo(parametriDto)) {
-//								reProxy.setPosizioneX(parametriDto.getxDestinazione());
-//								reProxy.setPosizioneY(parametriDto.getyDestinazione());
-//								reProxy.setColore(parametriDto.getColore());
-//								if(!isScacco(reProxy, scacchiera)) {
-//									salvo = true;
-//									return salvo;
-//								}
-//							}
-//						}
-//					}catch (Exception e) {
-//						continue;
-//					}
-//				}
-//			}
-//			return salvo;		
-//
-//		}catch(Exception e) {
-//			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
-//		}
-//
-//	}
+	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
+		Pezzo reProxy = new Pezzo();
+		boolean salvo = false;
+		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+		try {
+			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(reProxy, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
+					re.getPosizioneY(), re.getColore(), scacchiera);
+			for(int righe = - 1; righe <= 1; righe++) {
+				for(int colonne = - 1; colonne <= 1; colonne++) {
+					try {
+						if(righe == 0 && colonne == 0) {
+							continue;
+						}else {
+							parametriDto.setxDestinazione(re.getPosizioneX() + righe);
+							parametriDto.setyDestinazione(re.getPosizioneY() + colonne);
+							reProxy.setTipo(Tipo.RE);
+							if(validaMosse.mossaConsentitaPerPezzo(parametriDto)) {
+								reProxy.setPosizioneX(parametriDto.getxDestinazione());
+								reProxy.setPosizioneY(parametriDto.getyDestinazione());
+								reProxy.setColore(parametriDto.getColore());
+								if(!isScacco(reProxy, scacchiera)) {
+									salvo = true;
+									return salvo;
+								}
+							}
+						}
+					}catch (Exception e) {
+						continue;
+					}
+				}
+			}
+			return salvo;		
+
+		}catch(Exception e) {
+			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
+		}
+
+	}
 
 
 	public boolean puoInterporreTraReEMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception {
@@ -208,9 +208,9 @@ public class ValidatoreScaccoAlRe {
 				return false;
 			}
 	
-//			if (negaScaccoMuovendoIlRe(re, scacchiera)) {
-//				return false; 
-//			}
+			if (negaScaccoMuovendoIlRe(re, scacchiera)) {
+				return false; 
+			}
 	
 			if (puoInterporreTraReEMinaccia(re, scacchiera)) {
 				return false;
