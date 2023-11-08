@@ -84,7 +84,7 @@ public class ValidatoreScaccoAlRe {
 		boolean salvo = false;
 		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 		try {
-			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(re, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
+			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(reProxy, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
 					re.getPosizioneY(), re.getColore(), scacchiera);
 			for(int righe = - 1; righe <= 1; righe++) {
 				for(int colonne = - 1; colonne <= 1; colonne++) {
@@ -94,11 +94,11 @@ public class ValidatoreScaccoAlRe {
 						}else {
 							parametriDto.setxDestinazione(re.getPosizioneX() + righe);
 							parametriDto.setyDestinazione(re.getPosizioneY() + colonne);
+							reProxy.setTipo(Tipo.RE);
 							if(validaMosse.mossaConsentitaPerPezzo(parametriDto)) {
 								reProxy.setPosizioneX(parametriDto.getxDestinazione());
 								reProxy.setPosizioneY(parametriDto.getyDestinazione());
 								reProxy.setColore(parametriDto.getColore());
-								reProxy.setTipo(Tipo.RE);
 								if(!isScacco(reProxy, scacchiera)) {
 									salvo = true;
 									return salvo;
