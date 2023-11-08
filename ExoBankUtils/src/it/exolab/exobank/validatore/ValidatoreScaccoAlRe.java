@@ -98,6 +98,7 @@ public class ValidatoreScaccoAlRe {
 								reProxy.setPosizioneX(parametriDto.getxDestinazione());
 								reProxy.setPosizioneY(parametriDto.getyDestinazione());
 								reProxy.setColore(parametriDto.getColore());
+								reProxy.setTipo(Tipo.RE);
 								if(!isScacco(reProxy, scacchiera)) {
 									salvo = true;
 									return salvo;
