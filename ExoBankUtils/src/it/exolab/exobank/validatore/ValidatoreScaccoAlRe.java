@@ -90,7 +90,7 @@ public class ValidatoreScaccoAlRe {
 
 	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
 		Scacchiera tabella = new Scacchiera();
-		tabella.setScacchiera(scacchiera);
+		tabella.setScacchiera(creaCopiaScacchiera(scacchiera));
 		Pezzo reProxy = new Pezzo();
 		reProxy.setColore(re.getColore());
 		reProxy.setEsiste(re.isEsiste());
@@ -134,6 +134,7 @@ public class ValidatoreScaccoAlRe {
 								}
 								if(!isScacco(reProxy, griglia)) {
 									salvo = true;
+									tabella.setScacchiera(scacchiera);
 									return salvo;
 								}else {
 									tabella.setScacchiera(scacchiera);
@@ -151,6 +152,22 @@ public class ValidatoreScaccoAlRe {
 			throw new Exception(Costanti.MOSSA_NON_CONSENTITA);
 		}
 
+	}
+	
+	private Pezzo[][] creaCopiaScacchiera(Pezzo[][] grigliaOriginale) {
+		Pezzo[][] grigliaCopia = new Pezzo[8][8];
+
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				Pezzo pezzoOriginale = new Pezzo();
+				pezzoOriginale = grigliaOriginale[x][y];
+				if (null != pezzoOriginale && pezzoOriginale.isEsiste()) {
+					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
+				}
+			}
+		}
+
+		return grigliaCopia;
 	}
 
 
