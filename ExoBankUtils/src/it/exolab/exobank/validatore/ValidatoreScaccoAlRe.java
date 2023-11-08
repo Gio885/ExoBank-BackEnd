@@ -24,7 +24,7 @@ public class ValidatoreScaccoAlRe {
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
 			for(Pezzo minaccia : minacce) {
 				try {
-					parametri = compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
+					compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						scacco = true;
 						minacceDirette.add(minaccia);
@@ -49,18 +49,27 @@ public class ValidatoreScaccoAlRe {
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
 			for(Pezzo minaccia : minacceDirette) {
 				try {
-					parametri = compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
+					compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
+					Integer minacciaPosXOriginale = minaccia.getPosizioneX();
+					Integer minacciaPosYOriginale = minaccia.getPosizioneY();
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
 						for(Pezzo alleato : alleati) {
 							try {
-								parametri = compilaDtoPerMinacceOAlleati(parametri, alleato, minaccia, scacchiera);
+								compilaDtoPerMinacceOAlleati(parametri, alleato, minaccia, scacchiera);
+								Integer alleatoPosXOriginale = alleato.getPosizioneX();
+								Integer alleatoPosYOriginale = alleato.getPosizioneY();
 								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
+									alleato.setPosizioneX(minaccia.getPosizioneX());
+									alleato.setPosizioneY(minaccia.getPosizioneY());
 									if(!isScacco(re, scacchiera)) {
 										salvo = true;
+										resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale);
+										resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale);
 										return salvo;
 									}
-
+									resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale);
+									resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale);
 								}
 
 							}catch(Exception e) {
@@ -80,11 +89,13 @@ public class ValidatoreScaccoAlRe {
 	}
 
 	public boolean negaScaccoMuovendoIlRe(Pezzo re, Pezzo[][] scacchiera) throws Exception {
-		Pezzo reProxy = new Pezzo();
 		boolean salvo = false;
+		Pezzo reProxy = new Pezzo();
 		ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 		try {
-			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(reProxy, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
+			Integer rePosXOriginale = re.getPosizioneX();
+			Integer rePosOriginale = re.getPosizioneX();
+			ParametriValidatoreDto parametriDto = new ParametriValidatoreDto(re, re.getPosizioneX(), re.getPosizioneY(), re.getPosizioneX(), 
 					re.getPosizioneY(), re.getColore(), scacchiera);
 			for(int righe = - 1; righe <= 1; righe++) {
 				for(int colonne = - 1; colonne <= 1; colonne++) {
@@ -189,7 +200,7 @@ public class ValidatoreScaccoAlRe {
 		}
 	}
 	
-	private ParametriValidatoreDto compilaDtoPerMinacceOAlleati(ParametriValidatoreDto dto, Pezzo pezzo, Pezzo pezzoDiArrivo, Pezzo[][] scacchiera) {
+	private void compilaDtoPerMinacceOAlleati(ParametriValidatoreDto dto, Pezzo pezzo, Pezzo pezzoDiArrivo, Pezzo[][] scacchiera) {
 		dto.setPezzo(pezzo);
 		dto.setxPartenza(pezzo.getPosizioneX());
 		dto.setyPartenza(pezzo.getPosizioneY());
@@ -197,7 +208,11 @@ public class ValidatoreScaccoAlRe {
 		dto.setyDestinazione(pezzoDiArrivo.getPosizioneY());
 		dto.setColore(pezzo.getColore());
 		dto.setGriglia(scacchiera);
-		return dto;
+	}
+	
+	private void resetPosizione(Pezzo pezzo, Integer posX, Integer posY) {
+		pezzo.setPosizioneX(posX);
+		pezzo.setPosizioneY(posY);
 	}
 
 
