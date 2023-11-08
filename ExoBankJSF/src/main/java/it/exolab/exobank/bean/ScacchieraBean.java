@@ -185,27 +185,29 @@ public class ScacchieraBean implements Serializable {
 			System.out.println("posX: " + posX + "posY: " + posY);
 			pezzoAggiornato = aggiornaPosizionePezzoAggiornato(posX, posY);
 			pezzo = null;
-			scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 			
 			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
+				scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 				ultimaPosizione = true;
 				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
 				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
 				
 			} else {
+				scacchiera = scacchieraController.mossaConsentita(pezzoAggiornato);
 				ultimaPosizione = false;
 				pezzoAggiornato = null;
 				cambiaTurno();
-				
 			}
 			aggiornaListePezziMangiati();
 			
-
-
 		} catch(MossaNonConsentita mossaNonConsentita) {
 			pezzoAggiornato = null;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
-
+		
+		} catch(ScaccoMatto scaccoMatto) {
+			partitaTerminata = true;
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+				
 		} catch(Scacco scacco) {
 			ultimaPosizione = false;
 			pezzoAggiornato = null;
@@ -213,9 +215,6 @@ public class ScacchieraBean implements Serializable {
 			cambiaTurno();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
 		
-		} catch(ScaccoMatto scaccoMatto) {
-			partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
 		
 		} catch(Exception exception) {
 			exception.printStackTrace();
