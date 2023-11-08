@@ -239,7 +239,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
 //        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo();
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
@@ -267,7 +266,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
         appoggio.setPosizioneX(parametri.getxDestinazione());
         appoggio.setPosizioneY(parametri.getyDestinazione());
         grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
-        grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()].setEsiste(false);
         grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
         
 //        eseguiMossaSullaCopia(grigliaCopia, parametri);
