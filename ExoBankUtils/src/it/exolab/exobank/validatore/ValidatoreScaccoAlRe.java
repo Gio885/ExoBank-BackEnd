@@ -128,17 +128,29 @@ public class ValidatoreScaccoAlRe {
 									appoggio.setTipo(griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()].getTipo());
 									griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = reProxy;
 									griglia[re.getPosizioneX()][re.getPosizioneY()] = null;
+									if(!isScacco(reProxy, griglia)) {
+										salvo = true;
+										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = appoggio;
+										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
+										return salvo;
+									}else {
+										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = appoggio;
+										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
+									}
 								}else {
 									griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = reProxy;
 									griglia[re.getPosizioneX()][re.getPosizioneY()] = null;
+									if(!isScacco(reProxy, griglia)) {
+										salvo = true;
+										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = null;
+										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
+										return salvo;
+									}else {
+										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = null;
+										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
+									}
 								}
-								if(!isScacco(reProxy, griglia)) {
-									salvo = true;
-									tabella.setScacchiera(scacchiera);
-									return salvo;
-								}else {
-									tabella.setScacchiera(scacchiera);
-								}
+								
 							}
 						}
 					}catch (Exception e) {
