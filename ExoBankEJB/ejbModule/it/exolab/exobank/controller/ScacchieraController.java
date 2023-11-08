@@ -239,23 +239,23 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		scacchiera.setScacchiera(grigliaCopia);
 
 		// Esegui la mossa sulla copia della griglia
-//		Pezzo appoggio = new Pezzo();
-//		appoggio.setColore(parametri.getPezzo().getColore());
-//		appoggio.setEsiste(parametri.getPezzo().isEsiste());
-//		appoggio.setId(parametri.getPezzo().getId());
-//		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
-//		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
-//		appoggio.setTipo(parametri.getPezzo().getTipo());
-//		appoggio.setPosizioneX(parametri.getxDestinazione());
-//		appoggio.setPosizioneY(parametri.getyDestinazione());
-		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = creaCopiaPezzoDaParametriEModificaPos(parametri);
+		Pezzo appoggio = new Pezzo();
+		appoggio.setColore(parametri.getPezzo().getColore());
+		appoggio.setEsiste(parametri.getPezzo().isEsiste());
+		appoggio.setId(parametri.getPezzo().getId());
+		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
+		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
+		appoggio.setTipo(parametri.getPezzo().getTipo());
+		appoggio.setPosizioneX(parametri.getxDestinazione());
+		appoggio.setPosizioneY(parametri.getyDestinazione());
+		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
 		grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
 		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
 
 		// Controlla se il re è in scacco dopo la mossa
 		try {
-			Pezzo re = trovaRe(creaCopiaPezzoDaParametriEModificaPos(parametri).getColore(), grigliaCopia);
+			Pezzo re = trovaRe(appoggio.getColore(), grigliaCopia);
 			return validaScacco.isScacco(re, grigliaCopia);
 		} catch (MossaNonConsentita s) {
 			s.printStackTrace();
@@ -265,21 +265,21 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 
 	private boolean mossaRimuoveScacco(ParametriValidatoreDto parametri) throws Exception {
 		Pezzo[][] grigliaCopia = creaCopiaScacchiera(parametri.getGriglia());
-//		Pezzo appoggio = new Pezzo();
-//		appoggio.setColore(parametri.getPezzo().getColore());
-//		appoggio.setEsiste(parametri.getPezzo().isEsiste());
-//		appoggio.setId(parametri.getPezzo().getId());
-//		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
-//		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
-//		appoggio.setTipo(parametri.getPezzo().getTipo());
-//		appoggio.setPosizioneX(parametri.getxDestinazione());
-//		appoggio.setPosizioneY(parametri.getyDestinazione());
-		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = creaCopiaPezzoDaParametriEModificaPos(parametri);
+		Pezzo appoggio = new Pezzo();
+		appoggio.setColore(parametri.getPezzo().getColore());
+		appoggio.setEsiste(parametri.getPezzo().isEsiste());
+		appoggio.setId(parametri.getPezzo().getId());
+		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
+		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
+		appoggio.setTipo(parametri.getPezzo().getTipo());
+		appoggio.setPosizioneX(parametri.getxDestinazione());
+		appoggio.setPosizioneY(parametri.getyDestinazione());
+		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
 		grigliaCopia[parametri.getxPartenza()][parametri.getyPartenza()] = null;
 
 
 		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-		Pezzo re = trovaRe(creaCopiaPezzoDaParametriEModificaPos(parametri).getColore(), grigliaCopia);
+		Pezzo re = trovaRe(appoggio.getColore(), grigliaCopia);
 
 		if (!validaScacco.isScacco(re, grigliaCopia)) {
 			return true;
@@ -288,18 +288,6 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		}
 	}
 	
-	public Pezzo creaCopiaPezzoDaParametriEModificaPos(ParametriValidatoreDto parametri) {
-	    Pezzo appoggio = new Pezzo();
-	    appoggio.setColore(parametri.getPezzo().getColore());
-	    appoggio.setEsiste(parametri.getPezzo().isEsiste());
-	    appoggio.setId(parametri.getPezzo().getId());
-	    appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
-	    appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
-	    appoggio.setTipo(parametri.getPezzo().getTipo());
-	    appoggio.setPosizioneX(parametri.getxDestinazione());
-	    appoggio.setPosizioneY(parametri.getyDestinazione());
-	    return appoggio;
-	}
 
 	private Pezzo[][] creaCopiaScacchiera(Pezzo[][] grigliaOriginale) {
 		Pezzo[][] grigliaCopia = new Pezzo[8][8];
