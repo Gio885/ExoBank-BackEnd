@@ -200,9 +200,7 @@ public class ScacchieraBean implements Serializable {
 			}
 			aggiornaListePezziMangiati();
 			
-		} catch(ScaccoMatto scaccoMatto) {
-			partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+
 
 		} catch(MossaNonConsentita mossaNonConsentita) {
 			pezzoAggiornato = null;
@@ -214,7 +212,11 @@ public class ScacchieraBean implements Serializable {
 			aggiornaListePezziMangiati();
 			cambiaTurno();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
-
+		
+		} catch(ScaccoMatto scaccoMatto) {
+			partitaTerminata = true;
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+		
 		} catch(Exception exception) {
 			exception.printStackTrace();
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
@@ -265,6 +267,10 @@ public class ScacchieraBean implements Serializable {
 			aggiornaListePezziMangiati();
 			cambiaTurno();
 			
+		} catch(ScaccoMatto scaccoMatto) {
+			partitaTerminata = true;
+	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+
 		} catch (Scacco scacco) {
 			nuovoTipo = null;
 			ultimaPosizione = false;
