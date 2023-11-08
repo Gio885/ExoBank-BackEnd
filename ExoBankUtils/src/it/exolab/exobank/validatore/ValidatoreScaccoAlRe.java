@@ -20,11 +20,11 @@ public class ValidatoreScaccoAlRe {
 		minacceDirette.removeAll(minacceDirette);
 		try {
 			List<Pezzo> minacce = trovaMinacceOAlleati(coloreGiocatore, scacchiera, false);
+			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
 			for(Pezzo minaccia : minacce) {
 				try {
-					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-					ParametriValidatoreDto parametri = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(),
-							re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
+					parametri = compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						scacco = true;
 						minacceDirette.add(minaccia);
@@ -45,18 +45,17 @@ public class ValidatoreScaccoAlRe {
 		Colore coloreGiocatore = re.getColore();
 		boolean salvo = false;
 		try {
+			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
+			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
 			for(Pezzo minaccia : minacceDirette) {
 				try {
-					ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-					ParametriValidatoreDto parametriMinaccia = new ParametriValidatoreDto(minaccia, minaccia.getPosizioneX(), 
-							minaccia.getPosizioneY(), re.getPosizioneX(), re.getPosizioneY(), minaccia.getColore(), scacchiera);
-					if(validaMosse.mossaConsentitaPerPezzo(parametriMinaccia)) {
+					parametri = compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
+					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 						List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
 						for(Pezzo alleato : alleati) {
 							try {
-								ParametriValidatoreDto parametriAlleato = new ParametriValidatoreDto(alleato, alleato.getPosizioneX(), 
-										alleato.getPosizioneY(), minaccia.getPosizioneX(), minaccia.getPosizioneY(), alleato.getColore(), scacchiera);
-								if(validaMosse.mossaConsentitaPerPezzo(parametriAlleato)) {
+								parametri = compilaDtoPerMinacceOAlleati(parametri, alleato, minaccia, scacchiera);
+								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
 									if(!isScacco(re, scacchiera)) {
 										salvo = true;
 										return salvo;
@@ -187,6 +186,17 @@ public class ValidatoreScaccoAlRe {
 		}catch(Exception e) {
 			throw new Exception();
 		}
+	}
+	
+	private ParametriValidatoreDto compilaDtoPerMinacceOAlleati(ParametriValidatoreDto dto, Pezzo pezzo, Pezzo pezzoDiArrivo, Pezzo[][] scacchiera) {
+		dto.setPezzo(pezzo);
+		dto.setxPartenza(pezzo.getPosizioneX());
+		dto.setyPartenza(pezzo.getPosizioneY());
+		dto.setxDestinazione(pezzoDiArrivo.getPosizioneX());
+		dto.setyDestinazione(pezzoDiArrivo.getPosizioneY());
+		dto.setColore(pezzo.getColore());
+		dto.setGriglia(scacchiera);
+		return dto;
 	}
 
 
