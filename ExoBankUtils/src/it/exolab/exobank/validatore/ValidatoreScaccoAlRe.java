@@ -128,11 +128,11 @@ public class ValidatoreScaccoAlRe {
 									griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = reProxy;
 									griglia[re.getPosizioneX()][re.getPosizioneY()] = null;
 									if(!isScacco(reProxy, griglia)) {
+										salvo = true;
 										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = appoggio;
 										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
 										return salvo;
 									}else {
-										salvo = true;
 										griglia[parametriDto.getxDestinazione()][parametriDto.getyDestinazione()] = appoggio;
 										griglia[re.getPosizioneX()][re.getPosizioneY()] = re;
 									}
