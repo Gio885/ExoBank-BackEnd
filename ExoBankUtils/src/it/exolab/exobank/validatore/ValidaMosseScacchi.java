@@ -51,7 +51,7 @@ public class ValidaMosseScacchi {
 
 	private boolean isDestinazioneStessoColore(int xDestinazione, int yDestinazione, Pezzo[][] scacchiera, Pezzo pezzo) {
 		Pezzo pezzoDestinazione = scacchiera[xDestinazione][yDestinazione];
-		return pezzoDestinazione != null && pezzoDestinazione.getColore().equals(pezzo.getColore());
+		return null != pezzoDestinazione && pezzoDestinazione.getColore().equals(pezzo.getColore());
 	}
 
 }
