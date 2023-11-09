@@ -104,5 +104,7 @@ public class Costanti {
 	public static final String SCRIPT_SHOW_MODAL_TRASFORMAZIONE = "PF('modalTrasformazionePedone').show()";
 	public static final String TEMPO_SCADUTO_GIOCATORE1 = "Il tempo è scaduto, hai perso Giocatore1! :(";
 	public static final String TEMPO_SCADUTO_GIOCATORE2 = "Il tempo è scaduto hai perso Giocatore2! :(";
+	public static final Integer PARTITA_VELOCE = 1;
+	public static final Integer PARTITA_CLASSICA = 2;
 
 }

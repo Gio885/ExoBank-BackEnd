@@ -96,12 +96,12 @@ public class ScacchieraBean implements Serializable {
 			tempoGiocatore1 = new Date();
 			tempoGiocatore1 = new Date();
 
-			if(scelta == 1) {
+			if(scelta == Costanti.PARTITA_VELOCE) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, 0, cal);
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, 0, cal);
 				
-			} else if(scelta == 2) {
+			} else if(scelta == Costanti.PARTITA_CLASSICA) {
 				tipoPartitaScelta = scelta;
 				tempoGiocatore1 = new Timer().creazioneTimer(0, 59, 59, cal);
 				tempoGiocatore2 = new Timer().creazioneTimer(0, 59, 59, cal);
@@ -159,9 +159,8 @@ public class ScacchieraBean implements Serializable {
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) == 0) {
 			cal.add(Calendar.MINUTE, -1);
 			cal.add(Calendar.SECOND, 59);
-
+			
 		}
-		
 		return cal.getTime();
 	}
 	
