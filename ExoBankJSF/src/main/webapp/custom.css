@@ -288,9 +288,6 @@ body .ui-messages>div {
 }
 
 
-
-
-
 .ui-messages.ui-messages-noicon ul {
     margin: 0 0 0 0 !important;
 }
@@ -368,6 +365,328 @@ display:none;
 	
 }
 
+.modalVittoria.ui-dialog{
+	border: 0px !important;
+}
+
+.modalVittoria.ui-dialog .ui-dialog-content{
+	height: 1200px !important;
+	width: 2400px !important;
+	background-color: transparent !important;
+	border:0px !important;
+	padding: 0px !important;
+	display: flex; /* Aggiungi display flex */
+	justify-content: center; /* Centra orizzontalmente */
+	align-items: center; /* Centra verticalmente */
+}
+
+/*.modalVittoria.ui-dialog .ui-dialog-content div{*/
+/*	position: absolute;  Aggiungi position absolute */
+/*	top: 0;  Imposta top a 0 */
+/*	left: 0;  Imposta left a 0 */
+/*	right: 0;  Imposta right a 0 */
+/*	bottom: 0;  Imposta bottom a 0 */
+/*	margin: auto;  Aggiungi margin auto */
+/*}*/
+
+@keyframes firework {
+  0% { 
+    transform: translate(-50%, 30vh); /*tipo altezza da dove partono*/
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  25% { 
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  50% {
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  95% {
+    width: 35vmin;
+    opacity: 1;
+  }
+  100% { 
+    width: 35vmin; 
+    opacity: 1; 
+  }
+}
+
+.firework,
+.firework::before,
+.firework::after {
+  --top: 60vh;
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  z-index: 1;
+  transform: translate(-50%, -50%);    /* questo praticamente centra dallo scoppio i raggi intorno cosi viene un cerchio perfetto*/
+  width: 0.5vmin;
+  aspect-ratio: 1;
+  background:
+    /* random backgrounds with different colors */
+    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+  background-size: 5.5vmin 1.5vmin;
+  background-repeat: no-repeat;
+  animation: firework 2s infinite;
+}
+
+.firework::before {
+  transform: translate(-50%, -50%) rotate(25deg) !important; 
+}
+
+.firework::after {
+  transform: translate(-50%, -50%) rotate(-37deg) !important;
+}
+
+
+
+
+@keyframes firework2 {
+  0% { 
+    transform: translate(-50%, 60vh);
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  25% { 
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  50% {
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  95% {
+    width: 35vmin;
+    opacity: 1;
+  }
+  100% { 
+    width: 35vmin; 
+    opacity: 1; 
+  }
+}
+
+.firework2,
+.firework2::before,
+.firework2::after {
+  --top: 50vh;
+  content: "";
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);    /* questo praticamente centra dallo scoppio i raggi intorno cosi viene un cerchio perfetto*/
+  width: 0.5vmin;
+  aspect-ratio: 1;
+  background:
+    /* random backgrounds with different colors */
+    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+  background-size: 5.5vmin 1.5vmin;
+  background-repeat: no-repeat;
+  animation: firework 2s infinite;
+}
+
+.firework2::before {
+  transform: translate(-50%, -50%) rotate(25deg) !important; 
+}
+
+.firework2::after {
+  transform: translate(-50%, -50%) rotate(-37deg) !important;
+}
+
+
+
+@keyframes firework3 {
+  0% { 
+    transform: translate(-50%, 60vh);
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  25% { 
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  50% {
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  95% {
+    width: 35vmin;
+    opacity: 1;
+  }
+  100% { 
+    width: 35vmin; 
+    opacity: 1; 
+  }
+}
+
+.firework3,
+.firework3::before,
+.firework3::after {
+  --top: 50vh;
+  content: "";
+  position: absolute;
+  top: 55%;
+  left: 35%;
+  z-index: 1;
+  transform: translate(-50%, -50%);    /* questo praticamente centra dallo scoppio i raggi intorno cosi viene un cerchio perfetto*/
+  width: 0.5vmin;
+  aspect-ratio: 1;
+  background:
+    /* random backgrounds with different colors */
+    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+  background-size: 5.5vmin 1.5vmin;
+  background-repeat: no-repeat;
+  animation: firework 2s infinite;
+}
+
+.firework3::before {
+  transform: translate(-50%, -50%) rotate(25deg) !important; 
+}
+
+.firework3::after {
+  transform: translate(-50%, -50%) rotate(-37deg) !important;
+}
+
+
+
+@keyframes firework4 {
+  0% { 
+    transform: translate(-50%, 60vh);
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  25% { 
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  50% {
+    width: 0.5vmin;
+    opacity: 1;
+  }
+  95% {
+    width: 35vmin;
+    opacity: 1;
+  }
+  100% { 
+    width: 35vmin; 
+    opacity: 1; 
+  }
+}
+
+
+.firework4,
+.firework4::before,
+.firework4::after {
+  --top: 20vh;
+  content: "";
+  position: absolute;
+  top: 60%;
+  left: 45%;
+  z-index: 1;
+  transform: translate(-50%, -50%);    /* questo praticamente centra dallo scoppio i raggi intorno cosi viene un cerchio perfetto*/
+  width: 0.5vmin;
+  aspect-ratio: 1;
+  background:
+    /* random backgrounds with different colors */
+    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+  background-size: 5.5vmin 1.5vmin;
+  background-repeat: no-repeat;
+  animation: firework 2s infinite;
+}
+
+.firework4::before {
+  transform: translate(-50%, -50%) rotate(25deg) !important; 
+}
+
+.firework4::after {
+  transform: translate(-50%, -50%) rotate(-37deg) !important;
+}
+
+.firework5,
+.firework5::before,
+.firework5::after {
+  --top: 50vh;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  z-index: 1;
+  transform: translate(-50%, -50%);    /* questo praticamente centra dallo scoppio i raggi intorno cosi viene un cerchio perfetto*/
+  width: 0.5vmin;
+  aspect-ratio: 1;
+  background:
+    /* random backgrounds with different colors */
+    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
+    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+  background-size: 5.5vmin 1.5vmin;
+  background-repeat: no-repeat;
+  animation: firework 2s infinite;
+}
+
+.firework5::before {
+  transform: translate(-50%, -50%) rotate(25deg) !important; 
+}
+
+.firework5::after {
+  transform: translate(-50%, -50%) rotate(-37deg) !important;
+}
 
 
 /*NON DOVREBBE SERVIRE NON USATO*/

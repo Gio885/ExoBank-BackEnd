@@ -6,6 +6,33 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 	
 	
+	<p:dialog id="modalVittoria" closable="true" widgetVar="modalVittoria" modal="true" resizable="false"  styleClass="modalVittoria">
+		<h:panelGroup rendered="#{scacchieraBean.giocaGiocatore1}">
+			<div style="width:1200px;height:1200px;flex-direction:column;display:flex;text-align:center;align-items:center;justify-content:center">
+				<h1 style="font-family:VT323;color:white;margin-right:350px;margin-top:150px">COMPLIMENTI GIOCATORE 1, HAI VINTO !!!</h1>
+				<p:commandLink
+					oncomplete="PF('modalVittoria').hide()"
+					style="font-family:VT323;color:white;margin-right:350px;font-size:30px;border-radius:10px;background-color:transparent;width:70px;height:35px;border:3px solid black"
+					value="OK"
+					/>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{scacchieraBean.giocaGiocatore2}">
+			<div style="width:1200px;height:1200px;flex-direction:column;display:flex;text-align:center;align-items:center;justify-content:center">
+				<h1 style="font-family:VT323;color:white;margin-right:350px;margin-top:150px">COMPLIMENTI GIOCATORE 2, HAI VINTO !!!</h1>
+				<p:commandLink
+					oncomplete="PF('modalVittoria').hide()"
+					style="font-family:VT323;color:white;margin-right:350px;font-size:30px;border-radius:10px;background-color:transparent;width:70px;height:35px;border:3px solid black"
+					value="OK"
+					/>
+			</div>
+		</h:panelGroup>
+		<div class="firework"></div>
+		<div class="firework2"></div>
+		<div class="firework3"></div>
+		<div class="firework4"></div>
+		<div class="firework5"></div>
+	</p:dialog>
 	
 	
 	<p:dialog id="modalTrasformazionePedone" styleClass="mioDialog" closable="false" widgetVar="modalTrasformazionePedone" modal="true" resizable="false">
