@@ -216,6 +216,36 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			// Controlla se la mossa elimina lo stato di scacco
 			if (!isScaccoDopoMossa(parametri)) {
 				reSottoScacco = false;
+				if(Tipo.RE.equals(parametri.getPezzo().getTipo())) {
+					int spostamentoRe = parametri.getxDestinazione() - parametri.getxPartenza();
+					if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
+						parametri.getGriglia()[0][0].setPosizioneY(2);
+						parametri.getGriglia()[0][0].setSpostato(true);
+						parametri.getGriglia()[0][2] = parametri.getGriglia()[0][0]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[0][0] = null; // Rimuovi il pezzo dalla posizione precedente
+					}
+
+					if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
+						parametri.getGriglia()[0][7].setPosizioneY(5);
+						parametri.getGriglia()[0][7].setSpostato(true);
+						parametri.getGriglia()[0][5] = parametri.getGriglia()[0][7]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[0][7] = null; // Rimuovi il pezzo dalla posizione precedente
+					}
+
+					if(parametri.getColore().equals(parametri.getGriglia()[7][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[7][0].isSpostato() && null == parametri.getGriglia()[7][1] && null == parametri.getGriglia()[7][2]) {
+						parametri.getGriglia()[7][0].setPosizioneY(2);
+						parametri.getGriglia()[7][0].setSpostato(true);
+						parametri.getGriglia()[7][2] = parametri.getGriglia()[0][0]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[7][0] = null; // Rimuovi il pezzo dalla posizione precedente
+					}
+
+					if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
+						parametri.getGriglia()[7][7].setPosizioneY(5);
+						parametri.getGriglia()[7][7].setSpostato(true);
+						parametri.getGriglia()[7][5] = parametri.getGriglia()[7][7]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[7][7] = null; // Rimuovi il pezzo dalla posizione precedente
+					}
+				}
 				parametri.getPezzo().setSpostato(true);
 				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
 				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
