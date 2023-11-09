@@ -146,6 +146,8 @@ public class ScacchieraBean implements Serializable {
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR,
 	        		giocaGiocatore1 ? "Il tempo è scaduto, hai perso Giocatore1! :(" : "Il tempo è scaduto hai perso Giocatore2! :(", null));
 			PrimeFaces.current().ajax().update("homeForm");
+			giocaGiocatore1 = !giocaGiocatore1;
+			giocaGiocatore2 = !giocaGiocatore2;
 			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
 
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0 
@@ -181,6 +183,7 @@ public class ScacchieraBean implements Serializable {
 			partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
 			PrimeFaces.current().ajax().update("homeForm");
+			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
 
 				
 		} catch(Scacco scacco) {
@@ -264,6 +267,7 @@ public class ScacchieraBean implements Serializable {
 			partitaTerminata = true;
 	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
 			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
 
 		} catch (Scacco scacco) {
 			nuovoTipo = null;
