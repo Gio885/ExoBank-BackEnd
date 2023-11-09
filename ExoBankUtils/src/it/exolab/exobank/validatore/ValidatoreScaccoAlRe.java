@@ -187,7 +187,7 @@ public class ValidatoreScaccoAlRe {
 			for (Pezzo pezzoAlleato : alleati) {
 				for(Pezzo pezzoMinaccia : minacce) {
 				try {
-					if (puoEsserePosizionatoTraReEMinaccia(re, pezzoMinaccia, pezzoAlleato, scacchiera)/*puoEsserePosizionatoNellaCroceDiagonale(re, pezzo, scacchiera)*/) {
+					if (puoEsserePosizionatoTraReEMinaccia(re, pezzoMinaccia, pezzoAlleato, scacchiera)) {
 						pezzoFrapposto = true;
 						break;
 					}
