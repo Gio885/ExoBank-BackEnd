@@ -143,7 +143,7 @@ public class ValidatoreMovimentiPezzi {
 	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws Exception {
 		boolean isValid = false;
 		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
-		int spostamentoRe = parametri.getxDestinazione() - parametri.getxPartenza();
+		int spostamentoRe = parametri.getyDestinazione() - parametri.getyPartenza();
 		int deltaX = Math.abs(parametri.getxDestinazione() - parametri.getxPartenza());
 		int deltaY = Math.abs(parametri.getyDestinazione() - parametri.getyPartenza());
 
@@ -151,7 +151,7 @@ public class ValidatoreMovimentiPezzi {
 			isValid = true;
 		}
 		
-		if(!parametri.getPezzo().isSpostato() && torriPerArroccoSpostate(parametri, spostamentoRe) && deltaX == 2 && deltaY == 0 && !validaScacco.isScacco(parametri.getPezzo(), parametri.getGriglia())) {
+		if(!parametri.getPezzo().isSpostato() && torriPerArroccoSpostate(parametri, spostamentoRe) && deltaX == 0 && deltaY == 2 && !validaScacco.isScacco(parametri.getPezzo(), parametri.getGriglia())) {
 			isValid = true;
 		}
 
