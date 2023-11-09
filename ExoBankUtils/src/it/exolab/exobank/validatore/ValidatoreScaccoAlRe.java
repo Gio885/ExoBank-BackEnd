@@ -58,35 +58,36 @@ public class ValidatoreScaccoAlRe {
 	private boolean negaScaccoMangiandoMinaccia(Pezzo re, Pezzo[][] scacchiera) throws Exception{
 		Colore coloreGiocatore = re.getColore();
 		boolean salvo = false;
+		Pezzo[][] copiaScacchiera = creaCopiaScacchiera(scacchiera);
+		Pezzo copiaRe = setPezzoDiAppoggio(re);
 		try {
 			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
-			List<Pezzo> minacce = trovaMinacceOAlleati(coloreGiocatore, scacchiera, false);
+			List<Pezzo> minacce = trovaMinacceOAlleati(coloreGiocatore, copiaScacchiera, false);
 			for(Pezzo minaccia : minacce) {
 				try {
-					compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
-					Integer minacciaPosXOriginale = minaccia.getPosizioneX();
-					Integer minacciaPosYOriginale = minaccia.getPosizioneY();
+					Pezzo copiaMinaccia = setPezzoDiAppoggio(minaccia);
+					compilaDtoPerMinacceOAlleati(parametri, copiaMinaccia, copiaRe, copiaScacchiera);
 					if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
-						List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, scacchiera, true);
+						List<Pezzo> alleati = trovaMinacceOAlleati(coloreGiocatore, copiaScacchiera, true);
 						for(Pezzo alleato : alleati) {
 							try {
-								compilaDtoPerMinacceOAlleati(parametri, alleato, minaccia, scacchiera);
-								Integer alleatoPosXOriginale = alleato.getPosizioneX();
-								Integer alleatoPosYOriginale = alleato.getPosizioneY();
+								Pezzo copiaAlleato = setPezzoDiAppoggio(alleato);
+								compilaDtoPerMinacceOAlleati(parametri, copiaAlleato, copiaMinaccia, copiaScacchiera);
 								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
-									scacchiera[alleato.getPosizioneX()][alleato.getPosizioneY()]=null;
-									alleato.setPosizioneX(minaccia.getPosizioneX());
-									alleato.setPosizioneY(minaccia.getPosizioneY());
-									scacchiera[minaccia.getPosizioneX()][minaccia.getPosizioneY()] = alleato;
-									if(!isScacco(re, scacchiera)) {
+									copiaAlleato.setPosizioneX(copiaMinaccia.getPosizioneX());
+									copiaAlleato.setPosizioneY(copiaMinaccia.getPosizioneY());
+									copiaScacchiera[copiaMinaccia.getPosizioneX()][copiaMinaccia.getPosizioneY()] = null;
+									copiaScacchiera[copiaAlleato.getPosizioneX()][copiaAlleato.getPosizioneY()] = copiaAlleato;
+									copiaScacchiera[alleato.getPosizioneX()][alleato.getPosizioneY()] = null;
+									if(!isScacco(copiaRe, copiaScacchiera)) {
 										salvo = true;
-										resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale, scacchiera);
-										resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
+										resetPosizione(copiaAlleato, alleato.getPosizioneX(), alleato.getPosizioneY(), copiaScacchiera);
+										resetPosizione(copiaMinaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), copiaScacchiera);
 										return salvo;
 									}
-									resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale, scacchiera);
-									resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
+									resetPosizione(copiaAlleato, alleato.getPosizioneX(), alleato.getPosizioneY(), copiaScacchiera);
+									resetPosizione(copiaMinaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), copiaScacchiera);
 								}
 
 							}catch(Exception e) {
