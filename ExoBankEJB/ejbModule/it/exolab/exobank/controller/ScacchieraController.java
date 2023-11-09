@@ -226,9 +226,9 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					}
 
 					if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
-						parametri.getGriglia()[0][7].setPosizioneY(5);
+						parametri.getGriglia()[0][7].setPosizioneY(4);
 						parametri.getGriglia()[0][7].setSpostato(true);
-						parametri.getGriglia()[0][5] = parametri.getGriglia()[0][7]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[0][4] = parametri.getGriglia()[0][7]; // Sposta il pezzo nella nuova posizione
 						parametri.getGriglia()[0][7] = null; // Rimuovi il pezzo dalla posizione precedente
 					}
 
@@ -240,9 +240,9 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					}
 
 					if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
-						parametri.getGriglia()[7][7].setPosizioneY(5);
+						parametri.getGriglia()[7][7].setPosizioneY(4);
 						parametri.getGriglia()[7][7].setSpostato(true);
-						parametri.getGriglia()[7][5] = parametri.getGriglia()[7][7]; // Sposta il pezzo nella nuova posizione
+						parametri.getGriglia()[7][4] = parametri.getGriglia()[7][7]; // Sposta il pezzo nella nuova posizione
 						parametri.getGriglia()[7][7] = null; // Rimuovi il pezzo dalla posizione precedente
 					}
 				}
