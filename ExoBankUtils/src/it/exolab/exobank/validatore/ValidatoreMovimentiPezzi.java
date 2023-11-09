@@ -150,7 +150,7 @@ public class ValidatoreMovimentiPezzi {
 		if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
 			isValid = true;
 		}
-		
+
 		if(!parametri.getPezzo().isSpostato() && torriPerArroccoSpostate(parametri, spostamentoRe) && deltaX == 0 && deltaY == 2 && !validaScacco.isScacco(parametri.getPezzo(), parametri.getGriglia())) {
 			isValid = true;
 		}
@@ -161,32 +161,34 @@ public class ValidatoreMovimentiPezzi {
 			}
 		}
 
-			throw new MossaNonConsentita("Movimento non valido per il re.");
+		throw new MossaNonConsentita("Movimento non valido per il re.");
 	}
 
 
 
 	private boolean torriPerArroccoSpostate (ParametriValidatoreDto parametri, int spostamentoRe) {
+		if(!parametri.getPezzo().isSpostato() && Colore.BIANCO.equals(parametri.getPezzo().getColore())) {
+			if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
+				return true;
+			}
 
-		if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
-			return true;
+			if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
+				return true;
+			}
+		}else if(!parametri.getPezzo().isSpostato() && Colore.NERO.equals(parametri.getPezzo().getColore())){
+
+			if(parametri.getColore().equals(parametri.getGriglia()[7][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[7][0].isSpostato() && null == parametri.getGriglia()[7][1] && null == parametri.getGriglia()[7][2]) {
+				return true;
+			}
+
+			if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
+				return true;
+			}
 		}
 
-		if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
-			return true;
-		}
-
-		if(parametri.getColore().equals(parametri.getGriglia()[7][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[7][0].isSpostato() && null == parametri.getGriglia()[7][1] && null == parametri.getGriglia()[7][2]) {
-			return true;
-		}
-
-		if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
-			return true;
-		}
-		
 		return false;
 	}
-	
-	
+
+
 
 }
