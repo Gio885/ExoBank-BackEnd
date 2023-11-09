@@ -127,36 +127,66 @@ public class ValidatoreMovimentiPezzi {
 	}
 
 	public boolean validaMovimentoCavallo(ParametriValidatoreDto parametri) throws MossaNonConsentita{;
-		if ((parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
-				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)) {
-			return true;
-		}
-		throw new MossaNonConsentita("Movimento non valido per il cavallo.");
+	if ((parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
+			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)) {
+		return true;
+	}
+	throw new MossaNonConsentita("Movimento non valido per il cavallo.");
 	}
 
-	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws MossaNonConsentita {
+	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws Exception {
 		boolean isValid = false;
-
+		ValidatoreScaccoAlRe validaScacco = new ValidatoreScaccoAlRe();
+		int spostamentoRe = parametri.getxDestinazione() - parametri.getxPartenza();
 		int deltaX = Math.abs(parametri.getxDestinazione() - parametri.getxPartenza());
 		int deltaY = Math.abs(parametri.getyDestinazione() - parametri.getyPartenza());
 
 		if ((deltaX == 1 && deltaY == 0) || (deltaX == 0 && deltaY == 1) || (deltaX == 1 && deltaY == 1)) {
 			isValid = true;
 		}
+		
+		if(!parametri.getPezzo().isSpostato() && torriPerArroccoSpostate(parametri, spostamentoRe) && deltaX == 2 && deltaY == 0 && !validaScacco.isScacco(parametri.getPezzo(), parametri.getGriglia())) {
+			isValid = true;
+		}
+
 		if (isValid) {
 			if (null == parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] || !parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()].getColore().equals(parametri.getGriglia()[parametri.getxPartenza()][parametri.getyPartenza()].getColore())) {
 				return true;
 			}
 		}
 
-		throw new MossaNonConsentita("Movimento non valido per il re.");
+			throw new MossaNonConsentita("Movimento non valido per il re.");
 	}
 
+
+
+	private boolean torriPerArroccoSpostate (ParametriValidatoreDto parametri, int spostamentoRe) {
+
+		if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
+			return true;
+		}
+
+		if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
+			return true;
+		}
+
+		if(parametri.getColore().equals(parametri.getGriglia()[7][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[7][0].isSpostato() && null == parametri.getGriglia()[7][1] && null == parametri.getGriglia()[7][2]) {
+			return true;
+		}
+
+		if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
+			return true;
+		}
+		
+		return false;
+	}
 	
+	
+
 }

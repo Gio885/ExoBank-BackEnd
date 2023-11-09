@@ -155,7 +155,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					}
 
 					if (null != tipoCorrente) {
-						griglia[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true);
+						griglia[index][j_index] = new Pezzo(idPezzo++, tipoCorrente, (index < 2) ? Colore.BIANCO : Colore.NERO, index, j_index, true, false);
 					} else {
 						griglia[index][j_index] = null;
 					}
@@ -216,6 +216,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			// Controlla se la mossa elimina lo stato di scacco
 			if (!isScaccoDopoMossa(parametri)) {
 				reSottoScacco = false;
+				parametri.getPezzo().setSpostato(true);
 				parametri.getPezzo().setPosizioneX(parametri.getxDestinazione());
 				parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
 				aggiornaScacchiera(parametri);
@@ -246,6 +247,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
 		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
 		appoggio.setTipo(parametri.getPezzo().getTipo());
+		appoggio.setSpostato(parametri.getPezzo().isSpostato());
 		appoggio.setPosizioneX(parametri.getxDestinazione());
 		appoggio.setPosizioneY(parametri.getyDestinazione());
 		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
@@ -272,6 +274,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		appoggio.setPosizioneX(parametri.getPezzo().getPosizioneX());
 		appoggio.setPosizioneY(parametri.getPezzo().getPosizioneY());
 		appoggio.setTipo(parametri.getPezzo().getTipo());
+		appoggio.setSpostato(parametri.getPezzo().isSpostato());
 		appoggio.setPosizioneX(parametri.getxDestinazione());
 		appoggio.setPosizioneY(parametri.getyDestinazione());
 		grigliaCopia[parametri.getxDestinazione()][parametri.getyDestinazione()] = appoggio;
@@ -297,7 +300,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 				Pezzo pezzoOriginale = new Pezzo();
 				pezzoOriginale = grigliaOriginale[x][y];
 				if (null != pezzoOriginale && pezzoOriginale.isEsiste()) {
-					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true);
+					grigliaCopia[x][y] = new Pezzo(pezzoOriginale.getId(), pezzoOriginale.getTipo(), pezzoOriginale.getColore(), x, y, true, pezzoOriginale.isSpostato());
 				}
 			}
 		}

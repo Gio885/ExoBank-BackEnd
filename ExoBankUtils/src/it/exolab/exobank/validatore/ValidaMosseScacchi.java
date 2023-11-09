@@ -7,7 +7,7 @@ import it.exolab.scacchiera.ex.MossaNonConsentita;
 
 public class ValidaMosseScacchi {
 
-	public boolean mossaConsentitaPerPezzo(ParametriValidatoreDto parametri) throws MossaNonConsentita {
+	public boolean mossaConsentitaPerPezzo(ParametriValidatoreDto parametri) throws Exception,MossaNonConsentita {
 		if (isDestinazioneFuoriScacchiera(parametri.getxDestinazione(), parametri.getyDestinazione(), parametri.getGriglia())) {
 			throw new MossaNonConsentita("La destinazione è fuori dalla scacchiera.");
 		}

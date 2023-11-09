@@ -78,6 +78,7 @@ public class ParametriValidatoreDto {
 		return griglia;
 	}
 
+
 	public void setGriglia(Pezzo[][] griglia) {
 		this.griglia = griglia;
 	}
