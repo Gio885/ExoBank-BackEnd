@@ -14,9 +14,11 @@ import javax.inject.Named;
 
 import org.primefaces.PrimeFaces;
 
+import it.exolab.exobank.chess.model.Colore;
 import it.exolab.exobank.chess.model.Pezzo;
 import it.exolab.exobank.chess.model.Scacchiera;
 import it.exolab.exobank.chess.model.Tipo;
+import it.exolab.exobank.costanti.Costanti;
 import it.exolab.exobank.ejbinterface.ScacchieraControllerInterface;
 import it.exolab.scacchiera.ex.MossaNonConsentita;
 import it.exolab.scacchiera.ex.Scacco;
@@ -82,8 +84,8 @@ public class ScacchieraBean implements Serializable {
 			
 		} catch(Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_FATAL, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_FATAL, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		}
 	}
 	
@@ -96,8 +98,8 @@ public class ScacchieraBean implements Serializable {
 
 			if(scelta == 1) {
 				tipoPartitaScelta = scelta;
-				tempoGiocatore1 = new Timer().creazioneTimer(0, 0, 03, cal);
-				tempoGiocatore2 = new Timer().creazioneTimer(0, 0, 03, cal);
+				tempoGiocatore1 = new Timer().creazioneTimer(0, 10, 0, cal);
+				tempoGiocatore2 = new Timer().creazioneTimer(0, 10, 0, cal);
 				
 			} else if(scelta == 2) {
 				tipoPartitaScelta = scelta;
@@ -108,8 +110,8 @@ public class ScacchieraBean implements Serializable {
 			
 		} catch(Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 
 		}
 	}
@@ -118,8 +120,8 @@ public class ScacchieraBean implements Serializable {
 	public void start() {
 		stopTimer = !stopTimer;
 		if(turno == 1) {
-			FacesContext.getCurrentInstance().addMessage("messaggioScacchiInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, "Tocca al bianco!", null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiInfo");
+			FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_INFO, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tocca al bianco!", null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_INFO);
 		}
 	}
 	
@@ -143,12 +145,12 @@ public class ScacchieraBean implements Serializable {
 		if (cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) == 0){
 	        stopTimer = !stopTimer;
 	        partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR,
-	        		giocaGiocatore1 ? "Il tempo è scaduto, hai perso Giocatore1! :(" : "Il tempo è scaduto hai perso Giocatore2! :(", null));
-			PrimeFaces.current().ajax().update("homeForm");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+	        		giocaGiocatore1 ? Costanti.TEMPO_SCADUTO_GIOCATORE1 : Costanti.TEMPO_SCADUTO_GIOCATORE2, null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM);
 			giocaGiocatore1 = !giocaGiocatore1;
 			giocaGiocatore2 = !giocaGiocatore2;
-			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
+			PrimeFaces.current().executeScript(Costanti.SCRIPT_SHOW_MODAL_VITTORIA);
 
 		} else if (cal.get(Calendar.MINUTE) > 0 && cal.get(Calendar.SECOND) > 0 
 					|| cal.get(Calendar.MINUTE) == 0 && cal.get(Calendar.SECOND) > 0 ) {
@@ -175,26 +177,26 @@ public class ScacchieraBean implements Serializable {
 			
 		} catch(MossaNonConsentita mossaNonConsentita) {
 			pezzoAggiornato = null;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, mossaNonConsentita.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		
 		} catch(ScaccoMatto scaccoMatto) {
 			stopTimer = false;
 			partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm");
-			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM);
+			PrimeFaces.current().executeScript(Costanti.SCRIPT_SHOW_MODAL_VITTORIA);
 
 				
 		} catch(Scacco scacco) {
 			gestionePedoneUltimaPosizione();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		
 		} catch(Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		}
 	}
 	
@@ -202,8 +204,8 @@ public class ScacchieraBean implements Serializable {
 		try {
 			if(scacchieraController.controlloPedoneUltimaPosizione(pezzoAggiornato)) {
 				ultimaPosizione = true;
-				PrimeFaces.current().ajax().update("homeForm:modalTrasformazionePedone");
-				PrimeFaces.current().executeScript("PF('modalTrasformazionePedone').show()");
+				PrimeFaces.current().ajax().update(Costanti.ID_MODAL_TRASFORMA_PEDONE);
+				PrimeFaces.current().executeScript(Costanti.SCRIPT_SHOW_MODAL_TRASFORMAZIONE);
 				
 			} else {
 				ultimaPosizione = false;
@@ -223,18 +225,18 @@ public class ScacchieraBean implements Serializable {
 			List<Pezzo> listaPezziMangiati = scacchieraController.listaPezziMangiati();
 			
 			for(Pezzo pezzo : listaPezziMangiati) {
-				if(pezzo.getColore().toString().equalsIgnoreCase("bianco") && !listaPezziMangiatiBianchi.contains(pezzo)) {
+				if(Colore.BIANCO == pezzo.getColore() && !listaPezziMangiatiBianchi.contains(pezzo)) {
 					listaPezziMangiatiBianchi.add(pezzo);
 					
-				} else if(pezzo.getColore().toString().equalsIgnoreCase("nero") && !listaPezziMangiatiNeri.contains(pezzo)) {
+				} else if(Colore.NERO == pezzo.getColore() && !listaPezziMangiatiNeri.contains(pezzo)) {
 					listaPezziMangiatiNeri.add(pezzo);
 				}
 			}
 			
 		} catch (Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		}
 	}
 	
@@ -248,8 +250,8 @@ public class ScacchieraBean implements Serializable {
 			}
 		} catch(Exception exception) {
 			exception.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+			FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 		}
 	}
 	
@@ -265,22 +267,22 @@ public class ScacchieraBean implements Serializable {
 			
 		} catch(ScaccoMatto scaccoMatto) {
 			partitaTerminata = true;
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
-			PrimeFaces.current().executeScript("PF('modalVittoria').show()");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, scaccoMatto.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
+			PrimeFaces.current().executeScript(Costanti.SCRIPT_SHOW_MODAL_VITTORIA);
 
 		} catch (Scacco scacco) {
 			nuovoTipo = null;
 			ultimaPosizione = false;
 			aggiornaListePezziMangiati();
 			cambiaTurno();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, scacco.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 
 		} catch (Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_ERROR, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 
 		}
 	}
@@ -290,9 +292,9 @@ public class ScacchieraBean implements Serializable {
 		turno++;
 		giocaGiocatore1 = !giocaGiocatore1;
 		giocaGiocatore2 = !giocaGiocatore2;
-		String message = giocaGiocatore1 ? "Tocca al Bianco!" : "Tocca al Nero!";
-        FacesContext.getCurrentInstance().addMessage("messaggioScacchiInfo", new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
-		PrimeFaces.current().ajax().update("homeForm:messaggioScacchiInfo");
+		String message = giocaGiocatore1 ? Costanti.TOCCA_BIANCO : Costanti.TOCCA_NERO;
+        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_INFO, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
+		PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_INFO);
 
 	}
 	
@@ -322,7 +324,7 @@ public class ScacchieraBean implements Serializable {
 			
 		} catch(Exception exception) {
 			exception.printStackTrace();
-			throw new Exception("errore in aggiornaPezzoAggiornato --> ");
+			throw new Exception(Costanti.ERRORE_AGGIORNA_POSIZIONE_PEZZO);
 		}
 		
 	}
@@ -341,8 +343,8 @@ public class ScacchieraBean implements Serializable {
 			
 		}catch(Exception exception) {
 			exception.printStackTrace();
-	        FacesContext.getCurrentInstance().addMessage("messaggioScacchiErrore", new FacesMessage(FacesMessage.SEVERITY_FATAL, exception.getMessage(), null));
-			PrimeFaces.current().ajax().update("homeForm:messaggioScacchiErrore");
+	        FacesContext.getCurrentInstance().addMessage(Costanti.ID_COMPONENTE_MESSAGGIO_ERRORE, new FacesMessage(FacesMessage.SEVERITY_FATAL, exception.getMessage(), null));
+			PrimeFaces.current().ajax().update(Costanti.ID_HOMEFORM_MESSAGGIO_ERRORE);
 
 		}
 	}
@@ -505,51 +507,4 @@ public class ScacchieraBean implements Serializable {
 	public void setTipoPartitaScelta(Integer tipoPartitaScelta) {
 		this.tipoPartitaScelta = tipoPartitaScelta;
 	}
-	
-//	public void trovaPezzo(Integer id) {
-//	for(Pezzo[] arrayPezzi : griglia) {
-//		for(Pezzo pezzo : arrayPezzi) {
-//			if(pezzo.getId() == id && null != pezzo) {
-//				this.pezzo = pezzo;
-//			}
-//		}
-//	}
-//}
-	
-//	public void azione() {
-//        // Recupera i parametri passati dalla chiamata AJAX
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-//        
-//        // Recupera le coordinate di partenza e destinazione e l'ID del pezzo
-//        String coordinataPartenza = params.get("coordinataPartenza");
-//        String coordinataDestinazione = params.get("coordinataDestinazione");
-//        String idPezzo = params.get("idPezzo");
-//
-//        // Fai qualcosa con le coordinate e l'ID del pezzo
-//        System.out.println("Coordinate di partenza: " + coordinataPartenza);
-//        System.out.println("Coordinate di destinazione: " + coordinataDestinazione);
-//        System.out.println("ID del pezzo: " + idPezzo);
-//
-//        // Esegui altre azioni o aggiorna il tuo modello dati
-//    }
-	
-//	//METODO PER AGGIORNARE POSIZIONE DEL PEZZO
-//	//SE DIVERSO DA NULL AGGIORNA POSIZOINE
-//	//ALTRIMENTI MANDA UN MESSAGGIO DI ERRORE
-//	public void nuovaPosizioneSelezionata(Integer posX, Integer posY) {
-//		System.out.println("posX " + posX + " posY " + posY);
-//		try {
-//			if(null != pezzo) {
-//				aggiornaPosizionePezzo(posX, posY);
-//				
-//			} else {
-//		        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, "Seleziona prima un pezzo", null));
-//			}
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//	        FacesContext.getCurrentInstance().addMessage("messaggioScacchi", new FacesMessage(FacesMessage.SEVERITY_INFO, e.getMessage(), null));
-//
-//		}
-//	}
 }

@@ -89,5 +89,20 @@ public class Costanti {
 	public static final String NESSUN_PEZZO_TROVATO = "Nessun pezzo con l'ID specifico è stato trovato.";
 	public static final String ERRORE_SCACCHIERA_INIZIALE = "Griglia non creata contatta assistenza";
 	public static final String PEDONE_NON_ULTIMA_POS = "Pedone non in ultima posizione";
+	
+	//BEAN
+	public static final String ID_HOMEFORM = "homeForm";
+	public static final String ID_COMPONENTE_MESSAGGIO_ERRORE = "messaggioScacchiErrore";
+	public static final String ID_COMPONENTE_MESSAGGIO_INFO = "messaggioScacchiInfo";
+	public static final String ID_HOMEFORM_MESSAGGIO_ERRORE = "homeForm:messaggioScacchiErrore";
+	public static final String ID_HOMEFORM_MESSAGGIO_INFO = "homeForm:messaggioScacchiInfo";
+	public static final String ID_MODAL_TRASFORMA_PEDONE = "homeForm:modalTrasformazionePedone";
+	public static final String ERRORE_AGGIORNA_POSIZIONE_PEZZO = "errore in aggiornaPezzoAggiornato --> ";
+	public static final String TOCCA_BIANCO = "Tocca al Bianco!";
+	public static final String TOCCA_NERO = "Tocca al Nero!";
+	public static final String SCRIPT_SHOW_MODAL_VITTORIA = "PF('modalVittoria').show()";
+	public static final String SCRIPT_SHOW_MODAL_TRASFORMAZIONE = "PF('modalTrasformazionePedone').show()";
+	public static final String TEMPO_SCADUTO_GIOCATORE1 = "Il tempo è scaduto, hai perso Giocatore1! :(";
+	public static final String TEMPO_SCADUTO_GIOCATORE2 = "Il tempo è scaduto hai perso Giocatore2! :(";
 
 }
