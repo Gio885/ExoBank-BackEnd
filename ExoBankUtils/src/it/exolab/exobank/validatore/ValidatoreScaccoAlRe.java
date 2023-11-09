@@ -324,5 +324,6 @@ public class ValidatoreScaccoAlRe {
 		}
 		return grigliaCopia;
 	}
+	
 
 }
