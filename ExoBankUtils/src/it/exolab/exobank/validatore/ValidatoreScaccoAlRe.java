@@ -215,26 +215,6 @@ public class ValidatoreScaccoAlRe {
 
 		return pezzoFrapposto;
 	}
-
-//	private boolean puoEsserePosizionatoNellaCroceDiagonale(Pezzo re, Pezzo alleato, Pezzo[][] scacchiera) throws MossaNonConsentita {
-//		int reX = re.getPosizioneX();
-//		int reY = re.getPosizioneY();
-//		int alleatoX = alleato.getPosizioneX();
-//		int alleatoY = alleato.getPosizioneY();
-//
-//		// Verifica se l'alleato può essere posizionato nella croce diagonale del re
-//		if (Math.abs(reX - alleatoX) == Math.abs(reY - alleatoY)) {
-//			// Crea un oggetto ParametriValidatoreDto per verificare la validità della mossa
-//			ParametriValidatoreDto parametri = new ParametriValidatoreDto(alleato, alleatoX, alleatoY, reX, reY, alleato.getColore(), scacchiera);
-//			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
-//			if (validaMosse.mossaConsentitaPerPezzo(parametri)) {
-//				return true;
-//			}
-//		}
-//
-//		return false;
-//	}
-//	
 	
 	private boolean puoEsserePosizionatoTraReEMinaccia(Pezzo re, Pezzo minaccia, Pezzo alleato, Pezzo[][] scacchiera) throws MossaNonConsentita {
 	    int reX = re.getPosizioneX();
