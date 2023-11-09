@@ -220,31 +220,19 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 					int spostamentoRe = parametri.getyDestinazione() - parametri.getyPartenza();
 					if(!parametri.getPezzo().isSpostato() && Colore.BIANCO.equals(parametri.getPezzo().getColore())) {
 						if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
-							parametri.getGriglia()[0][0].setPosizioneY(2);
-							parametri.getGriglia()[0][0].setSpostato(true);
-							parametri.getGriglia()[0][2] = parametri.getGriglia()[0][0]; // Sposta il pezzo nella nuova posizione
-							parametri.getGriglia()[0][0] = null; // Rimuovi il pezzo dalla posizione precedente
+							aggiornaPosizioneTorreDuranteArrocco(parametri, 0, 0, 2);
 						}
 
 						if(parametri.getColore().equals(parametri.getGriglia()[0][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[0][7].isSpostato() && null == parametri.getGriglia()[0][4] && null == parametri.getGriglia()[0][5] && null == parametri.getGriglia()[0][6]) {
-							parametri.getGriglia()[0][7].setPosizioneY(4);
-							parametri.getGriglia()[0][7].setSpostato(true);
-							parametri.getGriglia()[0][4] = parametri.getGriglia()[0][7]; // Sposta il pezzo nella nuova posizione
-							parametri.getGriglia()[0][7] = null; // Rimuovi il pezzo dalla posizione precedente
+							aggiornaPosizioneTorreDuranteArrocco(parametri, 0, 7, 4);
 						}
 					}else if(!parametri.getPezzo().isSpostato() && Colore.NERO.equals(parametri.getPezzo().getColore())){
 						if(parametri.getColore().equals(parametri.getGriglia()[7][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[7][0].isSpostato() && null == parametri.getGriglia()[7][1] && null == parametri.getGriglia()[7][2]) {
-							parametri.getGriglia()[7][0].setPosizioneY(2);
-							parametri.getGriglia()[7][0].setSpostato(true);
-							parametri.getGriglia()[7][2] = parametri.getGriglia()[0][0]; // Sposta il pezzo nella nuova posizione
-							parametri.getGriglia()[7][0] = null; // Rimuovi il pezzo dalla posizione precedente
+							aggiornaPosizioneTorreDuranteArrocco(parametri, 7, 0, 2);
 						}
 
 						if(parametri.getColore().equals(parametri.getGriglia()[7][7].getColore()) && spostamentoRe > 0 && !parametri.getGriglia()[7][7].isSpostato() && null == parametri.getGriglia()[7][4] && null == parametri.getGriglia()[7][5] && null == parametri.getGriglia()[7][6]) {
-							parametri.getGriglia()[7][7].setPosizioneY(4);
-							parametri.getGriglia()[7][7].setSpostato(true);
-							parametri.getGriglia()[7][4] = parametri.getGriglia()[7][7]; // Sposta il pezzo nella nuova posizione
-							parametri.getGriglia()[7][7] = null; // Rimuovi il pezzo dalla posizione precedente
+							aggiornaPosizioneTorreDuranteArrocco(parametri, 7, 7, 4);
 						}
 					}
 				}
@@ -346,5 +334,12 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 		parametri.getGriglia()[parametri.getxDestinazione()][parametri.getyDestinazione()] = parametri.getPezzo(); // Sposta il pezzo nella nuova posizione
 		parametri.getPezzo().setPosizioneX(parametri.getxDestinazione()); // Aggiorna le coordinate del pezzo
 		parametri.getPezzo().setPosizioneY(parametri.getyDestinazione());
+	}
+	
+	private void aggiornaPosizioneTorreDuranteArrocco(ParametriValidatoreDto parametri, Integer x, Integer y, Integer yDestinazione) {
+		parametri.getGriglia()[x][y].setPosizioneY(yDestinazione);
+		parametri.getGriglia()[x][y].setSpostato(true);
+		parametri.getGriglia()[x][yDestinazione] = parametri.getGriglia()[x][y]; // Sposta il pezzo nella nuova posizione
+		parametri.getGriglia()[x][y] = null; // Rimuovi il pezzo dalla posizione precedente
 	}
 }

@@ -126,18 +126,18 @@ public class ValidatoreMovimentiPezzi {
 		return false;
 	}
 
-	public boolean validaMovimentoCavallo(ParametriValidatoreDto parametri) throws MossaNonConsentita{;
-	if ((parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
-			|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)) {
-		return true;
-	}
-	throw new MossaNonConsentita("Movimento non valido per il cavallo.");
+	public boolean validaMovimentoCavallo(ParametriValidatoreDto parametri) throws MossaNonConsentita{
+		if ((parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() + 1)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 2 && parametri.getyDestinazione() == parametri.getyPartenza() - 1)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() + 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() - 2)
+				|| (parametri.getxDestinazione() == parametri.getxPartenza() - 1 && parametri.getyDestinazione() == parametri.getyPartenza() + 2)) {
+			return true;
+		}
+		throw new MossaNonConsentita("Movimento non valido per il cavallo.");
 	}
 
 	public boolean validaMovimentoRe(ParametriValidatoreDto parametri) throws Exception {
