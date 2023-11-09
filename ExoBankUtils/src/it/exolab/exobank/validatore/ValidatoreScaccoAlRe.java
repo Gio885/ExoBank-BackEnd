@@ -85,8 +85,6 @@ public class ValidatoreScaccoAlRe {
 										resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
 										return salvo;
 									}
-									alleato.setPosizioneX(alleatoPosXOriginale);
-									alleato.setPosizioneY(alleatoPosYOriginale);
 									resetPosizione(alleato, alleatoPosXOriginale, alleatoPosYOriginale, scacchiera);
 									resetPosizione(minaccia, minacciaPosXOriginale, minacciaPosYOriginale, scacchiera);
 								}
@@ -306,6 +304,8 @@ public class ValidatoreScaccoAlRe {
 	
 	private void resetPosizione(Pezzo pezzo, Integer posX, Integer posY, Pezzo[][] scacchiera) {
 		scacchiera[posX][posY] = pezzo;
+		pezzo.setPosizioneX(posY);
+		pezzo.setPosizioneY(posY);
 	}
 
 
