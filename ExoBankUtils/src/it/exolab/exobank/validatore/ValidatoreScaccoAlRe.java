@@ -48,7 +48,8 @@ public class ValidatoreScaccoAlRe {
 		try {
 			ValidaMosseScacchi validaMosse = new ValidaMosseScacchi();
 			ParametriValidatoreDto parametri = new ParametriValidatoreDto();
-			for(Pezzo minaccia : minacceDirette) {
+			List<Pezzo> minacce = trovaMinacceOAlleati(coloreGiocatore, scacchiera, false);
+			for(Pezzo minaccia : minacce) {
 				try {
 					compilaDtoPerMinacceOAlleati(parametri, minaccia, re, scacchiera);
 					Integer minacciaPosXOriginale = minaccia.getPosizioneX();
