@@ -152,7 +152,7 @@
 	    		styleClass="p-commandLink-transparent" 
 	    		style="background-color: #{(1 == scacchieraBean.tipoPartitaScelta) ? 'rgba(0,128,255,0.3)' : '#D7C99C' } ; color:black;font-size:24px;font-family:VT323;padding:15px;border:4px solid black;border-radius:15px;text-decoration:none "
 	    		value="Partita veloce"
-	    		update="commandLink1 commandLink2 tempo"
+	    		update="commandLink1 commandLink2 tempo bottoneInizia"
 	    		action="#{scacchieraBean.sceltaLungezzaPartita(1)}"
 	    		/>
 	    		<p:commandLink
@@ -161,12 +161,14 @@
 	    		styleClass="p-commandLink-transparent" 
 	    		style="background-color: #{(2 == scacchieraBean.tipoPartitaScelta) ? 'rgba(0,128,255,0.3)' : '#D7C99C' } ; color:black;font-size:24px;font-family:VT323;padding:15px;border:4px solid black;border-radius:15px;margin-top:10px;margin-bottom:10px;text-decoration:none "
 	    		value="Partita Lunga"
-	    		update="commandLink1 commandLink2 tempo"
+	    		update="commandLink1 commandLink2 tempo bottoneInizia"
 	    		action="#{scacchieraBean.sceltaLungezzaPartita(2)}"
 	    		/>
 	    	
 	    	<p:commandButton 
+	    		id="bottoneInizia"
 	    		styleClass="button-scacchi"
+	    		disabled="#{null == scacchieraBean.tipoPartitaScelta}"
 	    		value="INIZIA" 
 	    		update="homeForm" 
 	    		oncomplete="PF('modalInizio').hide()" 
