@@ -427,7 +427,7 @@ display:none;
   aspect-ratio: 1;
   background:
     /* random backgrounds with different colors */
-    radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   /**/
+    radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   
     radial-gradient(circle, #00ff00 0.8vmin, #0000 0) 00% 50%,
     radial-gradient(circle, #0000ff 0.3vmin, #0000 0) 50% 99%,
     radial-gradient(circle, #ffff00 0.6vmin, #0000 0) 99% 50%,
@@ -493,18 +493,18 @@ display:none;
   aspect-ratio: 1;
   background:
     /* random backgrounds with different colors */
-    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
-    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
-    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
-    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
-    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
-    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
-    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
-    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
-    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+   radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   
+    radial-gradient(circle, #00ff00 0.8vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.3vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.6vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.6vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.2vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.8vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.8vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.9vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.6vmin, #0000 0) 90% 23%,
     radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+    radial-gradient(circle, #ff8000 0.9vmin, #0000 0) 13% 24%;
   background-size: 5.5vmin 1.5vmin;
   background-repeat: no-repeat;
   animation: firework 2s infinite;
@@ -558,18 +558,18 @@ display:none;
   aspect-ratio: 1;
   background:
     /* random backgrounds with different colors */
-    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
-    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
-    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
-    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
-    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
-    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
-    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
-    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
-    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   
+    radial-gradient(circle, #00ff00 0.8vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.3vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.6vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.6vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.2vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.8vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.8vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.9vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.6vmin, #0000 0) 90% 23%,
     radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+    radial-gradient(circle, #ff8000 0.9vmin, #0000 0) 13% 24%;
   background-size: 5.5vmin 1.5vmin;
   background-repeat: no-repeat;
   animation: firework 2s infinite;
@@ -624,18 +624,18 @@ display:none;
   aspect-ratio: 1;
   background:
     /* random backgrounds with different colors */
-    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
-    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
-    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
-    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
-    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
-    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
-    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
-    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
-    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+   	radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   
+    radial-gradient(circle, #00ff00 0.8vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.3vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.6vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.6vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.2vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.8vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.8vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.9vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.6vmin, #0000 0) 90% 23%,
     radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+    radial-gradient(circle, #ff8000 0.9vmin, #0000 0) 13% 24%;
   background-size: 5.5vmin 1.5vmin;
   background-repeat: no-repeat;
   animation: firework 2s infinite;
@@ -663,18 +663,18 @@ display:none;
   aspect-ratio: 1;
   background:
     /* random backgrounds with different colors */
-    radial-gradient(circle, #ff0000 0.2vmin, #0000 0) 50% 00%,   /**/
-    radial-gradient(circle, #00ff00 0.3vmin, #0000 0) 00% 50%,
-    radial-gradient(circle, #0000ff 0.5vmin, #0000 0) 50% 99%,
-    radial-gradient(circle, #ffff00 0.2vmin, #0000 0) 99% 50%,
-    radial-gradient(circle, #ff00ff 0.3vmin, #0000 0) 80% 90%,
-    radial-gradient(circle, #00ffff 0.5vmin, #0000 0) 95% 90%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 10% 60%,
-    radial-gradient(circle, #00ff80 0.2vmin, #0000 0) 31% 80%,
-    radial-gradient(circle, #8000ff 0.3vmin, #0000 0) 80% 10%,
-    radial-gradient(circle, #ff0080 0.2vmin, #0000 0) 90% 23%,
+    radial-gradient(circle, #ff0000 0.4vmin, #0000 0) 50% 00%,   
+    radial-gradient(circle, #00ff00 0.8vmin, #0000 0) 00% 50%,
+    radial-gradient(circle, #0000ff 0.3vmin, #0000 0) 50% 99%,
+    radial-gradient(circle, #ffff00 0.6vmin, #0000 0) 99% 50%,
+    radial-gradient(circle, #ff00ff 0.6vmin, #0000 0) 80% 90%,
+    radial-gradient(circle, #00ffff 0.2vmin, #0000 0) 95% 90%,
+    radial-gradient(circle, #ff8000 0.8vmin, #0000 0) 10% 60%,
+    radial-gradient(circle, #00ff80 0.8vmin, #0000 0) 31% 80%,
+    radial-gradient(circle, #8000ff 0.9vmin, #0000 0) 80% 10%,
+    radial-gradient(circle, #ff0080 0.6vmin, #0000 0) 90% 23%,
     radial-gradient(circle, #0080ff 0.3vmin, #0000 0) 45% 20%,
-    radial-gradient(circle, #ff8000 0.5vmin, #0000 0) 13% 24%;
+    radial-gradient(circle, #ff8000 0.9vmin, #0000 0) 13% 24%;
   background-size: 5.5vmin 1.5vmin;
   background-repeat: no-repeat;
   animation: firework 2s infinite;
