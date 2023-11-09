@@ -217,7 +217,7 @@ public class ScacchieraController implements ScacchieraControllerInterface {
 			if (!isScaccoDopoMossa(parametri)) {
 				reSottoScacco = false;
 				if(Tipo.RE.equals(parametri.getPezzo().getTipo())) {
-					int spostamentoRe = parametri.getxDestinazione() - parametri.getxPartenza();
+					int spostamentoRe = parametri.getyDestinazione() - parametri.getyPartenza();
 					if(parametri.getColore().equals(parametri.getGriglia()[0][0].getColore()) && spostamentoRe < 0 && !parametri.getGriglia()[0][0].isSpostato() && null == parametri.getGriglia()[0][1] && null == parametri.getGriglia()[0][2]) {
 						parametri.getGriglia()[0][0].setPosizioneY(2);
 						parametri.getGriglia()[0][0].setSpostato(true);
