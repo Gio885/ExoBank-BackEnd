@@ -75,15 +75,11 @@ public class ValidatoreScaccoAlRe {
 								Pezzo copiaAlleato = setPezzoDiAppoggio(alleato);
 								compilaDtoPerMinacceOAlleati(parametri, copiaAlleato, copiaMinaccia, copiaScacchiera);
 								if(validaMosse.mossaConsentitaPerPezzo(parametri)) {
-									copiaAlleato.setPosizioneX(copiaMinaccia.getPosizioneX());
-									copiaAlleato.setPosizioneY(copiaMinaccia.getPosizioneY());
-									copiaScacchiera[copiaMinaccia.getPosizioneX()][copiaMinaccia.getPosizioneY()] = null;
-									copiaScacchiera[copiaAlleato.getPosizioneX()][copiaAlleato.getPosizioneY()] = copiaAlleato;
-									copiaScacchiera[alleato.getPosizioneX()][alleato.getPosizioneY()] = null;
+									mossaFintaPerTestScacco(copiaAlleato, copiaMinaccia, copiaScacchiera);
 									if(!isScacco(copiaRe, copiaScacchiera)) {
-										salvo = true;
 										resetPosizione(copiaAlleato, alleato.getPosizioneX(), alleato.getPosizioneY(), copiaScacchiera);
 										resetPosizione(copiaMinaccia, minaccia.getPosizioneX(), minaccia.getPosizioneY(), copiaScacchiera);
+										salvo = true;
 										return salvo;
 									}
 									resetPosizione(copiaAlleato, alleato.getPosizioneX(), alleato.getPosizioneY(), copiaScacchiera);
@@ -309,7 +305,15 @@ public class ValidatoreScaccoAlRe {
 		pezzo.setPosizioneY(posY);
 	}
 
-
+	private void mossaFintaPerTestScacco(Pezzo alleato, Pezzo minaccia, Pezzo[][] scacchiera) {
+		Integer alleatoPosXOriginale = alleato.getPosizioneX();
+		Integer alleatoPosYOriginale = alleato.getPosizioneY();
+		alleato.setPosizioneX(minaccia.getPosizioneX());
+		alleato.setPosizioneY(minaccia.getPosizioneY());
+		scacchiera[minaccia.getPosizioneX()][minaccia.getPosizioneY()] = null;
+		scacchiera[alleato.getPosizioneX()][alleato.getPosizioneY()] = alleato;
+		scacchiera[alleatoPosXOriginale][alleatoPosYOriginale] = null;
+	}
 	
 	private Pezzo[][] creaCopiaScacchiera(Pezzo[][] grigliaOriginale) {
 		Pezzo[][] grigliaCopia = new Pezzo[8][8];
