@@ -73,58 +73,48 @@ public class EmailController implements EmailControllerInterface {
 	
 	
 	@Resource
-	private TimerService timerService;
+	private TimerService timerService;	
 	private Timer timer;
-	
-    /**
-     * Default constructor. 
-     */
-    public EmailController() {
-    }
-    
-    @PostConstruct
-    private void init() {
-    	System.out.println("STO CREANDO IL TIMER ALL'INIZIALIZZAZIONE DELL EJB ----------------------------------------------------------------------------------");
-    	TimerConfig timerConfig = new TimerConfig(null,false);   //info e persist
-    	ScheduleExpression se = new ScheduleExpression().second("*/59").minute("*").hour("4");  //schedularExpression per definire la pianificazione del timer
-    	timer = timerService.createCalendarTimer(se, timerConfig);
-    	System.out.println("IL TIMER E --------------------------------  "+timer.getTimeRemaining()+" ----------------------------------------------");
-    }
-    
-    
-    @Timeout
-    public void scheduledTimeout(Timer timer) {
-    	EmailCrud crud = new EmailCrud();
-		SqlMapFactory factory = SqlMapFactory.instance();
-		SqlSession session = factory.openSession();
-		EmailMapper mapper = session.getMapper(EmailMapper.class);
-		List<Email> listaEmailDaInviare = null;
+
+	public EmailController() {
+	}
+
+	@PostConstruct
+	private void init() {
+		TimerConfig timerConfig = new TimerConfig(null, false); // info e persist
+		//schedularExpression per definire la pianificazione del timer
+		ScheduleExpression se = new ScheduleExpression().second("0").minute("0").hour("*");
+		timer = timerService.createCalendarTimer(se, timerConfig);
+		System.out.println("IL TIMER ---- " + timer.getTimeRemaining() +"--------");
+	}
+
+	@Timeout
+	public void scheduledTimeout(Timer timer) throws Exception {
 		try {
+			EmailCrud crud = new EmailCrud();
+			SqlMapFactory factory = SqlMapFactory.instance();
+			SqlSession session = factory.openSession();
+			EmailMapper mapper = session.getMapper(EmailMapper.class);
+			List<Email> listaEmailDaInviare = null;
 			listaEmailDaInviare = crud.listaEmailDaReinviare(mapper);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for(Email e : listaEmailDaInviare) {
-			new SendEmail().sendEmail(e.getDestinatario(), e.getOggettoEmail(), e.getTestoEmail());
-			try {
+			for (Email e : listaEmailDaInviare) {
+				new SendEmail().sendEmail(e.getDestinatario(), e.getOggettoEmail(), e.getTestoEmail());
 				StatoEmail stato = new StatoEmail();
 				stato.setId(CostantiEmail.EMAIL_INVIATA);
 				e.setStatoEmail(stato);
-				crud.updateEmail(mapper,e);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				crud.updateEmail(mapper, e);
 			}
-		}   		
-    }
-    
-    
-    @PreDestroy
-    private void shutDown() {
-    	timer.cancel();
-    	System.out.println("TIMER CANCELLATO ALLA POCO PRIMA DELLA DISTRUZIONE DELL'EJB ----------------------------------- "+timer+" --------------------------------------------");
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Errore metodo scheduledTimeout");
+			throw new Exception (null != e.getMessage() ? e.getMessage() : "Errore Scheduled");
+		}
+	}
+
+	@PreDestroy
+	private void shutDown() {
+		timer.cancel();
+	}
          
 	@Override
 	public Email insertAndSendEmail(Utente utente, ContoCorrente conto, Integer tipo) throws Exception {
