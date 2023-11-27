@@ -8,6 +8,7 @@
 		<project>ExoBankDB</project>
 		<project>ExoBankRest</project>
 		<project>ExoBankEJB</project>
+		<project>ExoBankJSF</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
