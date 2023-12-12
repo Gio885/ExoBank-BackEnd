@@ -29,13 +29,6 @@ import org.apache.ibatis.session.SqlSession;
 @LocalBean
 public class TransazioneController implements TransazioneControllerInterface {
 
-	/**
-	 * Default constructor.
-	 */
-	public TransazioneController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public Dto<Transazione> insertTransazione(Transazione transazione) throws Exception {
 		SqlMapFactory factory = SqlMapFactory.instance();

@@ -13,6 +13,7 @@ import it.exolab.exobank.sendemail.SendEmail;
 import it.exolab.exobank.sqlmapfactory.SqlMapFactory;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -76,8 +77,6 @@ public class EmailController implements EmailControllerInterface {
 	private TimerService timerService;	
 	private Timer timer;
 
-	public EmailController() {
-	}
 
 	@PostConstruct
 	private void init() {
@@ -88,6 +87,7 @@ public class EmailController implements EmailControllerInterface {
 		System.out.println("IL TIMER ---- " + timer.getTimeRemaining() +"--------");
 	}
 
+	//@Schedule(configurazione timer)     --questo al posto di timeout mi risparmia l'init per la configurazione del timer
 	@Timeout
 	public void scheduledTimeout(Timer timer) throws Exception {
 		try {
@@ -115,6 +115,11 @@ public class EmailController implements EmailControllerInterface {
 	private void shutDown() {
 		timer.cancel();
 	}
+	
+	public Email insertAndSendEmail(Utente utente,Integer tipo) throws Exception {
+		return insertAndSendEmail(utente, utente.getContoCorrente(),tipo);
+	}
+			
          
 	@Override
 	public Email insertAndSendEmail(Utente utente, ContoCorrente conto, Integer tipo) throws Exception {
@@ -135,7 +140,7 @@ public class EmailController implements EmailControllerInterface {
 					email = buildEmail(utente.getEmail(), CostantiEmail.EMAIL_OGGETTO_AGGIORNAMENTO_STATO_CONTO, new SendEmail().emailStatoConto(conto), utente);
 				}
 				email = crud.insertEmail(mapper,email);
-				if(null != email) {
+				if(Objects.nonNull(email)) {
 					factory.commitSession();
 					new SendEmail().sendEmail(email.getDestinatario(), email.getOggettoEmail(), email.getTestoEmail());
 					StatoEmail stato = new StatoEmail();
@@ -146,7 +151,7 @@ public class EmailController implements EmailControllerInterface {
 			}
 			return email;
 		}catch(Exception e) {
-			e.printStackTrace();
+			e.printStackTrace();			
 			factory.rollbackSession();
 			System.out.println("ERRORE CONTROLLER EMAIL ----INSERT------");
 			throw new Exception(Costanti.ERRORE_CONTATTA_AMMINISTRATORE);
@@ -164,7 +169,7 @@ public class EmailController implements EmailControllerInterface {
 		emailDaInserire.setOggettoEmail(oggettoEmail);
 		emailDaInserire.setTestoEmail(testoEmail);
 		emailDaInserire.setUtente(utente);
-		emailDaInserire.setStatoEmail(statoEmail);
+		emailDaInserire.setStatoEmail(statoEmail);		
 		return emailDaInserire;
 	}
     

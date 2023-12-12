@@ -29,13 +29,6 @@ import org.apache.ibatis.session.SqlSession;
 @LocalBean
 public class ContoCorrenteController implements ContoCorrenteControllerInterface {
 
-	/**
-	 * Default constructor.
-	 */
-	public ContoCorrenteController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public Dto<ContoCorrente> updateConto(ContoCorrente conto) throws Exception {
 		SqlMapFactory factory = SqlMapFactory.instance();

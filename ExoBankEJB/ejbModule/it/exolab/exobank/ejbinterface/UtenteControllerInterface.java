@@ -10,10 +10,11 @@ import it.exolab.exobank.models.Utente;
 
 @Local
 public interface UtenteControllerInterface {
-
 	
 	Dto<List<Utente>> findAll() throws Exception;
+	
 	Dto<Utente> insertUtente(Utente utente) throws SQLException, Exception;
+	
 	Dto<Utente> findUtenteByEmailPassword(Utente utente) throws Exception;
 	
 }

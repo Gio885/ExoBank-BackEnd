@@ -13,8 +13,11 @@ import it.exolab.exobank.models.Utente;
 public interface TransazioneControllerInterface {
 
 	Dto <Transazione> insertTransazione(Transazione transazione) throws SQLException, Exception;
+	
 	Dto <List<Transazione>> findAllTransazioni() throws SQLException, Exception;
+	
 	Dto <Transazione> updateTransazione(Transazione transazione) throws SQLException, Exception;
+	
 	Dto <List<Transazione>> findTransazioniUtente(Utente utente) throws SQLException, Exception;
 	
 }

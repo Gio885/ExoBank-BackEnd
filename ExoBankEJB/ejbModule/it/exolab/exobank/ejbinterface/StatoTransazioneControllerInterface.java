@@ -10,6 +10,5 @@ import it.exolab.exobank.models.StatoTransazione;
 public interface StatoTransazioneControllerInterface {
 
 	List<StatoTransazione> findStatiTransazione() throws Exception;
-	
-	
+		
 }

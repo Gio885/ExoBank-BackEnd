@@ -9,9 +9,6 @@ import it.exolab.exobank.models.Utente;
 @Local
 public interface EmailControllerInterface {
 
-	
 	Email insertAndSendEmail(Utente utente,ContoCorrente conto,Integer tipo) throws Exception;
-	
-	
-	
+		
 }

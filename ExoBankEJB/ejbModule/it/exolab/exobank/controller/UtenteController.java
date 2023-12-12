@@ -25,14 +25,7 @@ import org.apache.ibatis.session.SqlSession;
  */
 @Stateless(name = "UtenteControllerInterface")
 @LocalBean
-public class UtenteController implements UtenteControllerInterface { // MANCA DTO DA FRONT END
-
-	/**
-	 * Default constructor.
-	 */
-	public UtenteController() {
-		// TODO Auto-generated constructor stub
-	}
+public class UtenteController implements UtenteControllerInterface { 
 
 	@Override
 	public Dto<List<Utente>> findAll() throws Exception {

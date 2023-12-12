@@ -22,13 +22,6 @@ import org.apache.ibatis.session.SqlSession;
 @LocalBean
 public class StatoTransazioneController implements StatoTransazioneControllerInterface {
 
-	/**
-	 * Default constructor.
-	 */
-	public StatoTransazioneController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public List<StatoTransazione> findStatiTransazione() throws Exception {
 		SqlMapFactory factory = SqlMapFactory.instance();

@@ -8,9 +8,7 @@ import it.exolab.exobank.models.StatoContoCorrente;
 
 @Local
 public interface StatoContoCorrenteControllerInterface {
-
 	
 	List<StatoContoCorrente> findAllStatiConto() throws Exception;
-
 	
 }

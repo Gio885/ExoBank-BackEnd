@@ -23,13 +23,6 @@ import org.apache.ibatis.session.SqlSession;
 @LocalBean
 public class StatoContoCorrenteController implements StatoContoCorrenteControllerInterface {
 
-	/**
-	 * Default constructor.
-	 */
-	public StatoContoCorrenteController() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public List<StatoContoCorrente> findAllStatiConto() throws Exception {
 		SqlMapFactory factory = SqlMapFactory.instance();
